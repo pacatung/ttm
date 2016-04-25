@@ -1,3 +1,52 @@
 // Place all the styles related to the posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.myself{
+  background-color: #b3c6ff;
+  color: white;
+  font-size: 50px;
+  text-align: center;
+  padding: 20px 0;
+}
+.family{
+  background-color: #99b3ff;
+  color: white;
+  font-size: 50px;
+  text-align: center;
+  padding: 20px 0;
+}
+.mate{
+  background-color: #809fff;
+  color: white;
+  font-size: 50px;
+  text-align: center;
+  padding: 20px 0;
+}
+.friend{
+  background-color: #668cff;
+  color: white;
+  font-size: 50px;
+  text-align: center;
+  padding: 20px 0;
+}
+.outside_frame1{
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 60px;
+}
+.outside_frame2{
+  padding-right: 60px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+.outside_frame3{
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 60px;
+}
+.outside_frame4{
+  padding-top: 10px;
+  padding-right: 60px;
+  padding-left: 10px;
+}

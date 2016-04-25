@@ -1,0 +1,32 @@
+<%= render 'layouts/nav' %>
+<div class="container">
+  <h1>新增一個主題</h1>
+  <%= form_for @post, url: posts_path do |f| %>
+    <div class="field">
+      <%= f.label :title, '主題' %><br/>
+      <%= f.text_field :title, autofocus: true, :class =>"form-control" %>
+    </div>
+    <div class="field">
+      <%= f.label :trip_date, '' %><br/>
+      <%= f.text_field :trip_date, :class =>"form-control" %>
+    </div>
+    <div class="field">
+      <%= f.label :origin, '出發地' %><br/>
+      <%= f.text_field :origin, autocomplete: "off", :class =>"form-control" %>
+    </div>
+    <div class="field">
+      <%= f.label :destination, '目的地' %><br/>
+      <%= f.text_field :destination, autocomplete: "off", :class =>"form-control" %>
+    </div>
+    <div class="field">
+      <%= f.label :distance, '' %><br >
+      <%= f.text_field :distance, :class =>"form-control" %>
+    </div>
+    <div class="field">
+      <%= f.label :description, '' %><br >
+      <%= f.text_area :description, :class =>"form-control" %>
+    </div>
+
+    <%= f.submit '新增貼文', class:"btn btn-primary"  %>
+  <% end %>
+</div>

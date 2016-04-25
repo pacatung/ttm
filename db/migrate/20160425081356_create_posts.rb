@@ -3,9 +3,9 @@ class CreatePosts < ActiveRecord::Migration
     create_table :posts do |t|
       t.string :title
       t.string :origin
-      t.string :destionation
+      t.string :destination
       t.date :trip_date
-      t.integer :distancece
+      t.float :distance
       t.text :description
       t.integer :user_id
 
