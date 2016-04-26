@@ -1,1 +1,15 @@
-show
+<%= render 'layouts/nav' %>
+<div class="container">
+  <%= link_to 'Back to index', posts_path %>
+  <%= image_tag 'location_map_pin_light_blue6.png', style: :'width:30px'%><%= @post.destination %>
+  主題： <%= @post.title %>
+  <br>
+  出發時間：<%= @post.trip_date %>
+  出發地：<%= @post.origin %>
+  目的地：<%= @post.destination %>
+  <br>
+  里程數：<%= @post.distance %>
+  <br>
+  旅行紀錄：<%= simple_format(@post.description) %>
+
+</div>

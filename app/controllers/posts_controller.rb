@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, :only => [ :show, :edit, :update, :destroy]
 
   def landing
 
@@ -19,7 +20,13 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  def show
+  end
+
 protected
+  def set_post
+    @post = Post.find(params[:id])
+  end
   def post_params
     params.require(:post).permit( :title, :trip_date, :origin, :destination, :distance, :description)
   end
