@@ -1,6 +1,6 @@
 <%= render 'layouts/nav' %>
 <div class="container">
-  <%= link_to 'Back to index', posts_path %>
+  <%= link_to '<', posts_path, style: :'font-size:20px;'%>
   <%= image_tag 'location_map_pin_light_blue6.png', style: :'width:30px'%><%= @post.destination %>
   主題： <%= @post.title %>
   <br>
