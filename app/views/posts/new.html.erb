@@ -1,14 +1,13 @@
 <%= render 'layouts/nav' %>
 <div class="container">
   <h1>新增旅行主題</h1>
-  <%= form_for @post, url: posts_path do |f| %>
+  <%= form_for @post, url: posts_path,:html => {:multipart => true}  do |f| %>
 
     <div class="form-group">
-        <%= f.label :pic, "Upload File" %>
-        <%= f.file_field :pic %>
+        <%= f.label :photos, "Upload File" %>
+        <%= file_field_tag "pics[]", type: :file ,:multiple=> true %>
         <%= check_box_tag "destroy_photo", "1" %> 刪除檔案
     </div>
-
     <div class="field">
       <%= f.label :title, '主題' %><br/>
       <%= f.text_field :title, autofocus: true, :class =>"form-control" %>

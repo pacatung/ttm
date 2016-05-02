@@ -11,18 +11,22 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
-    # @photo = Photo.new
-    @photo = @post.photos.build
   end
 
   def create
     @post = Post.new(post_params)
-    # @photo = Photo.new(photo_params)
-    @photo =@post.photos.build(photo_params)
-    @post.save
-    @photo.save
 
-    redirect_to posts_path
+    respond_to do |format|
+      if @post.save
+        if params[:pics]
+          #===== post pics[] here
+          params[:pics].each { |pic|
+            @post.photos.create(pic: pic)
+          }
+        end
+        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+      end
+    end
   end
 
   def show
@@ -33,9 +37,6 @@ private
     @post = Post.find(params[:id])
   end
   def post_params
-    params.require(:post).permit( :title, :trip_date, :origin, :destination, :distance, :description)
-  end
-  def photo_params
-    params.require(:post).permit( :post_id, :photo_location, :pic)
+    params.require(:post).permit( :title, :trip_date, :origin, :destination, :distance, :description, photos_attributes: [:post_id, :photo_location, :pic])
   end
 end
