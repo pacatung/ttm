@@ -2,7 +2,12 @@ namespace :dev do
 
   desc "Rebuild system"
   # task :rebuild => ["db:drop", "db:setup", :fake]
-  task :rebuild => [ "db:setup", :fake]
+
+  task :dropdb => :environment do
+    puts "delete Post and Photo....."
+    Post.delete_all
+    Photo.delete_all
+  end
 
   task :fakeuser => :environment do
     puts "Create fake data for development"
@@ -12,17 +17,22 @@ namespace :dev do
 
   task :fakepost => :environment do
     puts "Create fake data for development!"
-    1.times do |n|
-      Post.create(
-        :title => Faker::Lorem.sentence(1),
-        :origin => Faker::Address.country,
-        :destination => Faker::Address.country,
-        :description =>Faker::Lorem.paragraph(4),
-        :trip_date => Faker::Date.backward(30),
-        :distance => Faker::Number.decimal(3.1),
-        # Photo.
-        photo = Photo.create(:storage => open("http://Users/BigBoss/Pictures/booking_system/1/44283_62269_935352.jpg"))
+    20.times do |n|
+      post = Post.create(
+                          :title => Faker::Lorem.sentence(1),
+                          :origin => Faker::Address.country,
+                          :destination => Faker::Address.country,
+                          :description =>Faker::Lorem.paragraph(4),
+                          :trip_date => Faker::Date.backward(30),
+                          :distance => Faker::Number.decimal(3.1)
+                          )
+      5.times do
+        post.photos.create(
+          :photo_location => Faker::Address.country,
+          # :pic => open("http://Users/BigBoss/Pictures/booking_system/1/44283_62269_935352.jpg")
+          :pic =>File.new("/Users/BigBoss/Pictures/booking_system/1/44283_62269_935352.jpg")
         )
+      end
     end
   end
 end
