@@ -1,8 +1,30 @@
 <%= render 'layouts/nav' %>
 <div class="container">
-  <%= link_to '<', posts_path, style: :'font-size:20px;'%>
+  <%= link_to '<', posts_path, style: :'font-size:40px; margin-right:20px'%>
   <%= image_tag 'location_map_pin_light_blue6.png', style: :'width:30px'%><%= @post.destination %>
   主題： <%= @post.title %>
+  <br>
+  <%= @post.photos %>
+  <% unless @photos.empty? %>
+  <% @photos.each do |pic| %>
+    <li class="span3" id="picture_<%= pic.id %>">
+    <div class="thumbnail">
+      <%= image_tag pic.pic.url %>
+      <div class="caption">
+        <p style="text-align: center;">
+        <%= link_to "Edit picture", photo_path(pic) %>
+        <%=
+          link_to "Delete picture", pic,
+            :data => { :confirm => "Are you sure?" },
+            :method => :delete
+          %>
+        </p>
+      </div>
+    </div>
+    </li>
+  <% end %>
+  <% end %>
+
   <br>
   出發時間：<%= @post.trip_date %>
   出發地：<%= @post.origin %>

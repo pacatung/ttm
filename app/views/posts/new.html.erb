@@ -6,7 +6,6 @@
     <div class="form-group">
         <%= f.label :photos, "Upload File" %>
         <%= file_field_tag "pics[]", type: :file ,:multiple=> true %>
-        <%= check_box_tag "destroy_photo", "1" %> 刪除檔案
     </div>
     <div class="field">
       <%= f.label :title, '主題' %><br/>

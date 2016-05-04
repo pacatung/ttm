@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   end
 
   def index
-
+    @posts = Post.all
   end
 
   def new
@@ -30,6 +30,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @photos = @post.photos
   end
 
 private
