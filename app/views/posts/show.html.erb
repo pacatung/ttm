@@ -4,7 +4,6 @@
   <%= image_tag 'location_map_pin_light_blue6.png', style: :'width:30px'%><%= @post.destination %>
   主題： <%= @post.title %>
   <br>
-  <%= @post.photos %>
   <% unless @photos.empty? %>
   <% @photos.each do |pic| %>
     <li class="span3" id="picture_<%= pic.id %>">
