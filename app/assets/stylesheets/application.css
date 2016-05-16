@@ -19,3 +19,8 @@
   width: 25%;
   border: 5px solid;
 }
+
+#landing_map{
+  height: 500px;
+  /* height: 100%; */
+}
