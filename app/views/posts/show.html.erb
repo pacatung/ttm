@@ -1,16 +1,53 @@
 <%= render 'layouts/nav' %>
 <div class="container">
-  <%= link_to '<', posts_path, style: :'font-size:40px; margin-right:20px'%>
-  <%= image_tag 'location_map_pin_light_blue6.png', style: :'width:30px'%><%= @post.destination %>
-  主題： <%= @post.title %>
-  <br>
+<% if false %>
+  <div>
+  <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px'), posts_path%>
+  <div class="text-center">
+    <%= image_tag "main_location.png", alt: :"icon", style: :"margin:auto;" %>
+  </div>
+  <!-- 主題： <%#= @post.title %> -->
+  <div class="pull-right">
+   <%= image_tag "album_index_share.png", alt: :"index_share" %>
+   <%= image_tag "album_sub_love.png", alt: :"sub_love" %>
+  </div>
+  </div>
+<% end %>
+</div>
+<!--  -->
+<div class="sub_menu" style="border-bottom:4px solid gray">
+<div class="container">
+  <div class="col-md-4">
+    <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px'), posts_path%>
+  </div>
+  <div class="col-md-4 text-center">
+    <%= image_tag "main_location.png", alt: :"icon" %>
+  </div>
+  <div class="col-md-4">
+    <div class="pull-right">
+    <%= image_tag "album_index_share.png", alt: :"index_share", style: :"margin-right:20px" %>
+    <%= image_tag "album_sub_lock.png", alt: :"sub_lock", style: :"margin-right:20px" %>
+    <%= image_tag "album_sub_love.png", alt: :"sub_love", style: :"margin-right:20px" %>
+    <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="text-center">
+    <%= @post.destination %>
+  </div>
+  </div>
+  </div>
+  <!--  -->
+  <div class="photo_area" style="background-color: #f2efef;">
+  <br><br>
+  <div class="container">
   <% unless @photos.empty? %>
-  <% @photos.each do |pic| %>
-    <li class="span3" id="picture_<%= pic.id %>">
-    <div class="thumbnail">
-      <%= image_tag pic.pic.url %>
-      <div class="caption">
-        <p style="text-align: center;">
+    <%= image_tag @post.photos.first.pic.url, style: :'margin-bottom:5px;' %>
+    <% @photos.each do |pic| %>
+    <div class="span3" id="picture_<%= pic.id %>" style="display: inline-block;">
+
+      <%= image_tag pic.pic.url(:medium) %>
+        <p style="">
         <%= link_to "Edit picture", photo_path(pic) %>
         <%=
           link_to "Delete picture", pic,
@@ -18,12 +55,13 @@
             :method => :delete
           %>
         </p>
-      </div>
     </div>
-    </li>
+    <% end %>
   <% end %>
-  <% end %>
+  </div>
+  </div>
 
+  <div class="container">
   <br>
   出發時間：<%= @post.trip_date %>
   出發地：<%= @post.origin %>
