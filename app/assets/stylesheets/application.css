@@ -16,11 +16,14 @@
 
 .user_bar{
   margin: auto;
-  width: 25%;
-  border: 5px solid;
+  width: 285px;
 }
 
 #landing_map{
+  height: 500px;
+  /* height: 100%; */
+}
+#map{
   height: 500px;
   /* height: 100%; */
 }

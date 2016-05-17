@@ -1,6 +1,5 @@
 
 <%= render 'layouts/nav' %>
-<p></p>
 <div class="user_bar">
 <div class="btn-group">
 <!-- Split button -->
@@ -52,32 +51,80 @@
 </div>
 </div>
 </div>
-<br>
+<br><br>
+
 <div class="container">
   <% @posts.each do |post| %>
-<!--      <div class="span4" id="post_<%= post.id %>">
-  <div class="thumbnail"> -->
-    <% if post.photos.first %>
-    <%= link_to image_tag(post.photos.first.pic.url(:thumb)), post_path(post) %>
-    <% else %>
-    N/A
-    <!-- </div> -->
-    <% end %>
-    <% end %>
-    <!-- </div> -->
-  <br><br>
+    <div id="post_<%= post.id %>" style="display: inline-block;">
+      <% if post.photos.first %>
+      <%= link_to image_tag(post.photos.first.pic.url(:medium), style: :"width:210px;"), post_path(post) %>
+      <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
+      <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
+    </div>
 
+      <% else %>
+        N/A
+      <% end %>
+  <% end %>
+
+  <br><br>
+  <div class="text-center">
+    <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:60px;"%>
+    <p style="color: #7fb2f9;font-size:20px;">Find Location On Map</p>
+    <br>
+  </div>
   <!-- google map -->
-  <div id="landing_map"></div>
+  <div id="map"></div>
+
   <script type="text/javascript">
 
-    var map;
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('landing_map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
-      });
-    }
+    // var map;
+    // function initMap() {
+    //   map = new google.maps.Map(document.getElementById('landing_map'), {
+    //     center: {lat: -34.397, lng: 150.644},
+    //     zoom: 8
+    //   });
+    // }
+
+    // This example creates an interactive map which constructs a polyline based on
+    // user clicks. Note that the polyline only appears once its path property
+    // contains two LatLng coordinates.
+
+var poly;
+var map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    center: {lat: 41.879, lng: -87.624}  // Center the map on Chicago, USA.
+  });
+
+  poly = new google.maps.Polyline({
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 3
+  });
+  poly.setMap(map);
+
+  // Add a listener for the click event
+  map.addListener('click', addLatLng);
+}
+
+// Handles click events on a map, and adds a new point to the Polyline.
+function addLatLng(event) {
+  var path = poly.getPath();
+
+  // Because path is an MVCArray, we can simply append a new coordinate
+  // and it will automatically appear.
+  path.push(event.latLng);
+
+  // Add a new marker at the new plotted point on the polyline.
+  var marker = new google.maps.Marker({
+    position: event.latLng,
+    title: '#' + path.getLength(),
+    map: map
+  });
+}
 
   </script>
   <script async defer

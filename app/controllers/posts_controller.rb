@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :find_post, :only => [ :show, :edit, :update, :destroy]
 
   def landing
-    @posts = Post.all
+    @posts = Post.limit(15)
   end
 
   def index
