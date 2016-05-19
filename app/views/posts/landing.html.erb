@@ -1,82 +1,71 @@
 
 <%= render 'layouts/nav' %>
-<div class="user_bar">
-<div class="btn-group">
-<!-- Split button -->
-<div class="btn-group">
-  <button type="button" class="btn btn-danger">Action</button>
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
+<div class="photo_area" style="background-color: #f2efef; margin-top: -20px;">
+  <br><br>
+  <div class="user_bar">
+    <div class="btn-group btn-group-lg">
+      <!-- Split button -->
+      <button type="button" class="btn btn-danger">Recommand</button>
+      <!-- Split button -->
+      <button type="button" class="btn btn-warning">New</button>
+      <!-- Split button -->
+      <button type="button" class="btn btn-info">Following</button>
+    </div>
+  </div>
+  <br><br>
+
+  <div class="container">
+    <% @posts.each do |post| %>
+      <div id="post_<%= post.id %>" style="display: inline-block;">
+        <% if post.photos.first %>
+        <%= link_to image_tag(post.photos.first.pic.url(:medium), style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
+        <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
+        <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
+      </div>
+        <% else %>
+          N/A
+        <% end %>
+    <% end %>
+  </div>
 </div>
 
-<!-- Split button -->
-<div class="btn-group">
-  <button type="button" class="btn btn-warning">Action</button>
-  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
-
-<!-- Split button -->
-<div class="btn-group">
-  <button type="button" class="btn btn-info">Action</button>
-  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
-</div>
-</div>
 <br><br>
+<div class="text-center">
+  <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:60px;"%>
+  <p style="color: #7fb2f9;font-size:20px;">Find Location On Map</p>
+  <br>
+</div>
 
 <div class="container">
-  <% @posts.each do |post| %>
-    <div id="post_<%= post.id %>" style="display: inline-block;">
-      <% if post.photos.first %>
-      <%= link_to image_tag(post.photos.first.pic.url(:medium), style: :"width:210px;"), post_path(post) %>
-      <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
-      <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
-    </div>
-
-      <% else %>
-        N/A
-      <% end %>
-  <% end %>
-
-  <br><br>
-  <div class="text-center">
-    <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:60px;"%>
-    <p style="color: #7fb2f9;font-size:20px;">Find Location On Map</p>
-    <br>
-  </div>
   <!-- google map -->
   <div id="map"></div>
 
-  <script type="text/javascript">
+  <div class="clearfix"></div>
+  <br><br>
+  <div class="col-md-4">
+    <div class="f_title" style="color: #7fb2f9;font-size: 17px;">
+      What is Traveler Mark ?
+    </div>
+    <p></p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam doloremque maxime adipisci necessitatibus explicabo quae tempora odio nobis. Porro nesciunt laborum aut, illo id quae praesentium magni alias vitae, non.</p>
+  </div>
+  <div class="col-md-4">
+    <div class="f_title" style="color: #7fb2f9;font-size: 17px;">
+      What is Traveler Mark ?
+    </div>
+    <p></p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quod praesentium fugiat nostrum, nesciunt assumenda. Necessitatibus sapiente amet sequi voluptatum deleniti veritatis eaque, iusto a numquam fugit facilis, aliquam nostrum.</p>
+  </div>
+  <div class="col-md-4">
+    <div class="f_title" style="color: #7fb2f9;font-size: 17px;">
+      What is Traveler Mark ?
+    </div>
+    <p></p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, repudiandae. Modi mollitia veritatis soluta, consequatur illum nam perferendis tempore aliquam, minima adipisci, distinctio est! Blanditiis corrupti, saepe. Dignissimos velit, dolorem!</p>
+  </div>
+</div>
+
+<script type="text/javascript">
 
     // var map;
     // function initMap() {
@@ -126,8 +115,7 @@ function addLatLng(event) {
   });
 }
 
-  </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&callback=initMap">
-  </script>
-</div>
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&callback=initMap">
+</script>

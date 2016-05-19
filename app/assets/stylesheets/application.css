@@ -16,9 +16,17 @@
 
 .user_bar{
   margin: auto;
-  width: 285px;
+  width: 320px;
 }
-
+[id^=post_]{
+  border: 1px solid white;
+  border-radius: 10px;
+  margin:0 15px 25px 0;
+  background-color:white;
+}
+[id^=post_]:nth-child(5n-0){
+margin-right: 0px;
+}
 #landing_map{
   height: 500px;
   /* height: 100%; */
