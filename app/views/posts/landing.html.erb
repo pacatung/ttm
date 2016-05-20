@@ -64,21 +64,57 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, repudiandae. Modi mollitia veritatis soluta, consequatur illum nam perferendis tempore aliquam, minima adipisci, distinctio est! Blanditiis corrupti, saepe. Dignissimos velit, dolorem!</p>
   </div>
 </div>
+<script>
+function initialize() {
 
+  // Create an array of styles.
+  var styles = [
+    {
+      stylers: [
+        { hue: "#00ffe6" },
+        { saturation: -20 }
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { lightness: 100 },
+        { visibility: "simplified" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+
+  // Create a new StyledMapType object, passing it the array of styles,
+  // as well as the name to be displayed on the map type control.
+  var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
+  var styledMap1 = new google.maps.StyledMapType(styles,
+    {name: "My Best"});
+
+  // Create a map object, and include the MapTypeId to add
+  // to the map type control.
+  var mapOptions = {
+    zoom: 11,
+    center: new google.maps.LatLng(55.6468, 37.581),
+    mapTypeControlOptions: {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+    }
+  };
+  var map = new google.maps.Map(document.getElementById('map'),
+    mapOptions);
+
+  //Associate the styled map with the MapTypeId and set it to display.
+  map.mapTypes.set('map_style', styledMap, styledMap1);
+  map.setMapTypeId('map_style');
+}
+</script>
 <script type="text/javascript">
-
-    // var map;
-    // function initMap() {
-    //   map = new google.maps.Map(document.getElementById('landing_map'), {
-    //     center: {lat: -34.397, lng: 150.644},
-    //     zoom: 8
-    //   });
-    // }
-
-    // This example creates an interactive map which constructs a polyline based on
-    // user clicks. Note that the polyline only appears once its path property
-    // contains two LatLng coordinates.
-
 var poly;
 var map;
 
@@ -117,5 +153,5 @@ function addLatLng(event) {
 
 </script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&callback=initialize">
 </script>
