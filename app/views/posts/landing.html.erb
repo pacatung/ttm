@@ -66,7 +66,17 @@
 </div>
 <script>
 function initialize() {
-
+  var my_best = [
+    {
+      "featureType":"all",
+      "elementType":"all",
+      "stylers":[
+        {"invert_lightness":true},
+        {"saturation":10},
+        {"lightness":30},
+        {"gamma":0.5},
+        {"hue":"#435158"}]
+      }];
   // Create an array of styles.
   var styles = [
     {
@@ -94,7 +104,7 @@ function initialize() {
   // as well as the name to be displayed on the map type control.
   var styledMap = new google.maps.StyledMapType(styles,
     {name: "Styled Map"});
-  var styledMap1 = new google.maps.StyledMapType(styles,
+  var styledMap1 = new google.maps.StyledMapType(my_best,
     {name: "My Best"});
 
   // Create a map object, and include the MapTypeId to add
@@ -103,15 +113,22 @@ function initialize() {
     zoom: 11,
     center: new google.maps.LatLng(55.6468, 37.581),
     mapTypeControlOptions: {
-      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style','map_style1']
     }
   };
+
   var map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
 
-  //Associate the styled map with the MapTypeId and set it to display.
-  map.mapTypes.set('map_style', styledMap, styledMap1);
+  // Associate the styled map with the MapTypeId and set it to display.
+  map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
+  map.mapTypes.set('map_style1', styledMap1);
+  map.setMapTypeId('map_style1');
+
+  google.maps.event.addDomListener(
+          window, 'load', initialize);
+
 }
 </script>
 <script type="text/javascript">
