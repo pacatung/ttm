@@ -38,3 +38,27 @@ margin-right: 0px;
   height: 500px;
   /* height: 100%; */
 }
+.user_show_divider:before{
+  content: "";
+  height: 2px;
+  position: absolute;
+  background: #c7d9e5;
+  top: 50%;
+  left: 0;
+  right: 0;
+}
+.user_show_divider{
+  margin: 30px 0;
+  display: block;
+  position: relative;
+}
+.user_show_divider>span{
+  padding: 12px 40px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  letter-spacing: 1px;
+  position: relative;
+  color:#3a94ca;
+  font-size:26px;
+}
