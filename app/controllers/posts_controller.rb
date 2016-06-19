@@ -2,11 +2,11 @@ class PostsController < ApplicationController
   before_action :find_post, :only => [ :show, :edit, :update, :destroy]
 
   def landing
-    @posts = Post.limit(15)
+    @posts = Post.order("id DESC").limit(15)
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.order("id DESC").limit(15)
   end
 
   def new
@@ -15,6 +15,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save
@@ -38,6 +39,6 @@ private
     @post = Post.find(params[:id])
   end
   def post_params
-    params.require(:post).permit( :title, :trip_date, :origin, :destination, :distance, :description, photos_attributes: [:post_id, :photo_location, :pic])
+    params.require(:post).permit( :title, :trip_date, :origin, :destination, :distance, :description,:user_id, photos_attributes: [:post_id, :photo_location, :pic])
   end
 end

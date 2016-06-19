@@ -10,30 +10,60 @@
     </div>
   </div>
 
-  <div style="width:40%;margin:0px auto;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis iste libero non sint ex est nesciunt, consequuntur animi ea sunt amet eos sed maxime adipisci ad, accusantium velit cupiditate doloribus nisi! Est architecto ipsa esse dolorem omnis. Eius sapiente adipisci id aperiam impedit eveniet ut reprehenderit, recusandae nobis tenetur repudiandae nostrum nisi! Voluptates quod accusantium quis id, provident vitae doloribus ut repellat obcaecati sint dolorum. Consequuntur nobis sint dicta tenetur veritatis a assumenda, quod eligendi numquam ducimus eius hic la.</div>
-
-  <div style="border-width:1px;border-style:dotted none;border-color:gray;padding:5px;width:40%;margin:10px auto;">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam sapiente debitis, autem distinctio harum incidunt corporis voluptatibus voluptas neque impedit, quis sit tempore iste adipisci assumenda placeat necessitatibus fuga facere ipsam saepe sint fugiat dolor in quaerat. Pariatur molestiae tenetur odit deleniti voluptatibus tempora alias asperiores aperiam esse? Aliquam, voluptatem!
+  <div style="width:40%;margin:0px auto;">
+    <%= image_tag 'france.png'%>
+    <%= image_tag 'germany.png'%>
   </div>
 
-  <div style="width:40%;margin:0px auto;">
+  <div style="border-width:1px;border-style:dotted none;border-color:gray;padding:5px;width:40%;margin:10px auto;">
+    <p style="color:gray;font-size: 20px;display: inline-block;margin:10px 0 10px 10px">Cumulative Miles</p>
+    <p class="pull-right" style="margin:10px 10px 10px 0;font-size: 20px;display: inline-block;">453235</p>
+    <br>
+    <p style="color:gray;font-size: 20px;display: inline-block;margin-left: 10px;">Rank</p>
+    <p class="pull-right" style="margin-right:10px;font-size: 20px;display: inline-block;">1/453235</p>
+  </div>
+
+  <div style="width:40%;margin:0px auto;text-align: center;">
     <div style="width:30%;display: inline-block;">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, voluptates.
+      <p style="color:gray;font-size: 20px;">Albums</p>
+      <p style="font-size: 20px;">16</p>
     </div>
     <div style="width:33%;display: inline-block;border-width:1px;border-style:none dotted;border-color:gray;padding-left: 5px;">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, voluptates.
+      <p style="color:gray;font-size: 20px;">Followers</p>
+      <p style="font-size: 20px;">168168168</p>
     </div>
     <div style="width:30%;display: inline-block;">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, voluptates.
+      <p style="color:gray;font-size: 20px;">Following</p>
+      <p style="font-size: 20px;">999</p>
     </div>
   </div>
 
   <div>
     <div class="text-center" style="margin-top: 30px;">
-      <p style="color: #3a94ca;font-size:20px;">About</p>
+      <p style="color: #3a94ca;font-size:26px;">About</p>
     </div>
     <div style="width:40%;margin:0px auto;">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo reiciendis perspiciatis asperiores laudantium, hic ullam porro enim nobis animi deserunt iure quis tempore. Nulla maxime nemo voluptates dolorum neque ab, nihil, placeat error quia animi recusandae quas illum libero totam excepturi, necessitatibus laborum incidunt laboriosam esse amet tenetur accusantium aliquid.
+    </div>
+  </div>
+</div>
+
+  <div class="text-center" style="margin-top: 30px;">
+    <p style="color: #3a94ca;font-size:26px;">Album</p>
+  </div>
+  <div style="background-color:#f2efef; padding-top:40px;">
+    <div class="container">
+      <% @posts.each do |post| %>
+        <div id="post_<%= post.id %>" style="display: inline-block;">
+          <% if post.photos.first %>
+          <%= link_to image_tag(post.photos.first.pic.url(:medium), style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
+          <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
+          <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
+        </div>
+          <% else %>
+            N/A
+          <% end %>
+      <% end %>
     </div>
   </div>
 
@@ -42,7 +72,6 @@
     <p style="color: #3a94ca;font-size:20px;">My Travel Footprint</p>
     <br>
   </div>
-</div>
 
 <!-- google map -->
 <div id="map"></div>
