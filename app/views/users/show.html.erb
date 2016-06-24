@@ -1,4 +1,7 @@
 <%= render 'layouts/nav' %>
+<!-- google map -->
+<div id="map"></div>
+
 <div class="container">
   <div class="row1" style="width: 100px;margin:0 auto;">
     <%= image_tag current_user.image, :style=>"height:100px;border-radius:4em;margin-top:30px"%>
@@ -11,8 +14,11 @@
   </div>
 
   <div style="width:40%;margin:0px auto;">
-    <%= image_tag 'france.png'%>
-    <%= image_tag 'germany.png'%>
+    <%= image_tag 'france.png', :style=>"width:10%;"%>
+    <%= image_tag 'germany.png', :style=>"width:10%;"%>
+    <%= image_tag 'united kingdom.png', :style=>"width:10%;"%>
+    <%= image_tag 'england.png', :style=>"width:10%;"%>
+    <%= image_tag 'united states.png', :style=>"width:10%;"%>
   </div>
 
   <div style="border-width:1px;border-style:dotted none;border-color:gray;padding:5px;width:40%;margin:10px auto;">
@@ -54,7 +60,7 @@
   <div style="background-color:#f2efef; padding-top:40px;">
     <div class="container">
       <% @posts.each do |post| %>
-        <div id="post_<%= post.id %>" style="display: inline-block;">
+        <div id="u_s_post_<%= post.id %>" style="display: inline-block;">
           <% if post.photos.first %>
           <%= link_to image_tag(post.photos.first.pic.url(:medium), style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
           <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
@@ -72,9 +78,6 @@
     <p style="color: #3a94ca;font-size:20px;">My Travel Footprint</p>
     <br>
   </div>
-
-<!-- google map -->
-<div id="map"></div>
 
 <script>
 var poly;

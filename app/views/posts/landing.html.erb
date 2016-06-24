@@ -5,18 +5,18 @@
   <div class="user_bar">
     <div class="btn-group btn-group-lg">
       <!-- Split button -->
-      <button type="button" class="btn btn-danger">Recommand</button>
+      <button type="button" class="btn btn-danger" style="background-color: white;color: #3a94ca;">Recommand</button>
       <!-- Split button -->
-      <button type="button" class="btn btn-warning">New</button>
+      <button type="button" class="btn btn-warning" style="background-color: white;color: #3a94ca;">New</button>
       <!-- Split button -->
-      <button type="button" class="btn btn-info">Following</button>
+      <button type="button" class="btn btn-info" style="background-color: white;color: #3a94ca;">Following</button>
     </div>
   </div>
   <br><br>
 
   <div class="container">
     <% @posts.each do |post| %>
-      <div id="post_<%= post.id %>" style="display: inline-block;">
+      <div id="p_l_post_<%= post.id %>" style="display: inline-block;">
         <% if post.photos.first %>
         <%= link_to image_tag(post.photos.first.pic.url(:medium), style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
         <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>

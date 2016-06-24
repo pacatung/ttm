@@ -35,3 +35,106 @@
     <%= f.submit '新增旅行主題', class:"btn btn-primary"  %>
   <% end %>
 </div>
+
+<!-- google map -->
+<div id="map"></div>
+<script>
+var poly;
+var map;
+function initialize() {
+  var my_best = [
+    {
+      "featureType":"all",
+      "elementType":"all",
+      "stylers":[
+        {"invert_lightness":true},
+        {"saturation":10},
+        {"lightness":30},
+        {"gamma":0.5},
+        {"hue":"#435158"}]
+      }];
+  // Create an array of styles.
+  var styles = [
+    {
+      stylers: [
+        { hue: "#00ffe6" },
+        { saturation: -20 }
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { lightness: 100 },
+        { visibility: "simplified" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+
+  // Create a new StyledMapType object, passing it the array of styles,
+  // as well as the name to be displayed on the map type control.
+  var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
+  var styledMap1 = new google.maps.StyledMapType(my_best,
+    {name: "My Best"});
+
+  // Create a map object, and include the MapTypeId to add
+  // to the map type control.
+  var mapOptions = {
+    zoom: 11,
+    center: new google.maps.LatLng(-34, 151),
+    // center: {lat: -34, lng: 151},
+    scrollwheel: false,
+    mapTypeControlOptions: {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style','map_style1']
+    }
+  }; //mapOptions
+
+  map = new google.maps.Map(document.getElementById('map'),
+    mapOptions);
+
+  poly = new google.maps.Polyline({
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 3
+  });
+  poly.setMap(map);
+
+  // Add a listener for the click event
+  map.addListener('click', addLatLng);
+
+  // Associate the styled map with the MapTypeId and set it to display.
+  map.mapTypes.set('map_style', styledMap);
+  map.setMapTypeId('map_style');
+  map.mapTypes.set('map_style1', styledMap1);
+  map.setMapTypeId('map_style1');
+
+  // google.maps.event.addDomListener(
+  //         window, 'load', initialize);
+}
+
+// Handles click events on a map, and adds a new point to the Polyline.
+function addLatLng(event) {
+  var path = poly.getPath();
+
+  // Because path is an MVCArray, we can simply append a new coordinate
+  // and it will automatically appear.
+  path.push(event.latLng);
+
+  // Add a new marker at the new plotted point on the polyline.
+  var marker = new google.maps.Marker({
+    position: event.latLng,
+    title: '#' + path.getLength(),
+    map: map
+  });
+}
+</script>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&callback=initialize">
+</script>

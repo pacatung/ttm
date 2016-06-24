@@ -18,17 +18,27 @@
   margin: auto;
   width: 320px;
 }
-[id^=post_]{
+[id^=p_l_post_]{
   border: 1px solid white;
   border-radius: 10px;
   margin:0 15px 25px 0;
   background-color:white;
 }
-[id^=post_]:nth-child(5n-0){
+[id^=p_l_post_]:nth-child(5n-0){
 margin-right: 0px;
 }
-[id^=post_]:hover{
-  border-bottom: 5px solid blue;
+[id^=u_s_post_]{
+  border: 1px solid white;
+  border-radius: 10px;
+  margin:0 15px 25px 0;
+  background-color:white;
+}
+[id^=u_s_post_]:nth-child(5n-0){
+margin-right: 0px;
+}
+[id^=p_l_post_]:hover,[id^=u_s_post_]:hover{
+  /* border-bottom: 5px outset blue; */
+  color:orange;
 }
 #landing_map{
   height: 500px;

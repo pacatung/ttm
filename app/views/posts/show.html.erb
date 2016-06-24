@@ -60,8 +60,19 @@
   <% end %>
   </div>
   </div>
-
+<br>
   <div class="container">
+    <%=image_tag current_user.image, :style=>"border-radius:3em; margin-right:20px"%>
+    <div style="display:inline-block;vertical-align: middle;">
+      <div style="font-size: 20px;">
+        <div>
+          <%= @post.title %>
+        </div>
+        <div style="color:gray;">
+          <%= current_user.name %>
+        </div>
+      </div>
+    </div>
   <br>
   出發時間：<%= @post.trip_date %>
   出發地：<%= @post.origin %>
