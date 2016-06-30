@@ -60,8 +60,9 @@
   <% end %>
   </div>
   </div>
-<br>
-  <div class="container">
+<br><br>
+<div class="container">
+  <div class="col-md-6">
     <%=image_tag current_user.image, :style=>"border-radius:3em; margin-right:20px"%>
     <div style="display:inline-block;vertical-align: middle;">
       <div style="font-size: 20px;">
@@ -73,13 +74,31 @@
         </div>
       </div>
     </div>
-  <br>
-  出發時間：<%= @post.trip_date %>
-  出發地：<%= @post.origin %>
-  目的地：<%= @post.destination %>
-  <br>
-  里程數：<%= @post.distance %>
-  <br>
-  旅行紀錄：<%= simple_format(@post.description) %>
+    <hr>
+    <p style="font-size: 18px;color: gray;">From &nbsp;
+      <i style="color:#3a94ca;"><%= @post.origin %></i>
+      &nbsp;&nbsp;To&nbsp;
+      <i style="color:#3a94ca;"><%= @post.destination %></i>,
+       &nbsp;Total Miles <i style="color:#3a94ca;">&nbsp;<%= @post.distance %></i>
+      <br>
+      Dates<i style="color:#3a94ca;">&nbsp;<%= @post.trip_date %></i>
+    </p>
+    <p style="font-size: 19px;"> <%= simple_format(@post.description) %></p>
+  </div>
 
+  <!-- <div class="col-md-6"> -->
+    <div class="fb_comment"></div>
+      <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.6&appId=1616713158647872";
+          fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+        </script>
+  <!-- </div> -->
+  <div class="fb-comments" data-href="http://localhost:3000/posts/" data-numposts="10" style="margin-top:32px;">
+
+  </div>
 </div>
