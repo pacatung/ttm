@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519155118) do
+ActiveRecord::Schema.define(version: 20160709144020) do
+
+  create_table "countries", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "flag_file_name"
+    t.string   "flag_content_type"
+    t.integer  "flag_file_size"
+    t.datetime "flag_updated_at"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "photos", force: :cascade do |t|
     t.string   "photo_location"
@@ -37,6 +53,26 @@ ActiveRecord::Schema.define(version: 20160519155118) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "user_countryships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "country_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_countryships", ["country_id"], name: "index_user_countryships_on_country_id"
+  add_index "user_countryships", ["user_id"], name: "index_user_countryships_on_user_id"
+
+  create_table "user_locationships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "location_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "user_locationships", ["location_id"], name: "index_user_locationships_on_location_id"
+  add_index "user_locationships", ["user_id"], name: "index_user_locationships_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

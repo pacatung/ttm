@@ -24,4 +24,10 @@ class User < ActiveRecord::Base
 
    has_many :posts
    has_many :photos
+
+   has_many :user_countryships
+   has_many :countries, :through=>:user_countryships
+
+   has_many :user_locationships
+   has_many :locations, :through=>:user_locationships
 end

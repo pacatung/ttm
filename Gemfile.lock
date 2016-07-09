@@ -93,6 +93,8 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    nested_form_fields (0.7)
+      rails (>= 3.2.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     oauth2 (1.0.0)
@@ -197,6 +199,7 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.0)
   jquery-rails
+  nested_form_fields
   omniauth-facebook
   paperclip
   rails (= 4.2.1)
