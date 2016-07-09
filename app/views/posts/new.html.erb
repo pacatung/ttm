@@ -1,14 +1,10 @@
 <%= render 'layouts/nav' %>
 <div class="container">
-  <h1>新增旅行主題</h1>
+<div class="col-md-6">
+  <h1>新增旅行</h1>
   <%= form_for @post, url: posts_path,:html => {:multipart => true}  do |f| %>
-
-    <div class="form-group">
-        <%= f.label :photos, "Upload File" %>
-        <%= file_field_tag "pics[]", type: :file ,:multiple=> true %>
-    </div>
     <div class="field">
-      <%= f.label :title, '主題' %><br/>
+      <%= f.label :title, '相簿名稱' %><br/>
       <%= f.text_field :title, autofocus: true, :class =>"form-control" %>
     </div>
     <div class="field">
@@ -17,11 +13,11 @@
     </div>
     <div class="field">
       <%= f.label :origin, '出發地' %><br/>
-      <%= f.text_field :origin, autocomplete: "off", :class =>"form-control" %>
+      <%= f.text_field :origin, autocomplete: "off", :class =>"form-control", :id=>"post_new_start", :placeholder=>"旅行出發地" %>
     </div>
     <div class="field">
       <%= f.label :destination, '目的地' %><br/>
-      <%= f.text_field :destination, autocomplete: "off", :class =>"form-control" %>
+      <%= f.text_field :destination, autocomplete: "off", :class =>"form-control", :id=>"post_new_end", :placeholder=>"旅行目的地" %>
     </div>
     <div class="field">
       <%= f.label :distance, '' %><br >
@@ -31,17 +27,25 @@
       <%= f.label :description, '' %><br >
       <%= f.text_area :description, :class =>"form-control" %>
     </div>
-
+    <br>
+    <div class="form-group">
+        <%= f.label :photos, "Upload File" %>
+        <%= file_field_tag "pics[]", type: :file ,:multiple=> true %>
+    </div>
     <%= f.submit '新增旅行主題', class:"btn btn-primary"  %>
   <% end %>
 </div>
 
+
 <!-- google map -->
-<div id="map"></div>
+<div id="post_new_map" style="height:800px;"></div>
+</div>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&libraries=places&callback=initMap"
+    async defer>
+</script>
+
 <script>
-var poly;
-var map;
-function initialize() {
   var my_best = [
     {
       "featureType":"all",
@@ -76,65 +80,119 @@ function initialize() {
     }
   ];
 
-  // Create a new StyledMapType object, passing it the array of styles,
-  // as well as the name to be displayed on the map type control.
+function initMap() {
   var styledMap = new google.maps.StyledMapType(styles,
     {name: "Styled Map"});
   var styledMap1 = new google.maps.StyledMapType(my_best,
     {name: "My Best"});
-
-  // Create a map object, and include the MapTypeId to add
-  // to the map type control.
   var mapOptions = {
-    zoom: 11,
-    center: new google.maps.LatLng(-34, 151),
-    // center: {lat: -34, lng: 151},
+    zoom: 7 ,
+    // center: new google.maps.LatLng(25.03, 121.30),
+    center: {lat: 25.03, lng: 121.30},
     scrollwheel: false,
     mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style','map_style1']
     }
   }; //mapOptions
-
-  map = new google.maps.Map(document.getElementById('map'),
-    mapOptions);
-
-  poly = new google.maps.Polyline({
-    strokeColor: '#000000',
-    strokeOpacity: 1.0,
-    strokeWeight: 3
-  });
-  poly.setMap(map);
-
-  // Add a listener for the click event
-  map.addListener('click', addLatLng);
-
-  // Associate the styled map with the MapTypeId and set it to display.
+  var map = new google.maps.Map(document.getElementById('post_new_map'),mapOptions);
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
   map.mapTypes.set('map_style1', styledMap1);
   map.setMapTypeId('map_style1');
 
-  // google.maps.event.addDomListener(
-  //         window, 'load', initialize);
+  //autocomplete
+  // var input = /** @type {!HTMLInputElement} */(
+  //     document.getElementById('post_new_start'));
+  // var input1 = /** @type {!HTMLInputElement} */(
+  //     document.getElementById('post_new_end'));
+  // var autocomplete = new google.maps.places.Autocomplete(input);
+  // autocomplete.bindTo('bounds', map);
+  // var autocomplete1 = new google.maps.places.Autocomplete(input1);
+  // autocomplete.bindTo('bounds', map);
+
+  // var infowindow = new google.maps.InfoWindow();
+  // var marker = new google.maps.Marker({
+  //   map: map,
+  //   anchorPoint: new google.maps.Point(0, -29)
+  // });
+
+  // autocomplete.addListener('place_changed', function() {
+  //   infowindow.close();
+  //   marker.setVisible(false);
+  //   var place = autocomplete.getPlace();
+  //   if (!place.geometry) {
+  //     window.alert("Autocomplete's returned place contains no geometry");
+  //     return;
+  //   }
+
+  //   // If the place has a geometry, then present it on a map.
+  //   if (place.geometry.viewport) {
+  //     map.fitBounds(place.geometry.viewport);
+  //   } else {
+  //     map.setCenter(place.geometry.location);
+  //     map.setZoom(17);  // Why 17? Because it looks good.
+  //   }
+  //   marker.setIcon(/** @type {google.maps.Icon} */({
+  //     url: place.icon,
+  //     size: new google.maps.Size(71, 71),
+  //     origin: new google.maps.Point(0, 0),
+  //     anchor: new google.maps.Point(17, 34),
+  //     scaledSize: new google.maps.Size(35, 35)
+  //   }));
+  //   marker.setPosition(place.geometry.location);
+  //   marker.setVisible(true);
+
+  //   var address = '';
+  //   if (place.address_components) {
+  //     address = [
+  //       (place.address_components[0] && place.address_components[0].short_name || ''),
+  //       (place.address_components[1] && place.address_components[1].short_name || ''),
+  //       (place.address_components[2] && place.address_components[2].short_name || '')
+  //     ].join(' ');
+  //   }
+
+  //   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+  //   infowindow.open(map, marker);
+  // });
+
+  // // Sets a listener on a radio button to change the filter type on Places
+  // // Autocomplete.
+  // function setupClickListener(id, types) {
+  //   var radioButton = document.getElementById(id);
+  //   radioButton.addEventListener('click', function() {
+  //     autocomplete.setTypes(types);
+  //   });
+  // }
+
+  // setupClickListener('changetype-all', []);
+  // setupClickListener('changetype-address', ['address']);
+  // setupClickListener('changetype-establishment', ['establishment']);
+  // setupClickListener('changetype-geocode', ['geocode']);
+
+  //direction
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+
+  directionsDisplay.setMap(map);
+
+  var onChangeHandler = function() {
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+  };
+  document.getElementById('post_new_start').addEventListener('change', onChangeHandler);
+  document.getElementById('post_new_end').addEventListener('change', onChangeHandler);
 }
 
-// Handles click events on a map, and adds a new point to the Polyline.
-function addLatLng(event) {
-  var path = poly.getPath();
-
-  // Because path is an MVCArray, we can simply append a new coordinate
-  // and it will automatically appear.
-  path.push(event.latLng);
-
-  // Add a new marker at the new plotted point on the polyline.
-  var marker = new google.maps.Marker({
-    position: event.latLng,
-    title: '#' + path.getLength(),
-    map: map
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('post_new_start').value,
+    destination: document.getElementById('post_new_end').value,
+    travelMode: google.maps.TravelMode.DRIVING
+  }, function(response, status) {
+    if (status === google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
   });
 }
-</script>
-
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&callback=initialize">
 </script>
