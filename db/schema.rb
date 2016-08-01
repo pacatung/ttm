@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709144020) do
+ActiveRecord::Schema.define(version: 20160801150703) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name"
@@ -41,6 +41,26 @@ ActiveRecord::Schema.define(version: 20160709144020) do
   end
 
   add_index "photos", ["post_id"], name: "index_photos_on_post_id"
+
+  create_table "post_countryships", force: :cascade do |t|
+    t.integer  "post_id"
+    t.integer  "country_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "post_countryships", ["country_id"], name: "index_post_countryships_on_country_id"
+  add_index "post_countryships", ["post_id"], name: "index_post_countryships_on_post_id"
+
+  create_table "post_locationships", force: :cascade do |t|
+    t.integer  "post_id"
+    t.integer  "location_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "post_locationships", ["location_id"], name: "index_post_locationships_on_location_id"
+  add_index "post_locationships", ["post_id"], name: "index_post_locationships_on_post_id"
 
   create_table "posts", force: :cascade do |t|
     t.string   "title"
