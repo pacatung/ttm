@@ -1,7 +1,7 @@
 <%= render 'layouts/nav' %>
 <div class="container">
 <div class="col-md-6">
-  <h1>新增旅行</h1>
+  <h1>新增行程</h1>
   <%= form_for @post, url: posts_path,:html => {:multipart => true}  do |f| %>
     <div class="field">
       <%= f.label :title, '相簿名稱' %><br/>

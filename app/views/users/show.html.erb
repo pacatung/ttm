@@ -4,7 +4,7 @@
 
 <div class="container">
   <div class="row1" style="width: 100px;margin:0 auto;">
-    <%= image_tag current_user.image, :style=>"height:100px;border-radius:4em;margin-top:30px"%>
+    <%= image_tag current_user.image+"?height=200", :style=>"height:100px;border-radius:4em;margin-top:30px"%>
   </div>
 
   <div style="text-align: center;">
@@ -19,6 +19,17 @@
     <%= image_tag 'united kingdom.png', :style=>"width:10%;"%>
     <%= image_tag 'england.png', :style=>"width:10%;"%>
     <%= image_tag 'united states.png', :style=>"width:10%;"%>
+    <br>
+    <%= image_tag 'flag_Australia.png'%>
+    <%= image_tag 'flag_Australia.png'%>
+    <%= image_tag 'flag_Australia.png'%>
+
+    <%= image_tag 'flag_Austria.png'%>
+    <%= image_tag 'flag_Austria.png'%>
+    <%= image_tag 'flag_Austria.png'%>
+
+    <%= image_tag 'flag_Azerbaijan.png'%>
+
   </div>
 
   <div style="border-width:1px;border-style:dotted none;border-color:gray;padding:5px;width:40%;margin:10px auto;">
@@ -62,7 +73,9 @@
       <% @posts.each do |post| %>
         <div id="u_s_post_<%= post.id %>" style="display: inline-block;">
           <% if post.photos.first %>
-          <%= link_to image_tag(post.photos.first.pic.url(:medium), style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
+          <div class="u_s_post_photo">
+          <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"u_s_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
+          </div>
           <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
           <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
         </div>

@@ -14,6 +14,9 @@
  *= require_self
  */
 
+li.nav_n_p>a{
+  padding:5px 5px 0 0 !important;
+}
 .user_bar{
   margin: auto;
   width: 320px;
@@ -71,4 +74,8 @@ margin-right: 0px;
   position: relative;
   color:#3a94ca;
   font-size:26px;
+}
+.p_l_post_photo_area, .u_s_post_photo_area{
+  height:150px;
+  overflow:none;
 }
