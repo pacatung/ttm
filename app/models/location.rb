@@ -1,4 +1,7 @@
 class Location < ActiveRecord::Base
+
+  # validates_presence_of :location
+
   has_many :user_locationships
   has_many :users, :through=>:user_locationships
 

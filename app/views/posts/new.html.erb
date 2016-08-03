@@ -11,14 +11,61 @@
       <%= f.label :trip_date, '' %><br/>
       <%= f.text_field :trip_date, :class =>"form-control" %>
     </div>
+
     <div class="field">
       <%= f.label :origin, '出發地' %><br/>
-      <%= f.text_field :origin, autocomplete: "off", :class =>"form-control", :id=>"post_new_start", :placeholder=>"旅行出發地" %>
+      <div class="col-md-6">
+      <%= f.text_field :origin, autocomplete: "on", :class =>"form-control", :id=>"origin-input", :placeholder=>"旅行出發地" %>
+      </div>
     </div>
+
+<% if false %>
+    <div class="form-group">
+      <%= f.label :countries, "國家", :class => "col-sm-3" %>
+      <div class="col-sm-9">
+        <%= f.nested_fields_for :countries do |ff| %>
+        <div class="col-sm-10 col-xs-10">
+          <%= ff.text_field :country, :class => "form-control input-sm"  %>
+        </div>
+        <div class="col-sm-1 col-xs-2">
+          <%= ff.remove_nested_fields_link 'x', :class => 'btn-sm btn-danger', role: 'button' %>
+        </div>
+        <% end %>
+        <p></p>
+        <div class="clearfix"></div>
+        <div class="col-sm-12">
+          <%= f.add_nested_fields_link :countries, '新增旅行國家', :class => "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+<% end %>
+    <div class="form-group">
+      <div class="col-sm-12 col-md-6">
+        <%= f.add_nested_fields_link :locations, '＋ 新增旅遊地點', :class => "btn btn-primary" %>
+      </div>
+      <div class="clearfix"></div>
+      <p></p>
+      <!-- <div class="col-sm-9"> -->
+      <%= f.nested_fields_for :locations do |ff| %>
+      <div class="col-sm-10 col-xs-10 col-md-6">
+        <%= ff.text_field :location, :class => "form-control input-sm", :placeholder=>"旅遊地點"  %>
+      </div>
+      <div class="col-sm-1 col-xs-2 col-md-6">
+        <%= ff.remove_nested_fields_link 'X', :class => 'btn-sm btn-danger', role: 'button' %>
+      </div>
+      <div class="clearfix"></div>
+      <p></p>
+      <% end %>
+      <p></p>
+      <!-- </div> -->
+    </div>
+
+    <div class="clearfix"></div>
     <div class="field">
-      <%= f.label :destination, '目的地' %><br/>
-      <%= f.text_field :destination, autocomplete: "off", :class =>"form-control", :id=>"post_new_end", :placeholder=>"旅行目的地" %>
+      <%= f.label :locations, '目的地' %><br/>
+      <%= f.text_field :destination, autocomplete: "off", :class =>"form-control", :id=>"destination-input", :placeholder=>"旅行目的地" %>
     </div>
+
     <div class="field">
       <%= f.label :distance, '' %><br >
       <%= f.text_field :distance, :class =>"form-control" %>
@@ -41,11 +88,12 @@
 <div id="post_new_map" style="height:800px;"></div>
 </div>
 <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&libraries=places&callback=initMap"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&libraries=places&callback=postNewMap"
     async defer>
 </script>
 
 <script>
+//style map css
   var my_best = [
     {
       "featureType":"all",
@@ -80,7 +128,7 @@
     }
   ];
 
-function initMap() {
+function postNewMap() {
   var styledMap = new google.maps.StyledMapType(styles,
     {name: "Styled Map"});
   var styledMap1 = new google.maps.StyledMapType(my_best,
@@ -99,100 +147,99 @@ function initMap() {
   map.setMapTypeId('map_style');
   map.mapTypes.set('map_style1', styledMap1);
   map.setMapTypeId('map_style1');
+  //========
+  var origin_place_id = null;
+  var destination_place_id = null;
+  var travel_mode = google.maps.TravelMode.WALKING;
 
-  //autocomplete
-  // var input = /** @type {!HTMLInputElement} */(
-  //     document.getElementById('post_new_start'));
-  // var input1 = /** @type {!HTMLInputElement} */(
-  //     document.getElementById('post_new_end'));
-  // var autocomplete = new google.maps.places.Autocomplete(input);
-  // autocomplete.bindTo('bounds', map);
-  // var autocomplete1 = new google.maps.places.Autocomplete(input1);
-  // autocomplete.bindTo('bounds', map);
-
-  // var infowindow = new google.maps.InfoWindow();
-  // var marker = new google.maps.Marker({
-  //   map: map,
-  //   anchorPoint: new google.maps.Point(0, -29)
-  // });
-
-  // autocomplete.addListener('place_changed', function() {
-  //   infowindow.close();
-  //   marker.setVisible(false);
-  //   var place = autocomplete.getPlace();
-  //   if (!place.geometry) {
-  //     window.alert("Autocomplete's returned place contains no geometry");
-  //     return;
-  //   }
-
-  //   // If the place has a geometry, then present it on a map.
-  //   if (place.geometry.viewport) {
-  //     map.fitBounds(place.geometry.viewport);
-  //   } else {
-  //     map.setCenter(place.geometry.location);
-  //     map.setZoom(17);  // Why 17? Because it looks good.
-  //   }
-  //   marker.setIcon(/** @type {google.maps.Icon} */({
-  //     url: place.icon,
-  //     size: new google.maps.Size(71, 71),
-  //     origin: new google.maps.Point(0, 0),
-  //     anchor: new google.maps.Point(17, 34),
-  //     scaledSize: new google.maps.Size(35, 35)
-  //   }));
-  //   marker.setPosition(place.geometry.location);
-  //   marker.setVisible(true);
-
-  //   var address = '';
-  //   if (place.address_components) {
-  //     address = [
-  //       (place.address_components[0] && place.address_components[0].short_name || ''),
-  //       (place.address_components[1] && place.address_components[1].short_name || ''),
-  //       (place.address_components[2] && place.address_components[2].short_name || '')
-  //     ].join(' ');
-  //   }
-
-  //   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-  //   infowindow.open(map, marker);
-  // });
-
-  // // Sets a listener on a radio button to change the filter type on Places
-  // // Autocomplete.
-  // function setupClickListener(id, types) {
-  //   var radioButton = document.getElementById(id);
-  //   radioButton.addEventListener('click', function() {
-  //     autocomplete.setTypes(types);
-  //   });
-  // }
-
-  // setupClickListener('changetype-all', []);
-  // setupClickListener('changetype-address', ['address']);
-  // setupClickListener('changetype-establishment', ['establishment']);
-  // setupClickListener('changetype-geocode', ['geocode']);
-
-  //direction
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
-
   directionsDisplay.setMap(map);
 
-  var onChangeHandler = function() {
-    calculateAndDisplayRoute(directionsService, directionsDisplay);
-  };
-  document.getElementById('post_new_start').addEventListener('change', onChangeHandler);
-  document.getElementById('post_new_end').addEventListener('change', onChangeHandler);
-}
+  var origin_input = document.getElementById('origin-input');
+  var post_locations_attributes_0_location = document.getElementById('post_locations_attributes_0_location');
+  var destination_input = document.getElementById('destination-input');
+  // var modes = document.getElementById('mode-selector');
 
-function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-  directionsService.route({
-    origin: document.getElementById('post_new_start').value,
-    destination: document.getElementById('post_new_end').value,
-    travelMode: google.maps.TravelMode.DRIVING
-  }, function(response, status) {
-    if (status === google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(modes);
+
+  var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
+  origin_autocomplete.bindTo('bounds', map);
+  var location_0_autocomplete = new google.maps.places.Autocomplete(post_locations_attributes_0_location);
+  location_0_autocomplete.bindTo('bounds', map);
+  var destination_autocomplete =
+      new google.maps.places.Autocomplete(destination_input);
+  destination_autocomplete.bindTo('bounds', map);
+
+  // Sets a listener on a radio button to change the filter type on Places
+  // Autocomplete.
+  // function setupClickListener(id, mode) {
+  //   var radioButton = document.getElementById(id);
+  //   radioButton.addEventListener('click', function() {
+  //     travel_mode = mode;
+  //   });
+  // }
+  // setupClickListener('changemode-walking', google.maps.TravelMode.WALKING);
+  // setupClickListener('changemode-transit', google.maps.TravelMode.TRANSIT);
+  // setupClickListener('changemode-driving', google.maps.TravelMode.DRIVING);
+
+  function expandViewportToFitPlace(map, place) {
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
     } else {
-      window.alert('Directions request failed due to ' + status);
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
     }
+  }
+
+  origin_autocomplete.addListener('place_changed', function() {
+    var place = origin_autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+    expandViewportToFitPlace(map, place);
+
+    // If the place has a geometry, store its place ID and route if we have
+    // the other place ID
+    origin_place_id = place.place_id;
+    route(origin_place_id, destination_place_id, travel_mode,
+          directionsService, directionsDisplay);
   });
+
+  destination_autocomplete.addListener('place_changed', function() {
+    var place = destination_autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+    expandViewportToFitPlace(map, place);
+
+    // If the place has a geometry, store its place ID and route if we have
+    // the other place ID
+    destination_place_id = place.place_id;
+    route(origin_place_id, destination_place_id, travel_mode,
+          directionsService, directionsDisplay);
+  });
+
+  function route(origin_place_id, destination_place_id, travel_mode,
+                 directionsService, directionsDisplay) {
+    if (!origin_place_id || !destination_place_id) {
+      return;
+    }
+    directionsService.route({
+      origin: {'placeId': origin_place_id},
+      destination: {'placeId': destination_place_id},
+      travelMode: travel_mode
+    }, function(response, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
 }
 </script>
