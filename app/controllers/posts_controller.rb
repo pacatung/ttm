@@ -39,7 +39,7 @@ private
     @post = Post.find(params[:id])
   end
   def post_params
-    params.require(:post).permit( :title, :trip_date, :origin, :destination, :distance, :description,:user_id,
+    params.require(:post).permit( :title, :start_date,:return_date, :origin, :destination, :distance, :description,:user_id,
      photos_attributes: [:post_id, :photo_location, :pic],countries_attributes:[:country,:_destroy,:id],
       locations_attributes:[:locationcountry,:_destroy,:id])
   end

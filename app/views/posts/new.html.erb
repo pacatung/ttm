@@ -7,10 +7,15 @@
       <%= f.label :title, '相簿名稱' %><br/>
       <%= f.text_field :title, autofocus: true, :class =>"form-control" %>
     </div>
-    <div class="field">
-      <%= f.label :trip_date, '' %><br/>
-      <%= f.text_field :trip_date, :class =>"form-control" %>
+    <p></p>
+
+    <%= f.label :trip_date %>
+    <div class="input-daterange input-group" id="datepicker">
+      <%= f.text_field :start_date, class: :"form-control", placeholder: :"出發日期" %>
+      <span class="input-group-addon">to</span>
+      <%= f.text_field :return_date, class: :"form-control", placeholder: :"回程日期" %>
     </div>
+
 
     <div class="field">
       <%= f.label :origin, '出發地' %><br/>
@@ -93,6 +98,11 @@
 </script>
 
 <script>
+//datepicker
+  $('.input-daterange').datepicker({
+    format: "yyyy/mm/dd"
+  });
+
 //style map css
   var my_best = [
     {
