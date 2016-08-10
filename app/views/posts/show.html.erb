@@ -81,9 +81,9 @@
       <i style="color:#3a94ca;"><%= @post.destination %></i>,
        &nbsp;Total Miles <i style="color:#3a94ca;">&nbsp;<%= @post.distance %></i>
       <br>
-      Dates<i style="color:#3a94ca;">&nbsp;<%= @post.start_date %></i>--<i style="color:#3a94ca;">&nbsp;<%= @post.return_date %>
+      Date<i style="color:#3a94ca;">&nbsp;<%= @post.start_date %></i>&nbsp;--<i style="color:#3a94ca;">&nbsp;<%= @post.return_date %></i>
     </p>
-    <p style="font-size: 19px;"> <%= simple_format(@post.description) %></p>
+    <%= simple_format @post.description, class: :"p_s_description" %>
   </div>
 
   <!-- <div class="col-md-6"> -->

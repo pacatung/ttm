@@ -96,19 +96,973 @@
 var poly;
 var map;
 function initialize() {
-  var my_best = [
-    {
-      "featureType":"all",
-      "elementType":"all",
-      "stylers":[
-        {"invert_lightness":true},
-        {"saturation":10},
-        {"lightness":30},
-        {"gamma":0.5},
-        {"hue":"#435158"}]
-      }];
   // Create an array of styles.
-  var styles = [
+  var style1=[
+    {
+        "featureType": "all",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "weight": "1.05"
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            },
+            {
+                "weight": "1.02"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.province",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "hue": "#ff0000"
+            },
+            {
+                "saturation": "-100"
+            },
+            {
+                "lightness": "27"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "-100"
+            },
+            {
+                "lightness": "68"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "weight": "0.01"
+            },
+            {
+                "saturation": "100"
+            },
+            {
+                "lightness": "-21"
+            },
+            {
+                "color": "#fccc9e"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "saturation": "-100"
+            },
+            {
+                "lightness": "57"
+            },
+            {
+                "gamma": "2.51"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "saturation": "-100"
+            },
+            {
+                "lightness": "-32"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 45
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#f7f6f5"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#facaa3"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "saturation": "-100"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffc59b"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#ffb363"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "saturation": "-100"
+            },
+            {
+                "lightness": "33"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffbe71"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#ffdbb6"
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "saturation": "-100"
+            },
+            {
+                "lightness": "40"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#fbe9d4"
+            },
+            {
+                "saturation": "-8"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#ffe7d5"
+            },
+            {
+                "weight": "0.84"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "saturation": "-100"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#ed842c"
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    }
+  ]
+  var style2=[
+      {
+          "featureType": "all",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "color": "#63b5e5"
+              }
+          ]
+      },
+      {
+          "featureType": "all",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "gamma": 0.01
+              },
+              {
+                  "lightness": 20
+              },
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "all",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "saturation": -31
+              },
+              {
+                  "lightness": -33
+              },
+              {
+                  "weight": 2
+              },
+              {
+                  "gamma": 0.8
+              },
+              {
+                  "color": "#0c4c73"
+              }
+          ]
+      },
+      {
+          "featureType": "all",
+          "elementType": "labels.icon",
+          "stylers": [
+              {
+                  "visibility": "off"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "color": "#0c4c73"
+              },
+              {
+                  "visibility": "on"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.country",
+          "elementType": "geometry.stroke",
+          "stylers": [
+              {
+                  "color": "#092e41"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.country",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#e2faff"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.country",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#092e41"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.province",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "color": "#07293d"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.province",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#c8eaff"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.province",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#08344f"
+              }
+          ]
+      },
+      {
+          "featureType": "landscape",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "lightness": 30
+              },
+              {
+                  "saturation": 30
+              }
+          ]
+      },
+      {
+          "featureType": "landscape",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "color": "#0c4c73"
+              }
+          ]
+      },
+      {
+          "featureType": "poi",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "saturation": 20
+              },
+              {
+                  "visibility": "off"
+              }
+          ]
+      },
+      {
+          "featureType": "poi.attraction",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "visibility": "off"
+              }
+          ]
+      },
+      {
+          "featureType": "poi.park",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "lightness": 20
+              },
+              {
+                  "saturation": -20
+              },
+              {
+                  "visibility": "off"
+              }
+          ]
+      },
+      {
+          "featureType": "poi.park",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#b8e0f8"
+              }
+          ]
+      },
+      {
+          "featureType": "poi.park",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#0c4c73"
+              }
+          ]
+      },
+      {
+          "featureType": "road",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "lightness": "-37"
+              },
+              {
+                  "saturation": -30
+              },
+              {
+                  "color": "#084061"
+              }
+          ]
+      },
+      {
+          "featureType": "road",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "visibility": "on"
+              },
+              {
+                  "color": "#156c9e"
+              }
+          ]
+      },
+      {
+          "featureType": "road",
+          "elementType": "labels",
+          "stylers": [
+              {
+                  "visibility": "simplified"
+              }
+          ]
+      },
+      {
+          "featureType": "transit",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "visibility": "off"
+              }
+          ]
+      },
+      {
+          "featureType": "water",
+          "elementType": "all",
+          "stylers": [
+              {
+                  "lightness": -20
+              }
+          ]
+      },
+      {
+          "featureType": "water",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "color": "#092e41"
+              }
+          ]
+      },
+      {
+          "featureType": "water",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      }
+  ]
+  var style3=[
+    {
+        "featureType": "administrative",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#444444"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.country",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#9b8d8d"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.province",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#ff9d9d"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#fafafa"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 45
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#abeadb"
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#ff9d9d"
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    }
+  ]
+  var style4=[
+      {
+          "featureType": "all",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "all",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "gamma": 0.01
+              },
+              {
+                  "lightness": 20
+              },
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "all",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "saturation": -31
+              },
+              {
+                  "lightness": -33
+              },
+              {
+                  "weight": 2
+              },
+              {
+                  "gamma": 0.8
+              },
+              {
+                  "color": "#064f7d"
+              }
+          ]
+      },
+      {
+          "featureType": "all",
+          "elementType": "labels.icon",
+          "stylers": [
+              {
+                  "visibility": "off"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.country",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#00253c"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.country",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#ffffff"
+              },
+              {
+                  "weight": "0.01"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.province",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.province",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#3a94ca"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.locality",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#dbf8fd"
+              }
+          ]
+      },
+      {
+          "featureType": "administrative.locality",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#2b7cad"
+              }
+          ]
+      },
+      {
+          "featureType": "landscape",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "lightness": 30
+              },
+              {
+                  "saturation": 30
+              },
+              {
+                  "color": "#3a94ca"
+              }
+          ]
+      },
+      {
+          "featureType": "landscape",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "landscape",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#3a94ca"
+              }
+          ]
+      },
+      {
+          "featureType": "landscape.natural.landcover",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "color": "#3a94ca"
+              }
+          ]
+      },
+      {
+          "featureType": "landscape.natural.terrain",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "color": "#3a94ca"
+              }
+          ]
+      },
+      {
+          "featureType": "poi",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "saturation": 20
+              }
+          ]
+      },
+      {
+          "featureType": "poi",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "color": "#1575af"
+              }
+          ]
+      },
+      {
+          "featureType": "poi",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "poi",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#ff0000"
+              },
+              {
+                  "visibility": "off"
+              }
+          ]
+      },
+      {
+          "featureType": "poi.park",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "lightness": 20
+              },
+              {
+                  "saturation": -20
+              }
+          ]
+      },
+      {
+          "featureType": "poi.park",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "color": "#3a94ca"
+              }
+          ]
+      },
+      {
+          "featureType": "poi.park",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "poi.park",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+              {
+                  "color": "#3a94ca"
+              }
+          ]
+      },
+      {
+          "featureType": "road",
+          "elementType": "geometry",
+          "stylers": [
+              {
+                  "lightness": 10
+              },
+              {
+                  "saturation": -30
+              }
+          ]
+      },
+      {
+          "featureType": "road",
+          "elementType": "geometry.fill",
+          "stylers": [
+              {
+                  "color": "#4fa2d2"
+              }
+          ]
+      },
+      {
+          "featureType": "road",
+          "elementType": "geometry.stroke",
+          "stylers": [
+              {
+                  "saturation": 25
+              },
+              {
+                  "lightness": 25
+              },
+              {
+                  "color": "#4fa2d2"
+              },
+              {
+                  "visibility": "simplified"
+              }
+          ]
+      },
+      {
+          "featureType": "road",
+          "elementType": "labels",
+          "stylers": [
+              {
+                  "visibility": "on"
+              }
+          ]
+      },
+      {
+          "featureType": "water",
+          "elementType": "all",
+          "stylers": [
+              {
+                  "lightness": -20
+              },
+              {
+                  "color": "#ffffff"
+              }
+          ]
+      },
+      {
+          "featureType": "water",
+          "elementType": "labels.text.fill",
+          "stylers": [
+              {
+                  "color": "#758084"
+              }
+          ]
+      }
+  ]
+  var style5=[
     {
       stylers: [
         { hue: "#00ffe6" },
@@ -132,25 +1086,43 @@ function initialize() {
 
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
-  var styledMap = new google.maps.StyledMapType(styles,
-    {name: "Styled Map"});
-  var styledMap1 = new google.maps.StyledMapType(my_best,
-    {name: "My Best"});
+  var style1 = new google.maps.StyledMapType(style1,
+    {name: "Style1"});
+  var style2 = new google.maps.StyledMapType(style2,
+      {name: "Style2"});
+  var style3 = new google.maps.StyledMapType(style3,
+      {name: "Style3"});
+  var style4 = new google.maps.StyledMapType(style4,
+      {name: "Style4"});
+  var style5 = new google.maps.StyledMapType(style5,
+      {name: "Style5"});
 
   // Create a map object, and include the MapTypeId to add
   // to the map type control.
   var mapOptions = {
-    zoom: 11,
-    center: new google.maps.LatLng(-34, 151),
+    zoom: 2,
+    center: new google.maps.LatLng(23.26, 0),
     // center: {lat: -34, lng: 151},
     scrollwheel: false,
     mapTypeControlOptions: {
-      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style','map_style1']
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP,'style1','style2','style3','style4','style5']
     }
   }; //mapOptions
 
   map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
+
+  // Associate the styled map with the MapTypeId and set it to display.
+  map.mapTypes.set('style1', style1);
+  map.setMapTypeId('style1');
+  map.mapTypes.set('style2', style2);
+  map.setMapTypeId('style2');
+  map.mapTypes.set('style4', style4);
+  map.setMapTypeId('style4');
+  map.mapTypes.set('style5', style5);
+  map.setMapTypeId('style5');
+  map.mapTypes.set('style3', style3);
+  map.setMapTypeId('style3');
 
   poly = new google.maps.Polyline({
     strokeColor: '#000000',
@@ -161,12 +1133,6 @@ function initialize() {
 
   // Add a listener for the click event
   map.addListener('click', addLatLng);
-
-  // Associate the styled map with the MapTypeId and set it to display.
-  map.mapTypes.set('map_style', styledMap);
-  map.setMapTypeId('map_style');
-  map.mapTypes.set('map_style1', styledMap1);
-  map.setMapTypeId('map_style1');
 
   // google.maps.event.addDomListener(
   //         window, 'load', initialize);

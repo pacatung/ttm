@@ -15,8 +15,16 @@
  *= require bootstrap-datepicker
  */
 
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a:hover{
+  background-color: #3a94ca !important;
+}
 li.nav_n_p>a{
-  padding:5px 5px 0 0 !important;
+  padding:10px 5px 0 0 !important;
+}
+li.nav_n_p>a>img{
+  width: 80%;
 }
 .user_bar{
   margin: auto;
@@ -51,6 +59,10 @@ margin-right: 0px;
 #map{
   height: 500px;
   /* height: 100%; */
+}
+.p_s_description{
+  font-size: 19px;
+  color: gray;
 }
 .user_show_divider:before{
   content: "";
