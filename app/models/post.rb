@@ -18,4 +18,8 @@ class Post < ActiveRecord::Base
   def can_edit_by_user?(user)
     user && self.user == user
   end
+
+  def find_my_favorite(user)
+    self.favorites.where(user: :user).first
+  end
 end
