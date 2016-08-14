@@ -4,16 +4,22 @@ class FavoritesController < ApplicationController
   before_action :set_post
 
   def create
-    Favorite.create!( :post => @post, :user => current_user )
+    @favorite = @post.find_my_favorite(current_user)
 
-    redirect_to :back
+    unless @favorite
+      @favorite = Favorite.create!( :post => @post, :user => current_user )
+    end
+
+    render "reload"
   end
 
   def destroy
-    favorite = @post.favorites.find( params[:id] )
-    favorite.destroy
+    @favorite = @post.favorites.find( params[:id] )
+    @favorite.destroy
 
-    redirect_to :back
+    @favorite = nil
+
+    render "reload"
   end
 
    protected
