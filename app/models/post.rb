@@ -12,6 +12,9 @@ class Post < ActiveRecord::Base
   has_many :locations, :through=>:post_locationships
   accepts_nested_attributes_for :locations, allow_destroy: true
 
+  has_many :favorites
+  has_many :favorited_users, :through=>:favorites, source: :user
+
   def can_edit_by_user?(user)
     user && self.user == user
   end

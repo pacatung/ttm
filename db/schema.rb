@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803081926) do
+ActiveRecord::Schema.define(version: 20160814102633) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "country"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 20160803081926) do
     t.integer  "flag_file_size"
     t.datetime "flag_updated_at"
   end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "favorites", ["post_id"], name: "index_favorites_on_post_id"
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
 
   create_table "locations", force: :cascade do |t|
     t.string   "location"
