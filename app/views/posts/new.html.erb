@@ -84,7 +84,7 @@
         <%= f.label :photos, "Upload File" %>
         <%= file_field_tag "pics[]", type: :file ,:multiple=> true %>
     </div>
-    <%= f.submit '新增旅行主題', class:"btn btn-primary"  %>
+    <%= f.submit '新增旅行主題', class:"btn btn-primary" %>
   <% end %>
 </div>
 
@@ -98,65 +98,48 @@
 </script>
 
 <script>
-//datepicker
+  //datepicker
   $('.input-daterange').datepicker({
     format: "yyyy/mm/dd"
   });
 
-//style map css
-  var my_best = [
-    {
-      "featureType":"all",
-      "elementType":"all",
-      "stylers":[
-        {"invert_lightness":true},
-        {"saturation":10},
-        {"lightness":30},
-        {"gamma":0.5},
-        {"hue":"#435158"}]
-      }];
   // Create an array of styles.
-  var styles = [
-    {
-      stylers: [
-        { hue: "#00ffe6" },
-        { saturation: -20 }
-      ]
-    },{
-      featureType: "road",
-      elementType: "geometry",
-      stylers: [
-        { lightness: 100 },
-        { visibility: "simplified" }
-      ]
-    },{
-      featureType: "road",
-      elementType: "labels",
-      stylers: [
-        { visibility: "off" }
-      ]
-    }
-  ];
+  <%= render 'layouts/mapStyles' %>
 
 function postNewMap() {
-  var styledMap = new google.maps.StyledMapType(styles,
-    {name: "Styled Map"});
-  var styledMap1 = new google.maps.StyledMapType(my_best,
-    {name: "My Best"});
+  // Create a new StyledMapType object, passing it the array of styles,
+  // as well as the name to be displayed on the map type control.
+  var style1type = new google.maps.StyledMapType(style1,
+      {name: "Orange"});
+  var style2type = new google.maps.StyledMapType(style2,
+      {name: "DarkBlue"});
+  var style3type = new google.maps.StyledMapType(style3,
+      {name: "Pink"});
+  var style4type = new google.maps.StyledMapType(style4,
+      {name: "LightBlue"});
+  var style5type = new google.maps.StyledMapType(style5,
+      {name: "LightGreen"});
   var mapOptions = {
     zoom: 7 ,
     // center: new google.maps.LatLng(25.03, 121.30),
     center: {lat: 25.03, lng: 121.30},
     scrollwheel: false,
     mapTypeControlOptions: {
-      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style','map_style1']
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP,'style1id','style2id','style3id','style4id','style5id']
     }
   }; //mapOptions
   var map = new google.maps.Map(document.getElementById('post_new_map'),mapOptions);
-  map.mapTypes.set('map_style', styledMap);
-  map.setMapTypeId('map_style');
-  map.mapTypes.set('map_style1', styledMap1);
-  map.setMapTypeId('map_style1');
+  // Associate the styled map with the MapTypeId and set it to display.
+  map.mapTypes.set('style1id', style1type);
+  map.setMapTypeId('style1id');
+  map.mapTypes.set('style2id', style2type);
+  map.setMapTypeId('style2id');
+  map.mapTypes.set('style4id', style4type);
+  map.setMapTypeId('style4id');
+  map.mapTypes.set('style5id', style5type);
+  map.setMapTypeId('style5id');
+  map.mapTypes.set('style3id', style3type);
+  map.setMapTypeId('style3id');
   //========
   var origin_place_id = null;
   var destination_place_id = null;
@@ -177,8 +160,8 @@ function postNewMap() {
 
   var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
   origin_autocomplete.bindTo('bounds', map);
-  var location_0_autocomplete = new google.maps.places.Autocomplete(post_locations_attributes_0_location);
-  location_0_autocomplete.bindTo('bounds', map);
+  // var location_0_autocomplete = new google.maps.places.Autocomplete(post_locations_attributes_0_location);
+  // location_0_autocomplete.bindTo('bounds', map);
   var destination_autocomplete =
       new google.maps.places.Autocomplete(destination_input);
   destination_autocomplete.bindTo('bounds', map);
