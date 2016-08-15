@@ -16,3 +16,7 @@
 //= require_tree .
 //= require nested_form_fields
 //= require bootstrap-datepicker
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

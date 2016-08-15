@@ -1,5 +1,10 @@
 <% if favorite %>
-  <%= link_to "-1", post_favorite_path(@post, favorite), :method => :delete, :class => "btn btn-danger", :remote => true %>
+  <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(@post, favorite), :method => :delete, :remote => true %>
 <% else %>
-  <%= link_to "+1", post_favorites_path(@post), :method => :post, :class => "btn btn-primary", :remote => true %>
+  <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(@post), :method => :post, :remote => true %>
+<% end %>
+
+<% if @post.favorites.count > 0 %>
+  <%= @post.favorites.count %>
+<% else %>
 <% end %>

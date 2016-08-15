@@ -19,7 +19,12 @@ class Post < ActiveRecord::Base
     user && self.user == user
   end
 
+  # AC9
+  # def find_my_favorite(user)
+  #   self.favorites.where(user: :user).first
+  # end
+  #AC8
   def find_my_favorite(user)
-    self.favorites.where(user: :user).first
+    user && self.favorites.find_by_user_id( user.id )
   end
 end
