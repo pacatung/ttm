@@ -63,31 +63,35 @@
 </div>
 
   <div class="container" style="margin-top: 30px;padding-bottom:20px">
-    <div class="u_s_new_album col-md-3" style="color: #d5d5d5;">
-      <%= link_to new_post_path do
-        image_tag("member_new.png",class: :"u_s_new_album_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_new_hover.png')}'", onmouseout: "this.src='#{asset_path('member_new.png')}'")
-      end %>&nbsp;
-      <p class="u_s_new_album_text" style="font-size:26px;display:inline;vertical-align:middle;">New Album</p>
-    </div>
+    <% if @user_id == current_user.id %>
+      <div class="u_s_new_album col-md-3" style="color: #d5d5d5;">
+        <%= link_to new_post_path do
+          image_tag("member_new.png",class: :"u_s_new_album_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_new_hover.png')}'", onmouseout: "this.src='#{asset_path('member_new.png')}'")
+        end %>&nbsp;
+        <p class="u_s_new_album_text" style="font-size:26px;display:inline;vertical-align:middle;">New Album</p>
+      </div>
 
-    <div class="u_s_manage_albums col-md-3" style="color: #d5d5d5;">
-      <%= link_to new_post_path do
-        image_tag("member_manage.png",class: :"u_s_manage_albums_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_manage_hover.png')}'", onmouseout: "this.src='#{asset_path('member_manage.png')}'")
-      end %>&nbsp;
-      <p class="u_s_manage_albums_text" style="font-size:26px;display:inline;vertical-align:middle;">Manage Albums</p>
-    </div>
-    <div class="u_s_member_favorit col-md-3" style="color: #d5d5d5;">
-      <%= link_to new_post_path do
-        image_tag("member_favorit.png",class: :"u_s_member_favorit_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_favorit_hover.png')}'", onmouseout: "this.src='#{asset_path('member_favorit.png')}'")
-      end %>&nbsp;
-      <p class="u_s_member_favorit_text" style="font-size:26px;display:inline;vertical-align:middle;">My followings</p>
-    </div>
-    <div class="u_s_member_trash col-md-3" style="color: #d5d5d5;">
-      <%= link_to new_post_path do
-        image_tag("member_trash.png",class: :"u_s_member_trash_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_trash_hover.png')}'", onmouseout: "this.src='#{asset_path('member_trash.png')}'")
-      end %>&nbsp;
-      <p class="u_s_member_trash_text" style="font-size:26px;display:inline;vertical-align:middle;">Trash Can</p>
-    </div>
+      <div class="u_s_manage_albums col-md-3" style="color: #d5d5d5;">
+        <%= link_to new_post_path do
+          image_tag("member_manage.png",class: :"u_s_manage_albums_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_manage_hover.png')}'", onmouseout: "this.src='#{asset_path('member_manage.png')}'")
+        end %>&nbsp;
+        <p class="u_s_manage_albums_text" style="font-size:26px;display:inline;vertical-align:middle;">Manage Albums</p>
+      </div>
+      <div class="u_s_member_favorit col-md-3" style="color: #d5d5d5;">
+        <%= link_to new_post_path do
+          image_tag("member_favorit.png",class: :"u_s_member_favorit_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_favorit_hover.png')}'", onmouseout: "this.src='#{asset_path('member_favorit.png')}'")
+        end %>&nbsp;
+        <p class="u_s_member_favorit_text" style="font-size:26px;display:inline;vertical-align:middle;">My followings</p>
+      </div>
+      <div class="u_s_member_trash col-md-3" style="color: #d5d5d5;">
+        <%= link_to new_post_path do
+          image_tag("member_trash.png",class: :"u_s_member_trash_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_trash_hover.png')}'", onmouseout: "this.src='#{asset_path('member_trash.png')}'")
+        end %>&nbsp;
+        <p class="u_s_member_trash_text" style="font-size:26px;display:inline;vertical-align:middle;">Trash Can</p>
+      </div>
+    <% else %>
+
+    <% end %>
   </div>
   <div class="clearfix"></div>
 
