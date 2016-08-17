@@ -6,6 +6,12 @@ class UsersController < ApplicationController
     @posts = Post.where(:user_id=>current_user.id)
   end
 
+  def trashcan
+    # @trash_posts = Post.where(:user_id=>current_user.id and :status=>'trashcan')
+    @trash_posts = Post.where(:user_id=>current_user.id)
+
+  end
+
 private
   # def set_user
   #   @user = User.find(params[:id])

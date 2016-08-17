@@ -15,6 +15,11 @@
       <%= f.text_field :return_date, class: :"form-control", placeholder: :"回程日期" %>
     </div>
     <p></p>
+    <div class="form-group">
+      <%= f.label :status %>
+      <%= f.select :status, post_status_options, :class => "form-control" %>
+    </div>
+    <p></p>
     <div class="field">
       <%= f.label :origin, '出發地' %><br/>
       <div class="col-md-6">

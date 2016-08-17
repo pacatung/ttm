@@ -17,6 +17,11 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user = current_user
 
+    #if @post.status == published
+      @post.publish_on = Time.now
+    #else
+    #end
+
     respond_to do |format|
       if @post.save
         if params[:pics]
@@ -40,7 +45,7 @@ private
   end
   def post_params
     params.require(:post).permit( :title, :start_date,:return_date, :origin, :destination, :distance, :description,:user_id,
-     photos_attributes: [:post_id, :photo_location, :pic],countries_attributes:[:country,:_destroy,:id],
+     :status, :publish_on, photos_attributes: [:post_id, :photo_location, :pic],countries_attributes:[:country,:_destroy,:id],
       locations_attributes:[:location,:_destroy,:id])
   end
 end

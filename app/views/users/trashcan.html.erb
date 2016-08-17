@@ -9,22 +9,12 @@
       <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">All</a></li>
       <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Published</a></li>
       <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Locked</a></li>
-      <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Following</a></li>
-      <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Locked</a></li>
       <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Trash Can</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="home">
-        <% @posts.each do |post| %>
-          <% if post.photos.first %>
-            <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"u_s_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
-          <% else %>
-            N/A
-          <% end %>
-        <% end %>
-      </div>
+      <div role="tabpanel" class="tab-pane active" id="home">...</div>
       <div role="tabpanel" class="tab-pane" id="profile">...</div>
       <div role="tabpanel" class="tab-pane" id="messages">...</div>
       <div role="tabpanel" class="tab-pane" id="settings">...</div>
@@ -32,7 +22,7 @@
 
   <div style="background-color:#f2efef; padding-top:40px;">
     <div class="container">
-      <% @posts.each do |post| %>
+      <% @trash_posts.each do |post| %>
         <div id="u_s_post_<%= post.id %>" style="display: inline-block;">
           <% if post.photos.first %>
           <div class="u_s_post_photo">

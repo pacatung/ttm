@@ -15,6 +15,8 @@ class Post < ActiveRecord::Base
   has_many :favorites
   has_many :favorited_users, :through=>:favorites, source: :user
 
+  STATUS=["draft","published","trashcan","locked"]
+
   def can_edit_by_user?(user)
     user && self.user == user
   end
@@ -23,7 +25,8 @@ class Post < ActiveRecord::Base
   # def find_my_favorite(user)
   #   self.favorites.where(user: :user).first
   # end
-  #AC8
+
+  # AC8
   def find_my_favorite(user)
     user && self.favorites.find_by_user_id( user.id )
   end
