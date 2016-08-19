@@ -19,8 +19,14 @@ Rails.application.routes.draw do
     resources :posts do
       resources :favorites
       member do
-        post :trashcanpost
-        delete :deletetrash
+        # move_to_transcan_post(@post)
+        post :move_to_trashcan
+      end
+
+# transcan_posts_path
+# /poss/transcan
+
+      collection do
         get :trashcan
       end
     end

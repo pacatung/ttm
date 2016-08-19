@@ -1,57 +1,282 @@
 <%= render 'layouts/nav' %>
 <div class="container">
-  <h1>trashcan</h1>
+  <h3>Hi, <%= current_user.name %></h1>
   <br>
+
+  <%= @favorite_user.inspect %>
+  <%= debug(current_user.id) %>
+
   <div>
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">All</a></li>
-      <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Published</a></li>
-      <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Locked</a></li>
-      <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Following</a></li>
-      <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Locked</a></li>
-      <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Trash Can</a></li>
+      <li role="presentation" class="active"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a></li>
+      <li role="presentation"><a href="#published" aria-controls="published" role="tab" data-toggle="tab">Published</a></li>
+      <li role="presentation"><a href="#locked" aria-controls="locked" role="tab" data-toggle="tab">Locked</a></li>
+      <li role="presentation"><a href="#following" aria-controls="following" role="tab" data-toggle="tab">Following</a></li>
+      <li role="presentation"><a href="#favorites" aria-controls="favorites" role="tab" data-toggle="tab">Favorites</a></li>
+      <li role="presentation"><a href="#trashcan" aria-controls="trashcan" role="tab" data-toggle="tab">Trash Can</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="home">
-        <% @posts.each do |post| %>
-          <% if post.photos.first %>
-            <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"u_s_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
-          <% else %>
-            N/A
+      <div role="tabpanel" class="tab-pane active" id="all">
+      <!--  -->
+      <table class="table table-hover">
+        <thead style="background-color:#3a94ca; color:white;">
+          <tr>
+            <th>#</th>
+            <th>DATE</th>
+            <th>DESTINATION</th>
+            <th>ORIGIN</th>
+            <th>MILES</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @posts.each do |post| %>
+          <tr>
+            <td>
+              <% if post.photos.first %>
+              <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+            <td><%= post.destination %></td>
+            <td><%= post.origin %></td>
+            <td><%= post.distance %></td>
+            <td>
+              <%= image_tag 'album_sub_open.png', alt: :'sub_open' %>
+              <%= image_tag "album_sub_love.png", alt: :"sub_love" %>
+              <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
+            </td>
+          </tr>
           <% end %>
-        <% end %>
+        </tbody>
+      </table>
       </div>
-      <div role="tabpanel" class="tab-pane" id="profile">...</div>
-      <div role="tabpanel" class="tab-pane" id="messages">...</div>
-      <div role="tabpanel" class="tab-pane" id="settings">...</div>
+
+      <div role="tabpanel" class="tab-pane active" id="published">
+        <!--  -->
+        <table class="table table-hover" style="background-color:#3a94ca;color:white;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>DATE</th>
+              <th>DESTINATION</th>
+              <th>ORIGIN</th>
+              <th>MILES</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @published_posts.each do |post| %>
+            <tr>
+              <td>
+                <% if post.photos.first %>
+                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td><%= post.destination %></td>
+              <td><%= post.origin %></td>
+              <td><%= post.distance %></td>
+              <td><%= post.origin %></td>
+              <td>
+
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="draft"><!--  -->
+        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>DATE</th>
+              <th>DESTINATION</th>
+              <th>ORIGIN</th>
+              <th>MILES</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @draft_posts.each do |post| %>
+            <tr>
+              <td>
+                <% if post.photos.first %>
+                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td><%= post.destination %></td>
+              <td><%= post.origin %></td>
+              <td><%= post.distance %></td>
+              <td><%= post.origin %></td>
+              <td>
+
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="locked"><!--  -->
+        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>DATE</th>
+              <th>DESTINATION</th>
+              <th>ORIGIN</th>
+              <th>MILES</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @locked_posts.each do |post| %>
+            <tr>
+              <td>
+                <% if post.photos.first %>
+                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td><%= post.destination %></td>
+              <td><%= post.origin %></td>
+              <td><%= post.distance %></td>
+              <td><%= post.origin %></td>
+              <td>
+
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="following"><!--  -->
+        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>DATE</th>
+              <th>DESTINATION</th>
+              <th>ORIGIN</th>
+              <th>MILES</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @published_posts.each do |post| %>
+            <tr>
+              <td>
+                <% if post.photos.first %>
+                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td><%= post.destination %></td>
+              <td><%= post.origin %></td>
+              <td><%= post.distance %></td>
+              <td><%= post.origin %></td>
+              <td>
+
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="favorites"><!--  -->
+        <table class="table table-hover">
+          <thead style="background-color:#3a94ca; color:white;">
+            <tr>
+              <th></th>
+              <th>DATE</th>
+              <th>DESTINATION</th>
+              <th>ORIGIN</th>
+              <th>MILES</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @favorite_posts.each do |post| %>
+            <tr>
+              <td>
+                <% if post.photos.first %>
+                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td><%= post.destination %></td>
+              <td><%= post.origin %></td>
+              <td><%= post.distance %></td>
+              <td><%= post.origin %></td>
+              <td>
+
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="trashcan"><!--  -->
+        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>DATE</th>
+              <th>DESTINATION</th>
+              <th>ORIGIN</th>
+              <th>MILES</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @trashcan_posts.each do |post| %>
+            <tr>
+              <td>
+                <% if post.photos.first %>
+                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td><%= post.destination %></td>
+              <td><%= post.origin %></td>
+              <td><%= post.distance %></td>
+              <td><%= post.origin %></td>
+              <td>
+
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
     </div>
-
-  <div style="background-color:#f2efef; padding-top:40px;">
-    <div class="container">
-      <% @posts.each do |post| %>
-        <div id="u_s_post_<%= post.id %>" style="display: inline-block;">
-          <% if post.photos.first %>
-          <div class="u_s_post_photo">
-          <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"u_s_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
-          </div>
-          <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
-          <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
-        </div>
-          <% else %>
-            N/A
-          <% end %>
-      <% end %>
-    </div>
-  </div>
-
-
-  </div>
   <br><br>
 </div>
+
+</div>        <!-- container -->
 
 <script>
   $('#myTabs a').click(function (e) {

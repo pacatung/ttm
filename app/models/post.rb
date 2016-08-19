@@ -10,7 +10,7 @@ class Post < ActiveRecord::Base
 
   has_many :post_locationships
   has_many :locations, :through=>:post_locationships
-  accepts_nested_attributes_for :locations, allow_destroy: true
+  accepts_nested_attributes_for :locations, allow_destroy: true, :reject_if => :all_blank
 
   has_many :favorites
   has_many :favorited_users, :through=>:favorites, source: :user

@@ -13,10 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require bootstrap-sprockets
 //= require nested_form_fields
 //= require bootstrap-datepicker
 
-$(function () {
+$(document).on("page:change", function(){
   $('[data-toggle="tooltip"]').tooltip()
 })

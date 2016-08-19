@@ -7,6 +7,21 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.order("id DESC").limit(15)
+    @locked_posts = Post.where(status: :'locked')
+    @published_posts = Post.where(status: :'published')
+    @draft_posts = Post.where(status: :'draft')
+    @trashcan_posts = Post.where(status: :'trashcan')
+
+    #@favorite_user = Favorite.where(:user_id=>current_user.id)
+    # @favorite_posts = Post.where(:id=>@favorite_user.post_id)
+
+    #@favorite_posts = Post.joins(:favorites).where(:user_id=>current_user.id).where(:id=>post_id)
+
+    @favorite_posts = current_user.favorited_posts
+
+    # = Bag.joins(:bookings).where( "bookings.pickup_date > ? OR bookings.return_date < ?",
+    # @booking.return_date, @booking.pickup_date ).where(:location=> @booking.get_bag_location, :is_rented => false).uniq
+    # @favorite_posts = Post.find_by_sql("select * from posts,favorites where posts.id = favortie.post_id")
   end
 
   def new

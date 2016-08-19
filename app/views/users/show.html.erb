@@ -4,12 +4,14 @@
 
 <div class="container">
   <div class="row1" style="width: 100px;margin:0 auto;">
-    <%= image_tag current_user.image+"?height=200", :style=>"height:100px;border-radius:4em;margin-top:30px"%>
+    <% if @user.image %>
+      <%= image_tag @user.image+"?height=200", :style=>"height:100px;border-radius:4em;margin-top:30px"%>
+    <% end %>
   </div>
 
   <div style="text-align: center;">
     <div class="user_show_divider">
-      <span calss="user_show_username"><%= current_user.name %></span>
+      <span calss="user_show_username"><%= @user.name %></span>
     </div>
   </div>
 
