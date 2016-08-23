@@ -92,8 +92,17 @@ margin-right: 0px;
   color:#3a94ca;
   font-size:26px;
 }
-
+/* posts/index */
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+	background-color: #3a94ca;
+	color: white;
+}
+.p_i_photo{
+  height:120px;
+  overflow: hidden;
+}
+/* posts/landing */
 .p_l_post_photo_area, .u_s_post_photo_area{
   height:150px;
-  overflow:none;
+  overflow:hidden;
 }

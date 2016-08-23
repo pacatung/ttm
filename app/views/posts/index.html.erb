@@ -2,16 +2,13 @@
 <div class="container">
   <h3>Hi, <%= current_user.name %></h1>
   <br>
-
-  <%= @favorite_user.inspect %>
-  <%= debug(current_user.id) %>
-
   <div>
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a></li>
       <li role="presentation"><a href="#published" aria-controls="published" role="tab" data-toggle="tab">Published</a></li>
+      <li role="presentation"><a href="#draft" aria-controls="draft" role="tab" data-toggle="tab">Draft</a></li>
       <li role="presentation"><a href="#locked" aria-controls="locked" role="tab" data-toggle="tab">Locked</a></li>
       <li role="presentation"><a href="#following" aria-controls="following" role="tab" data-toggle="tab">Following</a></li>
       <li role="presentation"><a href="#favorites" aria-controls="favorites" role="tab" data-toggle="tab">Favorites</a></li>
@@ -20,13 +17,14 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="all">
+      <div role="tabpanel" class="tab-pane" id="all">
       <!--  -->
       <table class="table table-hover">
         <thead style="background-color:#3a94ca; color:white;">
           <tr>
-            <th>#</th>
+            <th>PHOTO</th>
             <th>DATE</th>
+            <th>COUNTRY</th>
             <th>DESTINATION</th>
             <th>ORIGIN</th>
             <th>MILES</th>
@@ -44,6 +42,7 @@
               <% end %>
             </td>
             <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+            <td> post.country </td>
             <td><%= post.destination %></td>
             <td><%= post.origin %></td>
             <td><%= post.distance %></td>
@@ -58,13 +57,14 @@
       </table>
       </div>
 
-      <div role="tabpanel" class="tab-pane active" id="published">
+      <div role="tabpanel" class="tab-pane" id="published">
         <!--  -->
-        <table class="table table-hover" style="background-color:#3a94ca;color:white;">
-          <thead>
+        <table class="table table-hover">
+          <thead style="background-color:#3a94ca;color:white;">
             <tr>
-              <th>#</th>
+              <th>PHOTO</th>
               <th>DATE</th>
+              <th>COUNTRY</th>
               <th>DESTINATION</th>
               <th>ORIGIN</th>
               <th>MILES</th>
@@ -82,25 +82,25 @@
                 <% end %>
               </td>
               <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td>post.country</td>
               <td><%= post.destination %></td>
               <td><%= post.origin %></td>
               <td><%= post.distance %></td>
               <td><%= post.origin %></td>
-              <td>
-
-              </td>
             </tr>
             <% end %>
           </tbody>
         </table>
       </div>
 
-      <div role="tabpanel" class="tab-pane" id="draft"><!--  -->
-        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
-          <thead>
+      <div role="tabpanel" class="tab-pane" id="draft">
+      <!--  -->
+        <table class="table table-hover">
+          <thead style="background-color:#3a94ca;color:white;">
             <tr>
-              <th>#</th>
+              <th>PHOTO</th>
               <th>DATE</th>
+              <th>COUNTRY</th>
               <th>DESTINATION</th>
               <th>ORIGIN</th>
               <th>MILES</th>
@@ -118,12 +118,14 @@
                 <% end %>
               </td>
               <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td>post.country</td>
               <td><%= post.destination %></td>
               <td><%= post.origin %></td>
               <td><%= post.distance %></td>
-              <td><%= post.origin %></td>
               <td>
-
+                <%= image_tag 'album_sub_open.png', alt: :'sub_open' %>
+                <%= image_tag "album_sub_love.png", alt: :"sub_love" %>
+                <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
               </td>
             </tr>
             <% end %>
@@ -131,11 +133,12 @@
         </table>
       </div>
       <div role="tabpanel" class="tab-pane" id="locked"><!--  -->
-        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
-          <thead>
+        <table class="table table-hover">
+          <thead style="background-color:#3a94ca;color:white;">
             <tr>
-              <th>#</th>
+              <th>PHOTO</th>
               <th>DATE</th>
+              <th>COUNTRY</th>
               <th>DESTINATION</th>
               <th>ORIGIN</th>
               <th>MILES</th>
@@ -153,10 +156,10 @@
                 <% end %>
               </td>
               <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td>post.country</td>
               <td><%= post.destination %></td>
               <td><%= post.origin %></td>
               <td><%= post.distance %></td>
-              <td><%= post.origin %></td>
               <td>
 
               </td>
@@ -166,8 +169,8 @@
         </table>
       </div>
       <div role="tabpanel" class="tab-pane" id="following"><!--  -->
-        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
-          <thead>
+        <table class="table table-hover">
+          <thead style="background-color:#3a94ca;color:white;">
             <tr>
               <th>#</th>
               <th>DATE</th>
@@ -200,16 +203,17 @@
           </tbody>
         </table>
       </div>
-      <div role="tabpanel" class="tab-pane" id="favorites"><!--  -->
+      <div role="tabpanel" class="tab-pane active" id="favorites"><!--  -->
         <table class="table table-hover">
           <thead style="background-color:#3a94ca; color:white;">
             <tr>
-              <th></th>
-              <th>DATE</th>
-              <th>DESTINATION</th>
-              <th>ORIGIN</th>
-              <th>MILES</th>
-              <th></th>
+              <th>PHOTO</th>
+              <th style="text-align:center;">AUTHOR</th>
+              <th style="text-align:center;">DATE</th>
+              <th style="text-align:center;">COUNTRY</th>
+              <th style="text-align:center;">DESTINATION</th>
+              <th style="text-align:center;">ORIGIN</th>
+              <th style="text-align:center;">MILES</th>
             </tr>
           </thead>
           <tbody>
@@ -217,19 +221,27 @@
             <tr>
               <td>
                 <% if post.photos.first %>
-                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                  <div class="p_i_photo">
+                    <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                  </div>
                 <% else %>
                   N/A
                 <% end %>
               </td>
-              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
-              <td><%= post.destination %></td>
-              <td><%= post.origin %></td>
-              <td><%= post.distance %></td>
-              <td><%= post.origin %></td>
-              <td>
-
+              <td style="padding-top:35px;">
+                <div style="width:50px;margin:0 auto;">
+                  <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                </div>
               </td>
+              <td style="text-align:center; padding-top:35px;">
+                <%= post.start_date %><br>
+                <div style="margin:0 auto; width:2px;">|</div><br>
+                <%= post.return_date %>
+              </td>
+              <td> post.country </td>
+              <td style="text-align:center; padding-top:57px;"><%= post.destination %></td>
+              <td style="text-align:center; padding-top:57px;"><%= post.origin %></td>
+              <td style="text-align:center; padding-top:57px;"><%= post.distance %></td>
             </tr>
             <% end %>
           </tbody>
@@ -237,11 +249,12 @@
         </table>
       </div>
       <div role="tabpanel" class="tab-pane" id="trashcan"><!--  -->
-        <table class="table table-hover" style="background-color:#3a94ca; color:white;">
-          <thead>
+        <table class="table table-hover">
+          <thead style="background-color:#3a94ca;color:white;">
             <tr>
-              <th>#</th>
+              <th>PHOTO</th>
               <th>DATE</th>
+              <th>COUNTRY</th>
               <th>DESTINATION</th>
               <th>ORIGIN</th>
               <th>MILES</th>
@@ -259,6 +272,7 @@
                 <% end %>
               </td>
               <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
+              <td>post.country</td>
               <td><%= post.destination %></td>
               <td><%= post.origin %></td>
               <td><%= post.distance %></td>

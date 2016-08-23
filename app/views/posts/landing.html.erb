@@ -19,7 +19,7 @@
       <div id="p_l_post_<%= post.id %>" style="display: inline-block;">
         <% if post.photos.first %>
         <div class="p_l_post_photo">
-        <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_l_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
+          <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_l_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
         </div>
         <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
         <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
