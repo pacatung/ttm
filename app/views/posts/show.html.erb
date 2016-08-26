@@ -14,47 +14,32 @@
 .tooltip.bottom > .tooltip-arrow{
   border-bottom: 5px solid #3a94ca;
 }
-.tooltip.right > .tooltip-arrow,{
+.tooltip.right > .tooltip-arrow{
   border-right: 5px solid #3a94ca;
 }
 </style>
 <%= render 'layouts/nav' %>
-<div class="container">
-<!-- try -->
-<% if false %>
-  <div>
-  <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px'), posts_path%>
-  <div class="text-center">
-    <%= image_tag "main_location.png", alt: :"icon", style: :"margin:auto;" %>
-  </div>
-  <!-- 主題： <%#= @post.title %> -->
-  <div class="pull-right">
-   <%= image_tag "album_index_share.png", alt: :"index_share" %>
-   <%= image_tag "album_sub_love.png", alt: :"sub_love" %>
-  </div>
-  </div>
-<% end %>
-</div>
-
 <!--  -->
-<div class="sub_menu" style="border-bottom:4px solid gray">
+<div class="sub_menu" style="border-bottom:4px solid #ddd5d5">
 <div class="container">
   <div class="col-md-4">
-    <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px;'), posts_path%>
+    <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px;'), posts_path %>
   </div>
   <div class="col-md-4 text-center">
     <%= image_tag "main_location.png", alt: :"icon" %>
   </div>
   <div class="col-md-4">
     <div class="pull-right">
-    <%= image_tag "album_sub_lock.png", alt: :"sub_lock", style: :"margin-right:20px" %>
-
-    <% favorite = @post.find_my_favorite(current_user) %>
-    <div id="favorite_block" style="display:inline; margin-right:20px;">
-      <%= render :partial => "favorites/favorite", :locals => { :favorite => favorite } %>
-    </div>
-
-    <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
+      <% favorite = @post.find_my_favorite(current_user) %>
+        <div id="favorite_block" style="display:inline; margin-right:20px;">
+          <%= render :partial => "favorites/favorite", :locals => { :favorite => favorite } %>
+        </div>
+      <% if current_user && @post.user == current_user %>
+        <div class="post_locker" style="display:inline;">
+          <%= render :partial => "locker", :locals => { :post => @post } %>
+        </div>
+        <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
+      <% end %>    
     </div>
   </div>
   <div class="clearfix"></div>
@@ -63,12 +48,14 @@
   </div>
   </div>
   </div>
+</div>
+
   <!--  -->
-  <div class="photo_area" style="background-color: #f2efef;">
-  <br><br>
+<div class="photo_area" style="background-color: #f2efef;">
+  <br>
   <div class="container">
   <% unless @photos.empty? %>
-    <%= image_tag @post.photos.first.pic.url, style: :'margin-bottom:5px;' %>
+    <%= image_tag @post.photos.first.pic.url, style: :'margin-bottom:15px;' %>
     <% @photos.each do |pic| %>
     <div class="span3" id="picture_<%= pic.id %>" style="display: inline-block;">
 
@@ -85,7 +72,8 @@
     <% end %>
   <% end %>
   </div>
-  </div>
+</div>
+
 <br><br>
 <div class="container">
   <div class="col-md-6">

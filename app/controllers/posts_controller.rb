@@ -1,27 +1,17 @@
 class PostsController < ApplicationController
-  before_action :find_post, :only => [ :show, :edit, :update, :destroy]
-
+  before_action :find_post, :only => [ :show, :edit, :update, :destroy, :change_status]
   def landing
     @posts = Post.order("id DESC").limit(15)
   end
 
   def index
     @posts = Post.order("id DESC").limit(15)
-    @locked_posts = Post.where(status: :'locked')
-    @published_posts = Post.where(status: :'published')
-    @draft_posts = Post.where(status: :'draft')
-    @trashcan_posts = Post.where(status: :'trashcan')
+    @locked_posts = Post.where(status: :'locked').limit(15)
+    @published_posts = Post.where(status: :'published').limit(15)
+    @draft_posts = Post.where(status: :'draft').limit(15)
+    @trashcan_posts = Post.where(status: :'trashcan').limit(15)
 
-    #@favorite_user = Favorite.where(:user_id=>current_user.id)
-    # @favorite_posts = Post.where(:id=>@favorite_user.post_id)
-
-    #@favorite_posts = Post.joins(:favorites).where(:user_id=>current_user.id).where(:id=>post_id)
-
-    @favorite_posts = current_user.favorited_posts
-
-    # = Bag.joins(:bookings).where( "bookings.pickup_date > ? OR bookings.return_date < ?",
-    # @booking.return_date, @booking.pickup_date ).where(:location=> @booking.get_bag_location, :is_rented => false).uniq
-    # @favorite_posts = Post.find_by_sql("select * from posts,favorites where posts.id = favortie.post_id")
+    @favorite_posts = current_user.favorited_posts.limit(15)
   end
 
   def new
@@ -52,6 +42,27 @@ class PostsController < ApplicationController
 
   def show
     @photos = @post.photos
+  end
+
+  def edit
+    
+  end
+
+  def update
+    @post.update_attributes(post_params)
+
+    respond_to do |format|
+      format.html { redirect_to post_url(@post) }
+    end
+  end
+
+  def change_status
+    @post.update_attributes(:status => params[:status])
+
+    respond_to do |format|
+      format.html { redirect_to post_url(@post) }
+      format.js
+    end
   end
 
 private

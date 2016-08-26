@@ -17,13 +17,16 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
     resources :posts do
+      member do
+        post :change_status
+      end
       resources :favorites
       member do
         # move_to_transcan_post(@post)
         post :move_to_trashcan
       end
 
-# transcan_posts_path
+# trashcan_posts_path
 # /poss/transcan
 
       collection do
@@ -32,13 +35,7 @@ Rails.application.routes.draw do
     end
 
     resources :photos
-    resources :users do
-      member do
-        post :trashcanpost
-        delete :deletetrash
-        get :trashcan
-      end
-    end
+    resources :users
 
   # Example resource route with options:
   #   resources :products do
