@@ -62,18 +62,13 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to post_url(@post) }
       
-      # if @post.status == 'locked'
-      #   format.js {render "change_status_locker"}
-      # elsif @post.status == 'trashcan'
-      #   format.js {render "change_status_trashcan"}        
-      # end
       case @post.status
         when 'locked'
           format.js {render "change_status_locked"}
         when 'published'
           format.js {render "change_status_published"}
         when 'trashcan'
-          format.js {render "change_status_trashcan"}
+          format.js {render "change_status_to_trashcan"}
         when 'draft'
           format.js {render "change_status_draft"}
       end

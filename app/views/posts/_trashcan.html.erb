@@ -1,1 +1,6 @@
+<% if @post.status == 'trashcan' %>
 <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(@post,:status => :'draft'),:method => :post, remote: :true %>
+<% else %>
+<%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),
+   change_status_post_path(@post, :status=> 'trashcan'), :method => :post, remote: :true %>
+<% end %>
