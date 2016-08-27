@@ -1,0 +1,2 @@
+$(".post_trashcan").html("<%=j render :partial=> "draft", :locals => { :post => @post } %>");
+$(".post_locker").html("<%=j render :partial=> "published", :locals => { :post => @post } %>");

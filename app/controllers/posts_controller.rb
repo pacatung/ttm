@@ -8,10 +8,10 @@ class PostsController < ApplicationController
     @posts = Post.order("id DESC").limit(15)
     @locked_posts = Post.where(status: :'locked').limit(15)
     @published_posts = Post.where(status: :'published').limit(15)
-    @draft_posts = Post.where(status: :'draft').limit(15)
+    @draft_posts = Post.where(status: :'draft').limit(15).order('id desc')
     @trashcan_posts = Post.where(status: :'trashcan').limit(15)
 
-    @favorite_posts = current_user.favorited_posts.limit(15)
+    @favorite_posts = current_user.favorited_posts.order("id DESC").limit(15)
   end
 
   def new
@@ -61,10 +61,25 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to post_url(@post) }
-      format.js
+      
+      # if @post.status == 'locked'
+      #   format.js {render "change_status_locker"}
+      # elsif @post.status == 'trashcan'
+      #   format.js {render "change_status_trashcan"}        
+      # end
+      case @post.status
+        when 'locked'
+          format.js {render "change_status_locked"}
+        when 'published'
+          format.js {render "change_status_published"}
+        when 'trashcan'
+          format.js {render "change_status_trashcan"}
+        when 'draft'
+          format.js {render "change_status_draft"}
+      end
     end
   end
-
+  
 private
   def find_post
     @post = Post.find(params[:id])

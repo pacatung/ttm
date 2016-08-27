@@ -38,7 +38,9 @@
         <div class="post_locker" style="display:inline;">
           <%= render :partial => "locker", :locals => { :post => @post } %>
         </div>
-        <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
+        <div class="post_trashcan" style="display:inline;">
+          <%= render :partial => "trashcan", :locals => { :post => @post } %>
+        </div>
       <% end %>    
     </div>
   </div>
