@@ -1,9 +1,9 @@
 <%= render 'layouts/nav' %>
 <div class="container">
-  <h3>Hi, <%= current_user.name %></h1>
+  <h1>Hi, <%= current_user.name %></h1>
+  <p>Welcome to manage album !</p>
   <br>
   <div>
-
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a></li>
@@ -17,42 +17,92 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane" id="all">
+      <div role="tabpanel" class="tab-pane active" id="all">
       <!--  -->
       <table class="table table-hover">
         <thead style="background-color:#3a94ca; color:white;">
           <tr>
             <th>PHOTO</th>
-            <th>DATE</th>
-            <th>COUNTRY</th>
-            <th>DESTINATION</th>
-            <th>ORIGIN</th>
-            <th>MILES</th>
-            <th></th>
+            <th style="text-align:center;">AUTHOR</th>
+            <th style="text-align:center;">DATE</th>
+            <th style="text-align:center;">COUNTRY</th>
+            <th style="text-align:center;">DESTINATION</th>
+            <th style="text-align:center;">ORIGIN</th>
+            <th style="text-align:center;">MILES</th>
+            <th style="text-align:center;"></th>
+            <th style="text-align:center;"></th>
+            <th style="text-align:center;"></th>
           </tr>
         </thead>
         <tbody>
-          <% @posts.each do |post| %>
+          <% @all_posts.each do |post| %>
           <tr>
             <td>
               <% if post.photos.first %>
-              <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
-              <% else %>
-                N/A
-              <% end %>
+                  <div class="p_i_photo">
+                    <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                  </div>
+                <% else %>
+                  N/A
+                <% end %>
             </td>
-            <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
-            <td> post.country </td>
-            <td><%= post.destination %></td>
-            <td><%= post.origin %></td>
-            <td><%= post.distance %></td>
-            <td>
-              <%= image_tag 'album_sub_open.png', alt: :'sub_open' %>
-              <%= image_tag "album_sub_love.png", alt: :"sub_love" %>
-              <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
-            </td>
-          </tr>
-          <% end %>
+              <td style="padding-top:43px;">
+                <div style="width:50px;margin:0 auto;">
+                  <% if post.user.image %>
+                      <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                    <% else %>
+                      <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                    <% end %>
+                </div>
+              </td>
+              <td style="text-align:center; padding-top:38px;">
+                <%= post.start_date %><br>
+                <div style="margin:0 auto; width:2px;">|</div>
+                <%= post.return_date %>
+              </td>
+              <td> post.country </td>
+              <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
+              <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
+              <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
+              <td style="text-align:center; padding-top:58px;">
+                <% favorite = post.find_my_favorite(current_user) %>
+                  <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                    <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
+                    <% if favorite %>
+                      <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                    <% else %>
+                      <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                    <% end %>
+                    <% if post.favorites.count > 0 %>
+                      <%= post.favorites.count %> 
+                    <% else %>
+                    <% end %>
+                  </div>
+              </td>
+              <td style="text-align:center; padding-top:52px;">
+                <% if current_user && post.user == current_user %>
+                  <div class="post_locker_<%= post.id %>" style="display:inline;">
+                    <%#= render :partial => "locker", :locals => { :post => @post } %>
+                    <% if post.status == 'locked' %>
+                      <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                    <% else %>
+                      <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                    <% end %>
+                  </div>
+                </td>
+                <td style="text-align:center; padding-top:52px;">
+                  <div class="post_trashcan_<%= post.id %>" style="display:inline;">
+                    <%#= render :partial => "trashcan", :locals => { :post => @post } %>
+                    <% if post.status == 'trashcan' %>
+                      <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(post,:status => :'draft'),:method => :post, remote: :true %>
+                    <% else %>
+                      <%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),change_status_post_path(post, :status=> 'trashcan'), :method => :post, remote: :true %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>    <!-- 36 -->
         </tbody>
       </table>
       </div>
@@ -60,15 +110,18 @@
       <div role="tabpanel" class="tab-pane" id="published">
         <!--  -->
         <table class="table table-hover">
-          <thead style="background-color:#3a94ca;color:white;">
+          <thead style="background-color:#3a94ca; color:white;">
             <tr>
               <th>PHOTO</th>
-              <th>DATE</th>
-              <th>COUNTRY</th>
-              <th>DESTINATION</th>
-              <th>ORIGIN</th>
-              <th>MILES</th>
-              <th></th>
+              <th style="text-align:center;">AUTHOR</th>
+              <th style="text-align:center;">DATE</th>
+              <th style="text-align:center;">COUNTRY</th>
+              <th style="text-align:center;">DESTINATION</th>
+              <th style="text-align:center;">ORIGIN</th>
+              <th style="text-align:center;">MILES</th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
             </tr>
           </thead>
           <tbody>
@@ -76,19 +129,70 @@
             <tr>
               <td>
                 <% if post.photos.first %>
-                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
-                <% else %>
-                  N/A
-                <% end %>
+                    <div class="p_i_photo">
+                      <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                    </div>
+                  <% else %>
+                    N/A
+                  <% end %>
               </td>
-              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
-              <td>post.country</td>
-              <td><%= post.destination %></td>
-              <td><%= post.origin %></td>
-              <td><%= post.distance %></td>
-              <td><%= post.origin %></td>
-            </tr>
-            <% end %>
+                <td style="padding-top:43px;">
+                  <div style="width:50px;margin:0 auto;">
+                    <% if post.user.image %>
+                      <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                    <% else %>
+                      <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                    <% end %>
+                  </div>
+                </td>
+                <td style="text-align:center; padding-top:38px;">
+                  <%= post.start_date %><br>
+                  <div style="margin:0 auto; width:2px;">|</div>
+                  <%= post.return_date %>
+                </td>
+                <td> post.country </td>
+                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
+                <td style="text-align:center; padding-top:58px;">
+                  <% favorite = post.find_my_favorite(current_user) %>
+                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                      <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
+                      <% if favorite %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                      <% else %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                      <% end %>
+                      <% if post.favorites.count > 0 %>
+                        <%= post.favorites.count %> 
+                      <% else %>
+                      <% end %>
+                    </div>
+                </td>
+                <td style="text-align:center; padding-top:52px;">
+                  <% if current_user && post.user == current_user %>
+                    <div class="post_locker_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "locker", :locals => { :post => @post } %>
+                      <% if post.status == 'locked' %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td style="text-align:center; padding-top:52px;">
+                    <div class="post_trashcan_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "trashcan", :locals => { :post => @post } %>
+                      <% if post.status == 'trashcan' %>
+                        <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(post,:status => :'draft'),:method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),change_status_post_path(post, :status=> 'trashcan'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>    <!-- 124 -->
           </tbody>
         </table>
       </div>
@@ -96,15 +200,18 @@
       <div role="tabpanel" class="tab-pane" id="draft">
       <!--  -->
         <table class="table table-hover">
-          <thead style="background-color:#3a94ca;color:white;">
+          <thead style="background-color:#3a94ca; color:white;">
             <tr>
               <th>PHOTO</th>
-              <th>DATE</th>
-              <th>COUNTRY</th>
-              <th>DESTINATION</th>
-              <th>ORIGIN</th>
-              <th>MILES</th>
-              <th></th>
+              <th style="text-align:center;">AUTHOR</th>
+              <th style="text-align:center;">DATE</th>
+              <th style="text-align:center;">COUNTRY</th>
+              <th style="text-align:center;">DESTINATION</th>
+              <th style="text-align:center;">ORIGIN</th>
+              <th style="text-align:center;">MILES</th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
             </tr>
           </thead>
           <tbody>
@@ -112,37 +219,87 @@
             <tr>
               <td>
                 <% if post.photos.first %>
-                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
-                <% else %>
-                  N/A
-                <% end %>
+                    <div class="p_i_photo">
+                      <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                    </div>
+                  <% else %>
+                    N/A
+                  <% end %>
               </td>
-              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
-              <td>post.country</td>
-              <td><%= post.destination %></td>
-              <td><%= post.origin %></td>
-              <td><%= post.distance %></td>
-              <td>
-                <%= image_tag 'album_sub_open.png', alt: :'sub_open' %>
-                <%= image_tag "album_sub_love.png", alt: :"sub_love" %>
-                <%= image_tag "album_sub_trash.png", alt: :"sub_trash" %>
-              </td>
-            </tr>
-            <% end %>
+                <td style="padding-top:43px;">
+                  <div style="width:50px;margin:0 auto;">
+                    <% if post.user.image %>
+                      <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                    <% else %>
+                      <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                    <% end %>
+                  </div>
+                </td>
+                <td style="text-align:center; padding-top:38px;">
+                  <%= post.start_date %><br>
+                  <div style="margin:0 auto; width:2px;">|</div>
+                  <%= post.return_date %>
+                </td>
+                <td> post.country </td>
+                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
+                <td style="text-align:center; padding-top:58px;">
+                  <% favorite = post.find_my_favorite(current_user) %>
+                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                      <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
+                      <% if favorite %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                      <% else %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                      <% end %>
+                      <% if post.favorites.count > 0 %>
+                        <%= post.favorites.count %> 
+                      <% else %>
+                      <% end %>
+                    </div>
+                </td>
+                <td style="text-align:center; padding-top:52px;">
+                  <% if current_user && post.user == current_user %>
+                    <div class="post_locker_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "locker", :locals => { :post => @post } %>
+                      <% if post.status == 'locked' %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td style="text-align:center; padding-top:52px;">
+                    <div class="post_trashcan_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "trashcan", :locals => { :post => @post } %>
+                      <% if post.status == 'trashcan' %>
+                        <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(post,:status => :'draft'),:method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),change_status_post_path(post, :status=> 'trashcan'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>    <!-- 210 -->
           </tbody>
         </table>
       </div>
       <div role="tabpanel" class="tab-pane" id="locked"><!--  -->
         <table class="table table-hover">
-          <thead style="background-color:#3a94ca;color:white;">
+          <thead style="background-color:#3a94ca; color:white;">
             <tr>
               <th>PHOTO</th>
-              <th>DATE</th>
-              <th>COUNTRY</th>
-              <th>DESTINATION</th>
-              <th>ORIGIN</th>
-              <th>MILES</th>
-              <th></th>
+              <th style="text-align:center;">AUTHOR</th>
+              <th style="text-align:center;">DATE</th>
+              <th style="text-align:center;">COUNTRY</th>
+              <th style="text-align:center;">DESTINATION</th>
+              <th style="text-align:center;">ORIGIN</th>
+              <th style="text-align:center;">MILES</th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
             </tr>
           </thead>
           <tbody>
@@ -150,21 +307,70 @@
             <tr>
               <td>
                 <% if post.photos.first %>
-                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
-                <% else %>
-                  N/A
-                <% end %>
+                    <div class="p_i_photo">
+                      <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                    </div>
+                  <% else %>
+                    N/A
+                  <% end %>
               </td>
-              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
-              <td>post.country</td>
-              <td><%= post.destination %></td>
-              <td><%= post.origin %></td>
-              <td><%= post.distance %></td>
-              <td>
-
-              </td>
-            </tr>
-            <% end %>
+                <td style="padding-top:43px;">
+                  <div style="width:50px;margin:0 auto;">
+                    <% if post.user.image %>
+                      <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                    <% else %>
+                      <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                    <% end %>
+                  </div>
+                </td>
+                <td style="text-align:center; padding-top:38px;">
+                  <%= post.start_date %><br>
+                  <div style="margin:0 auto; width:2px;">|</div>
+                  <%= post.return_date %>
+                </td>
+                <td> post.country </td>
+                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
+                <td style="text-align:center; padding-top:58px;">
+                  <% favorite = post.find_my_favorite(current_user) %>
+                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                      <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
+                      <% if favorite %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                      <% else %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                      <% end %>
+                      <% if post.favorites.count > 0 %>
+                        <%= post.favorites.count %> 
+                      <% else %>
+                      <% end %>
+                    </div>
+                </td>
+                <td style="text-align:center; padding-top:52px;">
+                  <% if current_user && post.user == current_user %>
+                    <div class="post_locker_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "locker", :locals => { :post => @post } %>
+                      <% if post.status == 'locked' %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td style="text-align:center; padding-top:52px;">
+                    <div class="post_trashcan_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "trashcan", :locals => { :post => @post } %>
+                      <% if post.status == 'trashcan' %>
+                        <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(post,:status => :'draft'),:method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),change_status_post_path(post, :status=> 'trashcan'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>    <!-- 294 -->
           </tbody>
         </table>
       </div>
@@ -203,7 +409,7 @@
           </tbody>
         </table>
       </div>
-      <div role="tabpanel" class="tab-pane active" id="favorites"><!--  -->
+      <div role="tabpanel" class="tab-pane" id="favorites"><!--  -->
         <table class="table table-hover">
           <thead style="background-color:#3a94ca; color:white;">
             <tr>
@@ -230,12 +436,16 @@
               </td>
               <td style="padding-top:35px;">
                 <div style="width:50px;margin:0 auto;">
-                  <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                  <% if post.user.image %>
+                    <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                  <% else %>
+                    <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                  <% end %>
                 </div>
               </td>
               <td style="text-align:center; padding-top:35px;">
                 <%= post.start_date %><br>
-                <div style="margin:0 auto; width:2px;">|</div><br>
+                <div style="margin:0 auto; width:2px;">|</div>
                 <%= post.return_date %>
               </td>
               <td> post.country </td>
@@ -245,20 +455,23 @@
             </tr>
             <% end %>
           </tbody>
-
         </table>
       </div>
+
       <div role="tabpanel" class="tab-pane" id="trashcan"><!--  -->
         <table class="table table-hover">
-          <thead style="background-color:#3a94ca;color:white;">
+          <thead style="background-color:#3a94ca; color:white;">
             <tr>
               <th>PHOTO</th>
-              <th>DATE</th>
-              <th>COUNTRY</th>
-              <th>DESTINATION</th>
-              <th>ORIGIN</th>
-              <th>MILES</th>
-              <th></th>
+              <th style="text-align:center;">AUTHOR</th>
+              <th style="text-align:center;">DATE</th>
+              <th style="text-align:center;">COUNTRY</th>
+              <th style="text-align:center;">DESTINATION</th>
+              <th style="text-align:center;">ORIGIN</th>
+              <th style="text-align:center;">MILES</th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
+              <th style="text-align:center;"></th>
             </tr>
           </thead>
           <tbody>
@@ -266,22 +479,70 @@
             <tr>
               <td>
                 <% if post.photos.first %>
-                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
-                <% else %>
-                  N/A
-                <% end %>
+                    <div class="p_i_photo">
+                      <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                    </div>
+                  <% else %>
+                    N/A
+                  <% end %>
               </td>
-              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
-              <td>post.country</td>
-              <td><%= post.destination %></td>
-              <td><%= post.origin %></td>
-              <td><%= post.distance %></td>
-              <td><%= post.origin %></td>
-              <td>
-
-              </td>
-            </tr>
-            <% end %>
+                <td style="padding-top:43px;">
+                  <div style="width:50px;margin:0 auto;">
+                    <% if post.user.image %>
+                      <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                    <% else %>
+                      <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                    <% end %>
+                  </div>
+                </td>
+                <td style="text-align:center; padding-top:38px;">
+                  <%= post.start_date %><br>
+                  <div style="margin:0 auto; width:2px;">|</div>
+                  <%= post.return_date %>
+                </td>
+                <td> post.country </td>
+                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
+                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
+                <td style="text-align:center; padding-top:58px;">
+                  <% favorite = post.find_my_favorite(current_user) %>
+                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                      <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
+                      <% if favorite %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                      <% else %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                      <% end %>
+                      <% if post.favorites.count > 0 %>
+                        <%= post.favorites.count %> 
+                      <% else %>
+                      <% end %>
+                    </div>
+                </td>
+                <td style="text-align:center; padding-top:52px;">
+                  <% if current_user && post.user == current_user %>
+                    <div class="post_locker_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "locker", :locals => { :post => @post } %>
+                      <% if post.status == 'locked' %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td style="text-align:center; padding-top:52px;">
+                    <div class="post_trashcan_<%= post.id %>" style="display:inline;">
+                      <%#= render :partial => "trashcan", :locals => { :post => @post } %>
+                      <% if post.status == 'trashcan' %>
+                        <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(post,:status => :'draft'),:method => :post, remote: :true %>
+                      <% else %>
+                        <%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),change_status_post_path(post, :status=> 'trashcan'), :method => :post, remote: :true %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>    <!-- 458 -->
           </tbody>
         </table>
       </div>

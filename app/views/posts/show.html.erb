@@ -31,14 +31,14 @@
   <div class="col-md-4">
     <div class="pull-right">
       <% favorite = @post.find_my_favorite(current_user) %>
-        <div id="favorite_block" style="display:inline; margin-right:20px;">
+        <div id="favorite_block_<%= @post.id %>" style="display:inline; margin-right:20px;">
           <%= render :partial => "favorites/favorite", :locals => { :favorite => favorite } %>
         </div>
       <% if current_user && @post.user == current_user %>
-        <div class="post_locker" style="display:inline;">
+        <div class="post_locker_<%= @post.id %>" style="display:inline;">
           <%= render :partial => "locker", :locals => { :post => @post } %>
         </div>
-        <div class="post_trashcan" style="display:inline;">
+        <div class="post_trashcan_<%= @post.id %>" style="display:inline;">
           <%= render :partial => "trashcan", :locals => { :post => @post } %>
         </div>
       <% end %>    

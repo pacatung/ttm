@@ -1,0 +1,5 @@
+<% if favorite %>
+  <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(@post, favorite), :method => :delete %>
+<% else %>
+  <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(@post), :method => :post, :remote => true %>
+<% end %>

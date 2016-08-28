@@ -1,15 +1,16 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user! => [:index]
   before_action :find_post, :only => [ :show, :edit, :update, :destroy, :change_status]
   def landing
     @posts = Post.order("id DESC").limit(15)
   end
 
   def index
-    @posts = Post.order("id DESC").limit(15)
-    @locked_posts = Post.where(status: :'locked').limit(15)
-    @published_posts = Post.where(status: :'published').limit(15)
+    @all_posts = Post.order("id DESC").limit(15)
+    @locked_posts = Post.where(status: :'locked').limit(15).order('id desc')
+    @published_posts = Post.where(status: :'published').limit(15).order('id desc')
     @draft_posts = Post.where(status: :'draft').limit(15).order('id desc')
-    @trashcan_posts = Post.where(status: :'trashcan').limit(15)
+    @trashcan_posts = Post.where(status: :'trashcan').limit(15).order('id desc')
 
     @favorite_posts = current_user.favorited_posts.order("id DESC").limit(15)
   end

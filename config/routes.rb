@@ -21,17 +21,7 @@ Rails.application.routes.draw do
         post :change_status
       end
       resources :favorites
-      member do
-        # move_to_transcan_post(@post)
-        post :move_to_trashcan
-      end
-
-# trashcan_posts_path
-# /poss/transcan
-
-      collection do
-        get :trashcan
-      end
+      
     end
 
     resources :photos

@@ -1,2 +1,2 @@
-$(".post_locker").html("<%=j render :partial=> "locked", :locals => { :post => @post } %>");
-$(".post_trashcan").html("<%=j render :partial=> "draft", :locals => { :post => @post } %>");
+$(".post_locker_<%= @post.id %>").html("<%=j render :partial=> "locked", :locals => { :post => @post } %>");
+$(".post_trashcan_<%= @post.id %>").html("<%=j render :partial=> "draft", :locals => { :post => @post } %>");
