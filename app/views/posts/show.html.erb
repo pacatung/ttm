@@ -22,32 +22,30 @@
 <!--  -->
 <div class="sub_menu" style="border-bottom:4px solid #ddd5d5">
 <div class="container">
-  <div class="col-md-4">
+  <div class="col-md-2">
     <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px;'), posts_path %>
   </div>
-  <div class="col-md-4 text-center">
-    <%= image_tag "main_location.png", alt: :"icon" %>
+  <div class="col-md-8 text-center">
+    <%= image_tag "main_location.png", alt: :"icon", class: :'main_location' %>
+    <div style="margin:3px 0;color:gray;">
+      <div class="location_label"><%= @post.destination %></div>
+    </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-2" style="margin-top:-14px;">
     <div class="pull-right">
       <% favorite = @post.find_my_favorite(current_user) %>
-        <div id="favorite_block_<%= @post.id %>" style="display:inline; margin-right:20px;">
+        <div id="favorite_block_<%= @post.id %>" style="display:inline;margin-right:10px;color:#3a94ca;">
           <%= render :partial => "favorites/favorite", :locals => { :favorite => favorite } %>
         </div>
       <% if current_user && @post.user == current_user %>
-        <div class="post_locker_<%= @post.id %>" style="display:inline;">
+        <div class="post_locker_<%= @post.id %>" style="display:inline;margin-right:10px;">
           <%= render :partial => "locker", :locals => { :post => @post } %>
         </div>
         <div class="post_trashcan_<%= @post.id %>" style="display:inline;">
           <%= render :partial => "trashcan", :locals => { :post => @post } %>
         </div>
-      <% end %>    
+      <% end %>
     </div>
-  </div>
-  <div class="clearfix"></div>
-  <div class="text-center">
-    <%= @post.destination %>
-  </div>
   </div>
   </div>
 </div>
@@ -56,11 +54,11 @@
 <div class="photo_area" style="background-color: #f2efef;">
   <br>
   <div class="container">
-  <% unless @photos.empty? %>
-    <%= image_tag @post.photos.first.pic.url, style: :'margin-bottom:15px;' %>
-    <% @photos.each do |pic| %>
-    <div class="span3" id="picture_<%= pic.id %>" style="display: inline-block;">
-
+  <% unless @post.photos.empty? %>
+    <%= image_tag @post.photos.first.pic.url, style: :'margin-bottom:15px;display:block;max-width:1140px;' %>
+    <% if @photos %>
+      <% @photos.each do |pic| %>
+      <div class="span3" id="picture_<%= pic.id %>" style="display: inline-block;">
       <%= image_tag pic.pic.url(:medium) %>
         <p style="">
         <%= link_to "Edit picture", photo_path(pic) %>
@@ -70,7 +68,9 @@
             :method => :delete
           %>
         </p>
-    </div>
+      </div>
+    <% end %>
+    <% else %>  <!-- 59 -->
     <% end %>
   <% end %>
   </div>
@@ -79,7 +79,7 @@
 <br><br>
 <div class="container">
   <div class="col-md-6">
-    <%=image_tag current_user.image, :style=>"border-radius:3em; margin-right:20px"%>
+    <%=image_tag @post.user.image, :style=>"border-radius:3em; margin-right:20px"%>
     <div style="display:inline-block;vertical-align: middle;">
       <div style="font-size: 20px;">
         <div>

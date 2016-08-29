@@ -16,6 +16,7 @@
 //= require bootstrap-sprockets
 //= require nested_form_fields
 //= require bootstrap-datepicker
+//= require select2
 
 $(document).on("page:change", function(){
   $('[data-toggle="tooltip"]').tooltip()

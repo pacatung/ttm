@@ -64,14 +64,14 @@
               <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
               <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
               <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-              <td style="text-align:center; padding-top:58px;">
+              <td style="text-align:center; padding-top:53px;">
                 <% favorite = post.find_my_favorite(current_user) %>
-                  <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                  <div id="favorite_block_<%= post.id %>" style="display:inline;">
                     <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                     <% if favorite %>
-                      <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                      <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
                     <% else %>
-                      <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                      <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
                     <% end %>
                     <% if post.favorites.count > 0 %>
                       <%= post.favorites.count %> 
@@ -84,9 +84,9 @@
                   <div class="post_locker_<%= post.id %>" style="display:inline;">
                     <%#= render :partial => "locker", :locals => { :post => @post } %>
                     <% if post.status == 'locked' %>
-                      <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                      <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
                     <% else %>
-                      <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                      <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
                     <% end %>
                   </div>
                 </td>
@@ -154,14 +154,14 @@
                 <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:58px;">
+                <td style="text-align:center; padding-top:53px;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
-                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
                       <% else %>
-                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
                       <% end %>
                       <% if post.favorites.count > 0 %>
                         <%= post.favorites.count %> 
@@ -174,9 +174,9 @@
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
                       <% if post.status == 'locked' %>
-                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
                       <% else %>
-                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
                       <% end %>
                     </div>
                   </td>
@@ -244,14 +244,14 @@
                 <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:58px;">
+                <td style="text-align:center; padding-top:53px;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
-                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
                       <% else %>
-                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
                       <% end %>
                       <% if post.favorites.count > 0 %>
                         <%= post.favorites.count %> 
@@ -264,9 +264,9 @@
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
                       <% if post.status == 'locked' %>
-                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
                       <% else %>
-                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
                       <% end %>
                     </div>
                   </td>
@@ -332,14 +332,14 @@
                 <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:58px;">
+                <td style="text-align:center; padding-top:53px;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
-                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
                       <% else %>
-                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
                       <% end %>
                       <% if post.favorites.count > 0 %>
                         <%= post.favorites.count %> 
@@ -352,9 +352,9 @@
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
                       <% if post.status == 'locked' %>
-                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
                       <% else %>
-                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
                       <% end %>
                     </div>
                   </td>
@@ -504,14 +504,14 @@
                 <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:58px;">
+                <td style="text-align:center; padding-top:53px;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline; margin-right:20px;">
+                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
-                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                        <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
                       <% else %>
-                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛'), post_favorites_path(post), :method => :post, :remote => true %>
+                        <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
                       <% end %>
                       <% if post.favorites.count > 0 %>
                         <%= post.favorites.count %> 
@@ -524,9 +524,9 @@
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
                       <% if post.status == 'locked' %>
-                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock", style: :"margin-right:20px"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
                       <% else %>
-                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock", style: :"margin-right:20px"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                        <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
                       <% end %>
                     </div>
                   </td>
@@ -542,7 +542,7 @@
                   <% end %>
                 </td>
               </tr>
-            <% end %>    <!-- 458 -->
+            <% end %>    <!-- 478 -->
           </tbody>
         </table>
       </div>

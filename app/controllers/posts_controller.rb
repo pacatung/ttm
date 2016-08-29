@@ -42,7 +42,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @photos = @post.photos
+    @photos = @post.photos[1..-1]
   end
 
   def edit

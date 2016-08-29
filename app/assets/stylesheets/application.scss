@@ -3,6 +3,8 @@
 @import "bootstrap-datepicker";
 @import "font-awesome";
 @import "bootstrap-social";
+@import "select2";
+@import "select2-bootstrap";
 
 /* fix login fb button */
 .btn-facebook {
@@ -35,10 +37,13 @@ li.nav_n_p>a>img{
   padding: 20px 15px;
 }
 [id^=p_l_post_]{
-  border: 1px solid white;
+  /* border: 1px solid gray; */
   border-radius: 10px;
   margin:0 15px 25px 0;
   background-color:white;
+  transition: all .4s ease;
+  box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+      
 }
 [id^=p_l_post_]:nth-child(5n-0){
 margin-right: 0px;
@@ -55,6 +60,12 @@ margin-right: 0px;
 [id^=p_l_post_]:hover,[id^=u_s_post_]:hover{
   /* border-bottom: 5px outset blue; */
   color:orange;
+  box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
+  transition: all .4s ease;
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: ease;
+  transition-delay: initial;
 }
 #landing_map{
   height: 500px;
@@ -105,4 +116,14 @@ margin-right: 0px;
 .p_l_post_photo_area, .u_s_post_photo_area{
   height:150px;
   overflow:hidden;
+}
+/* post/show */
+.main_location{
+  margin: -20px 0 0 0;
+}
+.location_label{
+  border: 2px solid grey;
+  border-radius: 19px;
+  display: inline;
+  padding: 0 6px;
 }
