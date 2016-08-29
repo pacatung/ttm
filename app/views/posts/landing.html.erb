@@ -1,19 +1,14 @@
-
 <%= render 'layouts/nav' %>
-<div class="photo_area" style="background-color: #f2efef; margin-top: -20px;">
-  <br><br>
+<div class="sub_menu" style="border-bottom:4px solid #ddd5d5;padding-bottom:20px;">
   <div class="user_bar">
-    <div class="btn-group btn-group-lg">
-      <!-- Split button -->
-      <button type="button" class="btn btn-danger" style="background-color: white;color: #3a94ca;">Recommand</button>
-      <!-- Split button -->
-      <button type="button" class="btn btn-warning" style="background-color: white;color: #3a94ca;">New</button>
-      <!-- Split button -->
-      <button type="button" class="btn btn-info" style="background-color: white;color: #3a94ca;">Following</button>
-    </div>
+    <ul class="nav nav-pills">
+      <li class="active"><a class="recommand" data-toggle="pill" href="#home">Recommand</a></li>
+      <li class="new"><a class="new" data-toggle="pill" href="#menu1">New</a></li>
+      <li class="following"><a class="following" data-toggle="pill" href="#menu2">Following</a></li>
+    </ul>
   </div>
-  <br><br>
-
+</div>
+<div class="photo_area" style="background-color: #f2efef; padding-top: 20px;">
   <div class="container">
     <% @posts.each do |post| %>
       <div id="p_l_post_<%= post.id %>" style="display: inline-block;">
@@ -21,8 +16,8 @@
         <div class="p_l_post_photo">
           <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_l_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
         </div>
-        <p class="text-center" style="margin:0;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
-        <p class="text-center" style="margin:0 0 20px">Lorem ipsum dolor sit.</p>
+        <p class="text-center" style="margin:0;padding:10px 0 0 0"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;"%><%= post.destination %></p>
+        <p class="text-center" style="padding:3px 0;margin:0 10px;border-top:1px solid #e5e5e5;"><%=link_to image_tag(post.user.image, style: :'height:40px;border-radius:20px;margin-right:10px;') %><%= post.user.name %></p>
       </div>
         <% else %>
           N/A

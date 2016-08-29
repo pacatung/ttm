@@ -107,12 +107,30 @@ margin-right: 0px;
   height:150px;
   overflow:hidden;
 }
+.user_bar>ul>li>a{
+  padding:4px 16px;
+  border: 1px solid #3a94ca;
+}
+.user_bar>ul>li>.new{
+  border-right: none;
+  border-left: none;
+}
+.user_bar>.nav-pills > li > a{
+  border-radius: 0px;
+}
+.user_bar>.nav-pills > li + li {
+    margin-left: 0px;
+}
+.user_bar>ul>li>a:hover{
+  background-color: #337ab7 !important;
+  color: white !important;
+}
 /* post/show */
 .main_location{
   margin: -20px 0 0 0;
 }
 .location_label{
-  border: 2px solid grey;
+  border: 1px solid grey;
   border-radius: 19px;
   display: inline;
   padding: 0 6px;
