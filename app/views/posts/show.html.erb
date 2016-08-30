@@ -23,7 +23,7 @@
 <div class="sub_menu" style="border-bottom:4px solid #ddd5d5">
 <div class="container">
   <div class="col-md-2">
-    <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px;'), posts_path %>
+    <%= link_to image_tag('album_index_back_hover.png', style: :'width:30px;'), url_for(:back) %>
   </div>
   <div class="col-md-8 text-center">
     <%= image_tag "main_location.png", alt: :"icon", class: :'main_location' %>
@@ -78,7 +78,11 @@
 <br><br>
 <div class="container">
   <div class="col-md-6">
-    <%=image_tag @post.user.image, :style=>"border-radius:3em; margin-right:20px"%>
+    <% if @post.user.image == nil %>
+    <%= link_to image_tag('member_head.png', :style=>'border-radius:25px; margin-right:20px;width:50px;'), user_path(@post.user)%>
+    <% else %>
+    <%=image_tag @post.user.image, :style=>"border-radius:25px; margin-right:20px;"%>
+    <% end %>
     <div style="display:inline-block;vertical-align: middle;">
       <div style="font-size: 20px;">
         <div>
