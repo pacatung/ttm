@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816112850) do
+ActiveRecord::Schema.define(version: 20160831033612) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "country"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 20160816112850) do
 
   add_index "favorites", ["post_id"], name: "index_favorites_on_post_id"
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
+
+  create_table "follows", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "following_user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "follows", ["following_user_id"], name: "index_follows_on_following_user_id"
+  add_index "follows", ["user_id"], name: "index_follows_on_user_id"
 
   create_table "locations", force: :cascade do |t|
     t.string   "location"

@@ -49,7 +49,9 @@ class User < ActiveRecord::Base
 
    # has_many :reverse_follows, :class_name => "Follow", :foreign_key => "following_user_id"
    # has_many :folllowed_users, :through=>:reverse_follows, source: :user
-
-
-
+   has_many :follows
+   has_many :following_users, :through => :follows, source: :following_user
+ 
+   has_many :reverse_follows, :class_name => "Follow", :foreign_key => "following_user_id"
+   has_many :followed_users, :through => :reverse_follows, :source => "user"
 end
