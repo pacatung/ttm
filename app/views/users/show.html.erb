@@ -1,6 +1,6 @@
 <%= render 'layouts/nav' %>
-<%= @user.inspect %>
-<%= current_user.inspect %>
+@user<%= @user.inspect %> <p></p>
+current_user<%= current_user.inspect %>
 
 <div class="container">
   <div class="row1" style="width: 100px;margin:0 auto;">
@@ -69,12 +69,10 @@
 <div class="container" style="margin-top: 30px;padding-bottom:20px">
   <% if current_user == nil || current_user.id != @user.id %>
     <div>
-      <div class="u_s_member_follow" style="color: #d5d5d5;margin:0px auto;width:350px;">
-        <%= link_to posts_path do
-          image_tag("addtofollow.png",class: :"u_s_member_follow_pic", onmouseover: "this.src='#{asset_path('addtofollow_hover.png')}'", onmouseout: "this.src='#{asset_path('addtofollow.png')}'")
-        end %>&nbsp;
-        <p class="u_s_member_follow_text" style="font-size:26px;display:inline;vertical-align:middle;">Add To My Followings</p>
-      </div>
+      <% follow = current_user.find_my_following(@user) %>
+        <div id="follow_block_<%= @user.id %>" class="u_s_member_follow" style="color: #d5d5d5;margin:0px auto;width:350px;">
+          <%= render :partial => "follows/follow", :locals => { :follow => follow } %>
+        </div>
     </div>
   <% elsif @user.id == current_user.id %>
     <div class="u_s_new_album col-md-3" style="color: #d5d5d5;">

@@ -54,4 +54,8 @@ class User < ActiveRecord::Base
  
    has_many :reverse_follows, :class_name => "Follow", :foreign_key => "following_user_id"
    has_many :followed_users, :through => :reverse_follows, :source => "user"
+
+  def find_my_following(user)
+    user && self.follows.find_by_following_user_id( user.id )
+  end
 end

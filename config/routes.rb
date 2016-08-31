@@ -25,7 +25,9 @@ Rails.application.routes.draw do
     end
 
     resources :photos
-    resources :users
+    resources :users do
+      resources :follows
+    end
 
   # Example resource route with options:
   #   resources :products do
