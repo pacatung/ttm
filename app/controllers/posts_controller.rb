@@ -6,11 +6,11 @@ class PostsController < ApplicationController
   end
 
   def index
-    @all_posts = Post.order("id DESC").limit(15)
-    @locked_posts = Post.where(status: :'locked').limit(15).order('id desc')
-    @published_posts = Post.where(status: :'published').limit(15).order('id desc')
-    @draft_posts = Post.where(status: :'draft').limit(15).order('id desc')
-    @trashcan_posts = Post.where(status: :'trashcan').limit(15).order('id desc')
+    @all_posts = current_user.posts.order("id DESC").limit(15)
+    @locked_posts = current_user.posts.where(status: :'locked').limit(15).order('id desc')
+    @published_posts = current_user.posts.where(status: :'published').limit(15).order('id desc')
+    @draft_posts = current_user.posts.where(status: :'draft').limit(15).order('id desc')
+    @trashcan_posts = current_user.posts.where(status: :'trashcan').limit(15).order('id desc')
 
     @favorite_posts = current_user.favorited_posts.order("id DESC").limit(15)
   end

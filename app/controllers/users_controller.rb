@@ -4,6 +4,12 @@ class UsersController < ApplicationController
   def show
     @posts = @user.posts.order('id desc')
   end
+  def edit
+    
+  end
+  def update
+    
+  end
 
 private
   def set_user
