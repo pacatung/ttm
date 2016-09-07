@@ -1,16 +1,15 @@
-<!-- post/show -->
+<!-- user/show -->
 <% if follow %>
-  <%= link_to image_tag("addtofollow_hover.png",class: :"u_s_member_follow_pic"), user_follow_path(@user, follow), :method => :delete, :remote => true %>&nbsp;
+  <%= link_to image_tag("addtofollow_hover.png",class: :"u_s_member_follow_pic", :'data-toggle'=>'tooltip', :'data-placement'=>'auto top', :title=>'取消追蹤'), user_follow_path(@user, follow), :method => :delete, :remote => true %>&nbsp;
   <p class="u_s_member_followed_text" style="font-size:26px;display:inline;vertical-align:middle;color:#3a94ca;">Add To My Followings</p>
 <% else %>
-  <%= link_to image_tag("addtofollow.png",class: :"u_s_member_follow_pic", onmouseover: "this.src='#{asset_path('addtofollow_hover.png')}'", onmouseout: "this.src='#{asset_path('addtofollow.png')}'"), user_follows_path(@user), :method => :post, :remote => true %>&nbsp;
+  <%= link_to image_tag("addtofollow.png",class: :"u_s_member_follow_pic", onmouseover: "this.src='#{asset_path('addtofollow_hover.png')}'", onmouseout: "this.src='#{asset_path('addtofollow.png')}'",:'data-toggle'=>'tooltip', :'data-placement'=>'auto top', :title=>'追蹤此人'), user_follows_path(@user), :method => :post, :remote => true %>&nbsp;
   <p class="u_s_member_follow_text" style="font-size:26px;display:inline;vertical-align:middle;">Add To My Followings</p>
 <% end %>
-
 <script>
 	$('.u_s_member_follow_pic').hover(function(){
-          $('.u_s_member_follow_text').css("color","#3a94ca");
-          }, function(){
-          $('.u_s_member_follow_text').css("color", "#d5d5d5");
+    $('.u_s_member_follow_text').css("color","#3a94ca");
+      }, function(){
+        $('.u_s_member_follow_text').css("color", "#d5d5d5");
       });
 </script>

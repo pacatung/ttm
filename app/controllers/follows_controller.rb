@@ -1,6 +1,6 @@
 class FollowsController < ApplicationController	 
 	  before_action :authenticate_user!
-	  before_action :set_user
+	  before_action :set_user, :only => [:destroy, :create]
 	def create
     @favorite = @user.find_my_following(current_user)
 
@@ -8,7 +8,11 @@ class FollowsController < ApplicationController
       @follow = Follow.create!( :following_user => @user, :user => current_user )
     end
 
-    render "reload_following"
+    if request.referrer == "http://localhost:3000/posts"
+      render "reload_index_follow"
+    else
+      render "reload_following"
+    end
   end
 
   def destroy
@@ -17,7 +21,11 @@ class FollowsController < ApplicationController
 
     @follow = nil
 
-    render "reload_following"
+    if request.referrer == "http://localhost:3000/posts"
+      render "reload_index_follow"
+    else
+      render "reload_following"
+    end
   end
 
 protected

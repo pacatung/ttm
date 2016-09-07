@@ -1,0 +1,1 @@
+$("#follow_block_<%= @user.id %>").html("<%=j render :partial => "follows/index_follow", :locals => { :follow => @follow, :user =>@user } %>");

@@ -1,0 +1,6 @@
+<% @user = user %>   <!--index -->
+  <% if follow %>
+  <%= link_to image_tag("album_sub_follow.png",:'data-toggle'=>'tooltip', :'data-placement'=>'auto top', :title=>'取消追蹤', class: :"p_i_member_follow_pic", style: :'width:30px;'), user_follow_path(@user, follow), :method => :delete, :remote => true %>
+<% else %>
+  <%= link_to image_tag("album_sub_unfollow.png", style: :'width:30px;', class: :"p_i_member_follow_pic", onmouseover: "this.src='#{asset_path('album_sub_follow.png')}'", onmouseout: "this.src='#{asset_path('album_sub_unfollow.png')}'",:'data-toggle'=>'tooltip', :'data-placement'=>'auto top', :title=>'追蹤此人'), user_follows_path(@user), :method => :post, :remote => true %>
+<% end %>

@@ -3,7 +3,6 @@
   <h1>Hi, <%= current_user.name %></h1>
   <p>Welcome to manage albums !</p>
   <p></p>
-<%= current_user.inspect %>
   <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -371,7 +370,7 @@
                   <% end %>
                 </td>
               </tr>
-            <% end %>    <!-- 294 -->
+            <% end %>    <!-- 306 -->
           </tbody>
         </table>
       </div>
@@ -379,31 +378,41 @@
         <table class="table table-hover">
           <thead style="background-color:#3a94ca;color:white;">
             <tr>
-              <th>#</th>
-              <th>DATE</th>
-              <th>DESTINATION</th>
-              <th>ORIGIN</th>
+              <th>ID</th>
+              <th>COUNTRY</th>
+              <th>NEW POST</th>
+              <th>Total Posts</th>
               <th>MILES</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <% @published_posts.each do |post| %>
+            <% @my_following_users.each do |user| %>
             <tr>
-              <td>
-                <% if post.photos.first %>
-                <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+              <td style="padding:53px 0 0 15px;display:block;overflow:hidden;text-overflow:ellipsis;">
+                <% if user.image %>
+                  <%= link_to image_tag(user.image, style: :'border-radius:25px;'), user_path(user) %>
                 <% else %>
-                  N/A
+                  <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(user) %>
                 <% end %>
+                <%= user.name %>
               </td>
-              <td><%= post.start_date %> <br><span>|</span><br><%= post.return_date %></td>
-              <td><%= post.destination %></td>
-              <td><%= post.origin %></td>
-              <td><%= post.distance %></td>
-              <td><%= post.origin %></td>
+              <td style="padding-top:70px;">country</td>
               <td>
-
+                <% lastest_post = user.posts.last %>
+                <% if user.posts.last == nil %>
+                  <p>~~~~~ The user haven't post yet ~~~~</p>
+                <% else %>
+                  <%= link_to image_tag(user.posts.last.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(lastest_post) %>
+                <% end %>  
+               </td> 
+              <td style="padding-top:70px;"><%= user.posts.count %></td>
+              <td style="padding-top:70px;">< MILES ></td>
+              <td style="padding-top:62px;">
+                <div id="follow_block_<%= user.id %>">
+                  <% follow = current_user.find_my_following(user) %>
+                  <%= render :partial => "follows/index_follow", :locals => { :follow => follow, :user => user } %>
+                </div>
               </td>
             </tr>
             <% end %>

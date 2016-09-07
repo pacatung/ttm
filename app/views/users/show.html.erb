@@ -1,6 +1,11 @@
 <%= render 'layouts/nav' %>
 @user<%= @user.inspect %> <p></p>
 current_user<%= current_user.inspect %>
+<p>
+  <%= request.url.inspect %>
+      <%= request.env['PATH_INFO'].inspect %> <br>
+      <%= url_for(:back) %>
+</p>
 
 <div class="container">
   <div class="row1" style="width: 100px;margin:0 auto;">
@@ -95,7 +100,7 @@ current_user<%= current_user.inspect %>
       <p class="u_s_member_favorit_text" style="font-size:26px;display:inline;vertical-align:middle;">My followings</p>
     </div>
     <div class="u_s_member_trash col-md-3" style="color: #d5d5d5;">
-      <%= link_to posts_path do
+      <%= link_to posts_path anchor: 'trashcan' do
         image_tag("member_trash.png",class: :"u_s_member_trash_pic", style: :"width:20%", onmouseover: "this.src='#{asset_path('member_trash_hover.png')}'", onmouseout: "this.src='#{asset_path('member_trash.png')}'")
       end %>&nbsp;
       <p class="u_s_member_trash_text" style="font-size:26px;display:inline;vertical-align:middle;">Trash Can</p>
