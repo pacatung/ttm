@@ -45,7 +45,12 @@ li.nav_n_p>a>img{
   width: 320px;
 }
 .signin{
-  background:url("signin_background.gif") no-repeat center center;
+  background:url("signin_background_map-01.jpg") no-repeat;
+  background-size: cover;
+}
+.signup{
+  background:url("signin background_map2-01.jpg") no-repeat;
+  background-size: cover;
 }
 .login_block{
   /* border: 1px solid #3a94ca; */
