@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user! => [:index]
   before_action :find_post, :only => [ :show, :edit, :update, :destroy, :change_status]
   def landing
-    @posts = Post.order("id DESC").limit(15)
+    @posts = Post.where(status: :'published').order("id DESC").limit(15)
   end
 
   def index

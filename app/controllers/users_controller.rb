@@ -5,12 +5,11 @@ class UsersController < ApplicationController
     @posts = @user.posts.order('id desc')
   end
   def edit
-    
   end
   def update
     @user.update(user_params)
 
-    redirect_to :action => :show, :id => @user
+    redirect_to user_path(@user)
   end
 
 private
