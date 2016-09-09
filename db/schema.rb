@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831033612) do
+ActiveRecord::Schema.define(version: 20160909052819) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "country"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160831033612) do
     t.string   "image"
     t.string   "fb_token"
     t.datetime "fb_expires_at"
+    t.string   "about_user"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

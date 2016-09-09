@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-   before_action :set_user, :only=>[:show]
+   before_action :set_user, :only=>[:show,:edit, :update]
 
   def show
     @posts = @user.posts.order('id desc')
@@ -8,7 +8,9 @@ class UsersController < ApplicationController
     
   end
   def update
-    
+    @user.update(user_params)
+
+    redirect_to :action => :show, :id => @user
   end
 
 private
@@ -17,6 +19,6 @@ private
   end
 
   def user_params
-    params.require(:user).permit( :email, :image)
+    params.require(:user).permit( :email, :image, :name, :about_user)
   end
 end

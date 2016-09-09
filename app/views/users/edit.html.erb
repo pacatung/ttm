@@ -1,1 +1,74 @@
 <%= render 'layouts/nav' %>
+<div class="container">
+	<div class="row" style="width: 100px;margin:0 auto;">
+	    <% if @user.image %>
+	      <%= image_tag @user.image+"?height=200", :style=>"height:100px;border-radius:4em;margin-top:30px" %>
+	    <% else %>
+	      <%= image_tag "member_head.png", :style=>"height:100px;border-radius:4em;margin-top:30px" %>
+	    <% end %>
+	  </div>
+		<%= form_for @user, :url => { :controller => 'users', :action => 'update', :id => @user } do |u| %>
+		  <div style="text-align: center;margin-top:20px;">
+			  <div class="col-md-4">
+			    <div class="user_show_divider"></div>
+			  </div>
+	      <div class="col-md-4" style="background-color:white;margin:0 auto;">
+		      <%= u.text_field :name, :class => "form-control", :style=>"width:80%;margin:11px auto;", placeholder: :'輸入暱稱' %>
+		    </div>
+	      <div class="col-md-4">
+	  	    <div class="user_show_divider"></div>	      	
+	      </div>
+    </div>
+		<div class="clearfix"></div>
+	  <div style="width:40%;margin:0px auto 15px;">
+	    <%= image_tag 'france.png', :style=>"width:10%;"%>
+	    <%= image_tag 'germany.png', :style=>"width:10%;"%>
+	    <%= image_tag 'united kingdom.png', :style=>"width:10%;"%>
+	    <%= image_tag 'england.png', :style=>"width:10%;"%>
+	    <%= image_tag 'united states.png', :style=>"width:10%;"%>
+	    <br>
+	    <%= image_tag 'flag_Australia.png'%>
+	    <%= image_tag 'flag_Australia.png'%>
+	    <%= image_tag 'flag_Australia.png'%>
+	    <%= image_tag 'flag_Austria.png'%>
+	    <%= image_tag 'flag_Austria.png'%>
+	    <%= image_tag 'flag_Austria.png'%>
+	    <%= image_tag 'flag_Azerbaijan.png'%>
+	  </div>
+
+	  <div style="border-width:1px;border-style:dotted none;border-color:gray;padding:5px;width:40%;margin:10px auto;">
+	    <p style="color:gray;font-size: 20px;display: inline-block;margin:10px 0 10px 10px">Cumulative Miles</p>
+	    <p class="pull-right" style="margin:10px 10px 10px 0;font-size: 20px;display: inline-block;">453235</p>
+	    <br>
+	    <p style="color:gray;font-size: 20px;display: inline-block;margin-left: 10px;">Rank</p>
+	    <p class="pull-right" style="margin-right:10px;font-size: 20px;display: inline-block;">1/453235</p>
+	  </div>
+
+	  <div style="width:40%;margin:0px auto;text-align: center;">
+	    <div style="width:30%;display: inline-block;">
+	      <p style="color:gray;font-size: 20px;">Albums</p>
+	      <p style="font-size: 20px;">16</p>
+	    </div>
+	    <div style="width:33%;display: inline-block;border-width:1px;border-style:none dotted;border-color:gray;padding-left: 5px;">
+	      <p style="color:gray;font-size: 20px;">Followers</p>
+	      <p style="font-size: 20px;">168168168</p>
+	    </div>
+	    <div style="width:30%;display: inline-block;">
+	      <p style="color:gray;font-size: 20px;">Following</p>
+	      <p style="font-size: 20px;">999</p>
+	    </div>
+	  </div>
+
+	  <div>
+	    <div class="text-center" style="margin-top: 30px;">
+	      <p style="color: #3a94ca;font-size:26px;">About</p>
+	    </div>
+	    <div style="width:40%;margin:0px auto;">
+		    <%= u.text_area :about_user, :class =>"form-control", rows: :'10', style: :'margin-bottom:50px;' %>
+  	    <%= u.submit "儲存更新", class: :'btn btn-info', style: :'padding:5px 40px;float:right;' %>
+	    </div>
+	  </div>
+	  <% end -%>  <!-- 10 -->
+	</div>
+</div>
+<br><br><br>

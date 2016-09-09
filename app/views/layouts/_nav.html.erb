@@ -42,7 +42,7 @@
             <li><%= link_to '個人資料', user_path(current_user) %></li>
             </%>
             <li><%= link_to '相簿管理', posts_path %></li>
-            <li><%= link_to '設定', users_path %></li>
+            <li><%= link_to '帳號設定', edit_user_path(current_user) %></li>
             <li role="separator" class="divider"></li>
             <li><%= link_to '登出', destroy_user_session_path, :method => :delete %></li>
             <% else %>
