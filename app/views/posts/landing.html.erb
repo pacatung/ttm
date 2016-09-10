@@ -14,15 +14,21 @@
       <div id="p_l_post_<%= post.id %>" style="display: inline-block;">
         <% if post.photos.first %>
           <div class="p_l_post_photo">
-            <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_l_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
+            <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_l_post_photo_area",style: :"border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
           </div>
         <% else %>
           <div class="p_l_post_photo">
-            <%= link_to image_tag("default.jpg", class: :"p_l_post_photo_area",style: :"width:210px;border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
+            <%= link_to image_tag("default.jpg", class: :"p_l_post_photo_area",style: :"border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
           </div>
         <% end %>
-          <p class="p_l_destination text-center" style="margin:0;width:210px;padding:4px 24px 0 24px;text-overflow:ellipsis;overflow:hidden;white-space: nowrap;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;" %><%= post.destination %></p>
-          <p class="text-center" style="padding:3px 0;margin:0 10px;border-top:1px solid #e5e5e5;"><%=link_to image_tag(post.user.image, style: :'height:40px;border-radius:20px;margin-right:10px;'), user_path(post.user) %><%= post.user.name %></p>
+          <p class="p_l_destination text-center" style="margin:0;padding:4px 24px 0 24px;text-overflow:ellipsis;overflow:hidden;white-space: nowrap;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;" %><%= post.destination %></p>
+          <p class="text-center" style="padding:3px 0;margin:0 10px;border-top:1px solid #e5e5e5;">
+            <% if post.user.image %>
+              <%=link_to image_tag(post.user.image, style: :'height:40px;border-radius:20px;margin-right:10px;'), user_path(post.user) %>
+            <% else %>
+              <%= image_tag "member_head.png", :style=>"height:40px;border-radius:4em;margin-right:10px" %>
+            <% end %><%= post.user.name %>
+          </p>
       </div>
     <% end %>
   </div>
