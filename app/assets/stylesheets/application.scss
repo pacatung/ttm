@@ -81,7 +81,7 @@ margin-right: 0px;
   transition-timing-function: ease;
   transition-delay: initial;
 }
-img.p_l_post_photo_area,.img.u_s_post_photo_area{
+img.p_l_post_photo_area,img.u_s_post_photo_area{
   width: 210px;
 }
 .p_l_destination,.u_s_destination{
@@ -169,8 +169,8 @@ img.p_l_post_photo_area,.img.u_s_post_photo_area{
   display: inline;
   padding: 0 6px;
 }
-/* 375px */
-@media only screen and (max-width: 375px) {
+/* 480px */
+@media only screen and (max-width: 480px) {
 [id^=p_l_post_],[id^=u_s_post_]{
   border-radius: 10px;
   margin:0 0 25px 0;
@@ -188,8 +188,32 @@ img.p_l_post_photo_area,img.u_s_post_photo_area{
 .p_l_destination,.u_s_destination{
   width: 170px;
 }
+.navbar-default .navbar-toggle .icon-bar{
+  background-color: white;
+}
+.navbar-default .navbar-toggle{
+  border-color: #3a94ca;
+}
+ul.nav.navbar-nav.navbar-right>li.dropdown.open>ul.dropdown-menu>li>a{
+  color: white;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+  background-color: #3a94ca;
+}
+.navbar-nav> .dropdown>.dropdown-toggle{
+  width: 10%;
+}
 .navbar-header>a>img{
   width: 40%;
+}
+.u_s_about{
+  width: 80%;
+}
+}
+/* 767px */
+@media (min-width: 481px) and (max-width: 767px) {
+.navbar-header>a>img{
+  width: 30%;
 }
 .navbar-default .navbar-toggle .icon-bar{
   background-color: white;
@@ -197,7 +221,16 @@ img.p_l_post_photo_area,img.u_s_post_photo_area{
 .navbar-default .navbar-toggle{
   border-color: #3a94ca;
 }
+ul.nav.navbar-nav.navbar-right>li.dropdown.open>ul.dropdown-menu>li>a{
+  color: white;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+  background-color: #3a94ca;
+}
+.navbar-nav> .dropdown>.dropdown-toggle{
+  width: 10%;
+}
 .u_s_about{
-  width: 80%;
+  width: 70%;
 }
 }
