@@ -15,7 +15,7 @@ class Post < ActiveRecord::Base
   has_many :favorites
   has_many :favorited_users, :through=>:favorites, source: :user
 
-  STATUS=["draft","published","locked","trashcan"]
+  STATUS=["published","draft","locked","trashcan"]
 
   def can_edit_by_user?(user)
     user && self.user == user

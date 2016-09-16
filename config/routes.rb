@@ -1,3 +1,4 @@
+
 Rails.application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   devise_scope :user do
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
         post :change_status
       end
       resources :favorites
-      
+      resources :countries, controller: :'post_countries'
     end
 
     resources :photos

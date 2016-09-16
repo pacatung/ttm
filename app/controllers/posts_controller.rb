@@ -13,8 +13,8 @@ class PostsController < ApplicationController
     @trashcan_posts = current_user.posts.where(status: :'trashcan').limit(15).order('id desc')
     @my_following = current_user.follows(params[:id])
     @my_following_users_ids = []
-    @my_following.each do |following|
-      @my_following_users_ids.push(following.following_user_id)
+    @my_following.each do |my_following|
+      @my_following_users_ids.push(my_following.following_user_id)
     end
     @following_users_last_posts=[]
     @my_following_users_ids.each do |user|
@@ -94,7 +94,7 @@ private
   end
   def post_params
     params.require(:post).permit( :title, :start_date,:return_date, :origin, :destination, :distance, :description,:user_id,
-     :status, :publish_on, photos_attributes: [:post_id, :photo_location, :pic],countries_attributes:[:country,:_destroy,:id],
-      locations_attributes:[:location,:_destroy,:id])
+     :status, :publish_on, :countries, photos_attributes: [:post_id, :photo_location, :pic],countries_attributes:[:name,:_destroy,:id,:priority],
+      locations_attributes:[:location,:_destroy,:id,:priority])
   end
 end

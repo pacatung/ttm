@@ -9,4 +9,7 @@ class Country < ActiveRecord::Base
 
   has_many :post_countryships
   has_many :posts, :through=>:post_countryships
+
+  # belongs_to :post
+  has_many :users, :through=>:post_countryships
 end

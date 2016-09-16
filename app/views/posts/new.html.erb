@@ -20,35 +20,37 @@
       <%= f.select :status, post_status_options[0..1], :class => "form-control" %>
     </div>
     <p></p>
+    <!--  -->
+    <div class="form-group">
+      <%= f.label :countries, "國家", :class => "" %> <br>
+      <!-- <div class="col-sm-9"> -->
+        <%= f.nested_fields_for :countries do |ff| %>
+        <div class="col-sm-10 col-xs-10">
+          <%= ff.text_field :name, :class => "form-control", :placeholder=>"旅行國家", :id=>"country" %>
+        </div>
+        <div class="col-sm-1 col-xs-2">
+          <%= ff.remove_nested_fields_link 'x', :class => 'btn btn-danger', role: 'button' %>
+        </div>
+        <div class="clearfix"></div>
+        <p></p>
+        <% end %>
+        <div class="col-sm-12">
+          <%= f.add_nested_fields_link :countries, '＋ 新增旅行國家', :class => "btn btn-primary" %>
+        </div>
+      <!-- </div> -->
+    </div>
+    <div class="clearfix"></div>
+
+<!--  -->
+    <p></p>
     <div class="field">
-      <%= f.label :origin, '出發地' %><br/>
-      <div class="col-md-6">
-      <%= f.text_field :origin, autocomplete: "on", :class =>"form-control", :id=>"origin-input", :placeholder=>"旅行出發地" %>
+      <%= f.label :origin, '旅行出發地' %><br/>
+      <div class="col-md-12">
+        <%= f.text_field :origin, autocomplete: "on", :class =>"form-control", :id=>"origin-input", :placeholder=>"旅行出發地" %>
       </div>
     </div>
 
-<!--  -->
 <% if false %>
-    <div class="form-group">
-      <%= f.label :countries, "國家", :class => "col-sm-3" %>
-      <div class="col-sm-9">
-        <%= f.nested_fields_for :countries do |ff| %>
-        <div class="col-sm-10 col-xs-10">
-          <%= ff.text_field :country, :class => "form-control input-sm"  %>
-        </div>
-        <div class="col-sm-1 col-xs-2">
-          <%= ff.remove_nested_fields_link 'x', :class => 'btn-sm btn-danger', role: 'button' %>
-        </div>
-        <% end %>
-        <p></p>
-        <div class="clearfix"></div>
-        <div class="col-sm-12">
-          <%= f.add_nested_fields_link :countries, '新增旅行國家', :class => "btn btn-primary" %>
-        </div>
-      </div>
-    </div>
-<% end %>
-<!--  -->
     <div class="form-group">
       <div class="col-sm-12 col-md-6">
         <%= f.add_nested_fields_link :locations, '＋ 新增旅遊地點', :class => "btn btn-primary" %>
@@ -58,7 +60,7 @@
       <!-- <div class="col-sm-9"> -->
       <%= f.nested_fields_for :locations do |ff| %>
       <div class="col-sm-10 col-xs-10 col-md-6">
-        <%= ff.text_field :location, :class => "form-control input-sm", :placeholder=>"旅遊地點"  %>
+        <%= ff.text_field :name, :class => "form-control", :placeholder=>"旅遊地點"  %>
       </div>
       <div class="col-sm-1 col-xs-2 col-md-6">
         <%= ff.remove_nested_fields_link 'X', :class => 'btn-sm btn-danger', role: 'button' %>
@@ -69,12 +71,17 @@
       <p></p>
       <!-- </div> -->
     </div>
+<% end %>
 
     <div class="clearfix"></div>
-    <div class="field">
-      <%= f.label :locations, '目的地' %><br/>
+    <p> </p>
+    <div class="field col-md-12">
+      <%= f.label :destination, '目的地' %><br/>
       <%= f.text_field :destination, autocomplete: "off", :class =>"form-control", :id=>"destination-input", :placeholder=>"旅行目的地" %>
+      <p></p>      
     </div>
+
+    <div class="clearfix"></div>
 
     <div class="field">
       <%= f.label :distance, '' %><br >
@@ -82,7 +89,7 @@
     </div>
     <div class="field">
       <%= f.label :description, '' %><br >
-      <%= f.text_area :description, :class =>"form-control" %>
+      <%= f.text_area :description, :class =>"form-control", :rows =>"8" %>
     </div>
     <br>
     <div class="form-group">
@@ -99,7 +106,7 @@
 <div id="post_new_map" style="height:800px;"></div></div>
 </div>
 <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&libraries=places&callback=postNewMap"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh7eo2VWtvG5qnxk2VvAJsNis4WgHHveA&language=en&libraries=places&callback=postNewMap"
     async defer>
 </script>
 
@@ -172,6 +179,32 @@ function postNewMap() {
       new google.maps.places.Autocomplete(destination_input);
   destination_autocomplete.bindTo('bounds', map);
 
+  // (Place Autocomplete Address Form)
+  var componentForm = {
+    country: 'long_name'
+  };
+  destination_autocomplete.addListener('place_changed', fillInAddress);
+  // "Place Autocomplete Address Form" [START region_fillform]
+  function fillInAddress() {
+    // Get the place details from the autocomplete object.
+    var place = destination_autocomplete.getPlace();
+
+    for (var component in componentForm) {
+      document.getElementById(component).value = '';
+      document.getElementById(component).disabled = false;
+    }
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+      var addressType = place.address_components[i].types[0];
+      if (componentForm[addressType]) {
+        var val = place.address_components[i][componentForm[addressType]];
+        document.getElementById(addressType).value = val;
+      }
+    }
+  }// [END region_fillform] (Place Autocomplete Address Form)
+
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
   // function setupClickListener(id, mode) {
@@ -206,7 +239,7 @@ function postNewMap() {
     origin_place_id = place.place_id;
     route(origin_place_id, destination_place_id, travel_mode,
           directionsService, directionsDisplay);
-  });
+  }); //196
 
   destination_autocomplete.addListener('place_changed', function() {
     var place = destination_autocomplete.getPlace();
@@ -221,7 +254,7 @@ function postNewMap() {
     destination_place_id = place.place_id;
     route(origin_place_id, destination_place_id, travel_mode,
           directionsService, directionsDisplay);
-  });
+  });//211
 
   function route(origin_place_id, destination_place_id, travel_mode,
                  directionsService, directionsDisplay) {
@@ -239,6 +272,6 @@ function postNewMap() {
         window.alert('Directions request failed due to ' + status);
       }
     });
-  }
-}
+  }//227
+}//116
 </script>

@@ -34,26 +34,14 @@ class User < ActiveRecord::Base
    has_many :favorites
    has_many :favorited_posts, :through=>:favorites, source: :post
 
-
-   # add follow model:
-   #   user_id
-   #   follow_user_id
-   #
-   #class Follow < ActiveRecord::Base
-   #  belongs_to :user
-   #  belongs_to :following_user, :class_name => "User", :foreign_key => "following_user_id"
-   #end
-
-   # has_many :follows
-   # has_many :following_users, :through=>:follows, source: :following_user
-
-   # has_many :reverse_follows, :class_name => "Follow", :foreign_key => "following_user_id"
-   # has_many :folllowed_users, :through=>:reverse_follows, source: :user
    has_many :follows
    has_many :following_users, :through => :follows, source: :following_user
  
    has_many :reverse_follows, :class_name => "Follow", :foreign_key => "following_user_id"
    has_many :followed_users, :through => :reverse_follows, :source => "user"
+
+   has_many :countries, :through => :post_countryships
+
 
   def find_my_following(user)
     user && self.follows.find_by_following_user_id( user.id )

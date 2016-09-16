@@ -50,7 +50,7 @@
             <% else %>
               <li><%#= link_to "Facebook", user_omniauth_authorize_path(:facebook) %></li>
               <li ><%= link_to '註冊', new_registration_path(:user), style: :'color:white;'%></li>
-              <li style="color:white;margin-top:14px;">|</li>
+              <li class="hidden-xs" style="color:white;margin-top:14px;">|</li>
               <li><%= link_to '登入', new_session_path(:user) ,style: :'color:white;'%></li>
             <% end %>
           </ul>
