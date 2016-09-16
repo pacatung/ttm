@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @country_ids.each do |ci|
       @countrys.push(Country.find(ci))
     end 
-    puts @countrys.inspect
+    @country_names = @countrys.collect(&:name).uniq
 # bad example
     # @post_countrys = []
     # @posts.map do |post|

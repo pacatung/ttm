@@ -3,6 +3,7 @@
   <h1>Hi, <%= current_user.name %></h1>
   <p>Welcome to manage albums !</p>
   <p></p>
+  <%= @post_counrtys %>
   <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -60,7 +61,12 @@
                 <div style="margin:0 auto; width:2px;">|</div>
                 <%= post.return_date %>
               </td>
-              <td> post.country </td>
+              <td>
+                <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                  <% country = Country.find(pc.country_id) %>
+                  <%= country_flag(country.name, 40) %>
+                <% end %>
+              </td>
               <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
               <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
               <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
@@ -328,7 +334,12 @@
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td> post.country </td>
+                <td>
+                  <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                    <% country = Country.find(pc.country_id) %>
+                    <%= country_flag(country.name, 40) %>
+                  <% end %>
+                </td>
                 <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
                 <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
