@@ -20,91 +20,93 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="all">
       <!--  -->
-      <table class="table table-hover">
+      <table class="table table-hover table-responsive">
         <thead style="background-color:#3a94ca; color:white;">
           <tr>
-            <th>PHOTO</th>
-            <th style="text-align:center;">AUTHOR</th>
-            <th style="text-align:center;">DATE</th>
-            <th style="text-align:center;">COUNTRY</th>
-            <th style="text-align:center;">DESTINATION</th>
-            <th style="text-align:center;">ORIGIN</th>
-            <th style="text-align:center;">MILES</th>
-            <th style="text-align:center;"></th>
-            <th style="text-align:center;"></th>
-            <th style="text-align:center;"></th>
+            <th class="p_i_all_post_photo_th">PHOTO</th>
+            <th class="p_i_all_post_author_th" style="text-align:center;">AUTHOR</th>
+            <th class="p_i_all_post_date_th" style="text-align:center;">DATE</th>
+            <th class="p_i_all_post_country_th" style="text-align:center;">COUNTRY</th>
+            <th class="p_i_all_post_destination_th" style="text-align:center;">DESTINATION</th>
+            <th class="p_i_all_post_origin_th" style="text-align:center;">ORIGIN</th>
+            <th class="p_i_all_post_distance_th" style="text-align:center;">MILES</th>
+            <th class="p_i_all_post_favorite_th" style="text-align:center;"></th>
+            <th class="p_i_all_post_locker_th" style="text-align:center;"></th>
+            <th class="p_i_all_post_trashcan_th" style="text-align:center;"></th>
           </tr>
         </thead>
         <tbody>
           <% @all_posts.each do |post| %>
           <tr>
-            <td>
+            <td class="p_i_all_post_photo_td">
               <% if post.photos.first %>
                   <div class="p_i_photo">
                     <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
                   </div>
                 <% else %>
-                  N/A
+                  <%= link_to image_tag('default.jpg', class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
                 <% end %>
             </td>
-              <td style="padding-top:43px;">
-                <div style="width:50px;margin:0 auto;">
-                  <% if post.user.image %>
-                      <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
-                    <% else %>
-                      <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
-                    <% end %>
+            <td class="p_i_all_post_author_td" style="vertical-align:middle;">
+              <div style="width:50px;margin:0 auto;">
+                <% if post.user.image %>
+                    <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                  <% else %>
+                    <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                  <% end %>
+              </div>
+            </td>
+            <td class="p_i_all_post_date_td" style="text-align:center; vertical-align:middle;">
+              <%= post.start_date %><br>
+              <div style="margin:0 auto; width:2px;">|</div>
+              <%= post.return_date %>
+            </td>
+            <td class="p_i_all_post_country_td" style="vertical-align:middle;">
+             <div style=" margin:0 auto;width:40px">
+              <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                <% country = Country.find(pc.country_id) %>
+                <%= country_flag(country.name, "40px") %>
+              <% end %>
+              </div>
+            </td>
+            <td class="p_i_all_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+            <td class="p_i_all_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
+            <td class="p_i_all_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
+            <td class="p_i_all_post_favorite_td" style="text-align:center; vertical-align:middle;">
+              <% favorite = post.find_my_favorite(current_user) %>
+                <div id="favorite_block_<%= post.id %>" style="display:inline;">
+                  <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
+                  <% if favorite %>
+                    <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                  <% else %>
+                    <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
+                  <% end %>
+                  <% if post.favorites.count > 0 %>
+                    <%= post.favorites.count %> 
+                  <% else %>
+                  <% end %>
+                </div>
+            </td>
+            <td class="p_i_all_post_locker_td" style="text-align:center; vertical-align:middle;">
+              <% if current_user && post.user == current_user %>
+                <div class="post_locker_<%= post.id %>" style="display:inline;">
+                  <%#= render :partial => "locker", :locals => { :post => @post } %>
+                  <% if post.status == 'locked' %>
+                    <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
+                  <% else %>
+                    <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
+                  <% end %>
                 </div>
               </td>
-              <td style="text-align:center; padding-top:38px;">
-                <%= post.start_date %><br>
-                <div style="margin:0 auto; width:2px;">|</div>
-                <%= post.return_date %>
-              </td>
-              <td>
-                <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
-                  <% country = Country.find(pc.country_id) %>
-                  <%= country_flag(country.name, 40) %>
-                <% end %>
-              </td>
-              <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
-              <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
-              <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-              <td style="text-align:center; padding-top:53px;">
-                <% favorite = post.find_my_favorite(current_user) %>
-                  <div id="favorite_block_<%= post.id %>" style="display:inline;">
-                    <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
-                    <% if favorite %>
-                      <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
-                    <% else %>
-                      <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
-                    <% end %>
-                    <% if post.favorites.count > 0 %>
-                      <%= post.favorites.count %> 
-                    <% else %>
-                    <% end %>
-                  </div>
-              </td>
-              <td style="text-align:center; padding-top:52px;">
-                <% if current_user && post.user == current_user %>
-                  <div class="post_locker_<%= post.id %>" style="display:inline;">
-                    <%#= render :partial => "locker", :locals => { :post => @post } %>
-                    <% if post.status == 'locked' %>
-                      <%= link_to image_tag("album_sub_lock.png",alt: :"sub_lock"),change_status_post_path(post,:status => :'published'), :method => :post, remote: :true %>
-                    <% else %>
-                      <%= link_to image_tag("album_sub_open.png",alt: :"sub_lock"), change_status_post_path(post, :status=> 'locked'), :method => :post, remote: :true %>
-                    <% end %>
-                  </div>
-                </td>
-                <td style="text-align:center; padding-top:52px;">
-                  <div class="post_trashcan_<%= post.id %>" style="display:inline;">
-                    <%#= render :partial => "trashcan", :locals => { :post => @post } %>
-                    <% if post.status == 'trashcan' %>
-                      <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(post,:status => :'draft'),:method => :post, remote: :true %>
-                    <% else %>
-                      <%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),change_status_post_path(post, :status=> 'trashcan'), :method => :post, remote: :true %>
-                    <% end %>
-                  </div>
+              <td class="p_i_all_post_trashcan_td" style="text-align:center; vertical-align:middle;">
+                <div class="post_trashcan_<%= post.id %>" style="display:inline;">
+                  <%#= render :partial => "trashcan", :locals => { :post => @post } %>
+                  <% if post.status == 'trashcan' %>
+                    <%= link_to image_tag("album_sub_trash_hover.png",alt: :"sub_trashcan"),change_status_post_path(post,:status => :'draft'),:method => :post, remote: :true %>
+                  <% else %>
+                    <%= link_to image_tag("album_sub_trash.png",alt: :"sub_trashcan"),change_status_post_path(post, :status=> 'trashcan'), :method => :post, remote: :true %>
+                  <% end %>
+                </div>
                 <% end %>
               </td>
             </tr>
@@ -133,7 +135,7 @@
           <tbody>
             <% @published_posts.each do |post| %>
             <tr>
-              <td>
+              <td class="p_i_published_post_photo_td">
                 <% if post.photos.first %>
                     <div class="p_i_photo">
                       <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
@@ -142,7 +144,7 @@
                     N/A
                   <% end %>
               </td>
-                <td style="padding-top:43px;">
+                <td class="p_i_published_post_author_td" style="vertical-align:middle;">
                   <div style="width:50px;margin:0 auto;">
                     <% if post.user.image %>
                       <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
@@ -151,16 +153,16 @@
                     <% end %>
                   </div>
                 </td>
-                <td style="text-align:center; padding-top:38px;">
+                <td class="p_i_published_post_date_td" style="text-align:center; vertical-align:middle;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td> post.country </td>
-                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:53px;">
+                <td class="p_i_published_post_country_td"> post.country </td>
+                <td class="p_i_published_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_published_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
+                <td class="p_i_published_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
+                <td class="p_i_published_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
                     <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
@@ -175,7 +177,7 @@
                       <% end %>
                     </div>
                 </td>
-                <td style="text-align:center; padding-top:52px;">
+                <td class="p_i_published_post_locker_td" style="text-align:center; vertical-align:middle;">
                   <% if current_user && post.user == current_user %>
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
@@ -186,7 +188,7 @@
                       <% end %>
                     </div>
                   </td>
-                  <td style="text-align:center; padding-top:52px;">
+                  <td class="p_i_published_post_trashcan_td" style="text-align:center; vertical-align:middle;">
                     <div class="post_trashcan_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "trashcan", :locals => { :post => @post } %>
                       <% if post.status == 'trashcan' %>
@@ -223,7 +225,7 @@
           <tbody>
             <% @draft_posts.each do |post| %>
             <tr>
-              <td>
+              <td class="p_i_draft_post_photo_td">
                 <% if post.photos.first %>
                     <div class="p_i_photo">
                       <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
@@ -232,7 +234,7 @@
                     N/A
                   <% end %>
               </td>
-                <td style="padding-top:43px;">
+                <td class="p_i_draft_post_author_td" style="vertical-align:middle;">
                   <div style="width:50px;margin:0 auto;">
                     <% if post.user.image %>
                       <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
@@ -241,16 +243,16 @@
                     <% end %>
                   </div>
                 </td>
-                <td style="text-align:center; padding-top:38px;">
+                <td class="p_i_draft_post_date_td" style="text-align:center; vertical-align:middle;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td> post.country </td>
-                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:53px;">
+                <td class="p_i_draft_post_country_td"> post.country </td>
+                <td class="p_i_draft_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_draft_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
+                <td class="p_i_draft_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
+                <td class="p_i_draft_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
                     <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
@@ -265,7 +267,7 @@
                       <% end %>
                     </div>
                 </td>
-                <td style="text-align:center; padding-top:52px;">
+                <td class="p_i_draft_post_locker_td" style="text-align:center; vertical-align:middle;">
                   <% if current_user && post.user == current_user %>
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
@@ -276,7 +278,7 @@
                       <% end %>
                     </div>
                   </td>
-                  <td style="text-align:center; padding-top:52px;">
+                  <td class="p_i_draft_post_trashcan_td" style="text-align:center; vertical-align:middle;">
                     <div class="post_trashcan_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "trashcan", :locals => { :post => @post } %>
                       <% if post.status == 'trashcan' %>
@@ -311,7 +313,7 @@
           <tbody>
             <% @locked_posts.each do |post| %>
             <tr>
-              <td>
+              <td class="p_i_locked_post_photo_td">
                 <% if post.photos.first %>
                     <div class="p_i_photo">
                       <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
@@ -320,7 +322,7 @@
                     N/A
                   <% end %>
               </td>
-                <td style="padding-top:43px;">
+                <td class="p_i_locked_post_author_td" style="vertical-align:middle;">
                   <div style="width:50px;margin:0 auto;">
                     <% if post.user.image %>
                       <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
@@ -329,21 +331,21 @@
                     <% end %>
                   </div>
                 </td>
-                <td style="text-align:center; padding-top:38px;">
+                <td class="p_i_locked_post_date_td" style="text-align:center; vertical-align:middle;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td>
+                <td class="p_i_locked_post_country_td">
                   <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
                     <% country = Country.find(pc.country_id) %>
                     <%= country_flag(country.name, 40) %>
                   <% end %>
                 </td>
-                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:53px;">
+                <td class="p_i_locked_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_locked_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
+                <td class="p_i_locked_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
+                <td class="p_i_locked_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
                     <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
@@ -358,7 +360,7 @@
                       <% end %>
                     </div>
                 </td>
-                <td style="text-align:center; padding-top:52px;">
+                <td class="p_i_locked_post_locker_td" style="text-align:center; vertical-align:middle;">
                   <% if current_user && post.user == current_user %>
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
@@ -369,7 +371,7 @@
                       <% end %>
                     </div>
                   </td>
-                  <td style="text-align:center; padding-top:52px;">
+                  <td class="p_i_locked_post_trashcan_td" style="text-align:center; vertical-align:middle;">
                     <div class="post_trashcan_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "trashcan", :locals => { :post => @post } %>
                       <% if post.status == 'trashcan' %>
@@ -408,7 +410,7 @@
                 <% end %>
                 <%= user.name %>
               </td>
-              <td style="padding-top:70px;">country</td>
+              <td style="vertical-align:middle;">country</td>
               <td>
                 <% lastest_post = user.posts.last %>
                 <% if user.posts.last == nil %>
@@ -417,9 +419,9 @@
                   <%= link_to image_tag(user.posts.last.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(lastest_post) %>
                 <% end %>  
                </td> 
-              <td style="padding-top:70px;"><%= user.posts.count %></td>
-              <td style="padding-top:70px;">< MILES ></td>
-              <td style="padding-top:62px;">
+              <td style="vertical-align:middle;"><%= user.posts.count %></td>
+              <td style="vertical-align:middle;">< MILES ></td>
+              <td style="vertical-align:middle;">
                 <div id="follow_block_<%= user.id %>">
                   <% follow = current_user.find_my_following(user) %>
                   <%= render :partial => "follows/index_follow", :locals => { :follow => follow, :user => user } %>
@@ -446,7 +448,7 @@
           <tbody>
             <% @favorite_posts.each do |post| %>
             <tr>
-              <td>
+              <td class="p_i_favorite_post_photo_td">
                 <% if post.photos.first %>
                   <div class="p_i_photo">
                     <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
@@ -455,7 +457,7 @@
                   N/A
                 <% end %>
               </td>
-              <td style="padding-top:35px;">
+              <td class="p_i_favorite_post_author_td" style="vertical-align:middle;">
                 <div style="width:50px;margin:0 auto;">
                   <% if post.user.image %>
                     <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
@@ -464,15 +466,15 @@
                   <% end %>
                 </div>
               </td>
-              <td style="text-align:center; padding-top:35px;">
+              <td class="p_i_favorite_post_date_td" style="text-align:center; vertical-align:middle;">
                 <%= post.start_date %><br>
                 <div style="margin:0 auto; width:2px;">|</div>
                 <%= post.return_date %>
               </td>
-              <td> post.country </td>
-              <td style="text-align:center; padding-top:57px;"><%= post.destination %></td>
-              <td style="text-align:center; padding-top:57px;"><%= post.origin %></td>
-              <td style="text-align:center; padding-top:57px;"><%= post.distance %></td>
+              <td class="p_i_favorite_post_country_td"> post.country </td>
+              <td class="p_i_favorite_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+              <td class="p_i_favorite_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
+              <td class="p_i_favorite_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
             </tr>
             <% end %>
           </tbody>
@@ -498,7 +500,7 @@
           <tbody>
             <% @trashcan_posts.each do |post| %>
             <tr>
-              <td>
+              <td class="p_i_trashcan_photo_td">
                 <% if post.photos.first %>
                     <div class="p_i_photo">
                       <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
@@ -507,7 +509,7 @@
                     N/A
                   <% end %>
               </td>
-                <td style="padding-top:43px;">
+                <td class="p_i_trashcan_post_author_td" style="vertical-align:middle;">
                   <div style="width:50px;margin:0 auto;">
                     <% if post.user.image %>
                       <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
@@ -516,16 +518,16 @@
                     <% end %>
                   </div>
                 </td>
-                <td style="text-align:center; padding-top:38px;">
+                <td class="p_i_trashcan_post_date_td" style="text-align:center; vertical-align:middle;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td> post.country </td>
-                <td style="text-align:center; padding-top:61px;"><%= post.destination %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.origin %></td>
-                <td style="text-align:center; padding-top:61px;"><%= post.distance %></td>
-                <td style="text-align:center; padding-top:53px;">
+                <td class="p_i_trashcan_post_country_td"> post.country </td>
+                <td class="p_i_trashcan_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_trashcan_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
+                <td class="p_i_trashcan_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
+                <td class="p_i_trashcan_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
                     <div id="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
@@ -540,7 +542,7 @@
                       <% end %>
                     </div>
                 </td>
-                <td style="text-align:center; padding-top:52px;">
+                <td class="p_i_trashcan_post_locker_td" style="text-align:center; vertical-align:middle;">
                   <% if current_user && post.user == current_user %>
                     <div class="post_locker_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "locker", :locals => { :post => @post } %>
@@ -551,7 +553,7 @@
                       <% end %>
                     </div>
                   </td>
-                  <td style="text-align:center; padding-top:52px;">
+                  <td class="p_i_trashcan_post_trashcan_td" style="text-align:center; vertical-align:middle;">
                     <div class="post_trashcan_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "trashcan", :locals => { :post => @post } %>
                       <% if post.status == 'trashcan' %>
