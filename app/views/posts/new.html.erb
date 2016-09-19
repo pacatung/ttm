@@ -84,9 +84,14 @@
     <div class="clearfix"></div>
 
     <div class="field">
-      <%= f.label :distance, '' %><br >
-      <%= f.text_field :distance, :class =>"form-control" %>
+      <%= f.label :distance, 'Distance  (Km)' %><br >
+      <div class="col-xs-12 col-sm-4 col-md-6">
+        <%= f.text_field :distance, :id=>"google_compute_distance", :class =>"form-control", :placeholder=>"路程距離 (公里)" %>
+      </div>
     </div>
+    <!-- distance:<span id="google_compute_distance1"></span> <br> -->
+    <div class="clearfix"></div>
+
     <div class="field">
       <%= f.label :description, '' %><br >
       <%= f.text_area :description, :class =>"form-control", :rows =>"8" %>
@@ -156,7 +161,7 @@ function postNewMap() {
   //========
   var origin_place_id = null;
   var destination_place_id = null;
-  var travel_mode = google.maps.TravelMode.WALKING;
+  var travel_mode = google.maps.TravelMode.DRIVING;
 
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -272,6 +277,21 @@ function postNewMap() {
         window.alert('Directions request failed due to ' + status);
       }
     });
-  }//227
-}//116
+  }
+  // show distace
+  directionsDisplay.addListener('directions_changed', function() {
+    computeTotalDistance(directionsDisplay.getDirections());
+  });
+  // compute distance
+  function computeTotalDistance(result) {
+    var total = 0;
+    var myroute = result.routes[0];
+    for (var i = 0; i < myroute.legs.length; i++) {
+      total += myroute.legs[i].distance.value;
+    }
+    total = total / 1000;
+    // document.getElementById('google_compute_distance1').innerHTML = total + ' km';
+    document.getElementById('google_compute_distance').value = total; //+ ' km';
+  }
+}
 </script>

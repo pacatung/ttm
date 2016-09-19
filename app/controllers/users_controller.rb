@@ -24,6 +24,10 @@ class UsersController < ApplicationController
     # @post_countrys.map do |c|
       # @country_ids.push(c.country_id)
     # end
+
+    @total_mailes = @posts.collect(&:distance).sum
+    @my_following = Follow.where(:user_id=>@user).count
+    @my_follower = Follow.where(:following_user_id=>@user).count
   end
 
   def edit

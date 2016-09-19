@@ -24,24 +24,24 @@
 
   <div style="border-width:1px;border-style:dotted none;border-color:gray;padding:5px;width:40%;margin:10px auto;">
     <p style="color:gray;font-size: 20px;display: inline-block;margin:10px 0 10px 10px">Cumulative Miles</p>
-    <p class="pull-right" style="margin:10px 10px 10px 0;font-size: 20px;display: inline-block;">453235</p>
+    <p class="pull-right" style="margin:10px 10px 10px 0;font-size: 20px;display: inline-block;"><%= @total_mailes %>&nbsp;<span style="color:gray;font-size: 14px;">公里</span></p>
     <br>
     <p style="color:gray;font-size: 20px;display: inline-block;margin-left: 10px;">Rank</p>
-    <p class="pull-right" style="margin-right:10px;font-size: 20px;display: inline-block;">1/453235</p>
+    <p class="pull-right" style="margin-right:10px;font-size: 20px;display: inline-block;">1/<%= User.count%></p>
   </div>
 
   <div style="width:40%;margin:0px auto;text-align: center;">
     <div style="width:30%;display: inline-block;">
       <p style="color:gray;font-size: 20px;">Albums</p>
-      <p style="font-size: 20px;">16</p>
+      <p style="font-size: 20px;"><%= @posts.count %></p>
     </div>
     <div style="width:33%;display: inline-block;border-width:1px;border-style:none dotted;border-color:gray;padding-left: 5px;">
       <p style="color:gray;font-size: 20px;">Followers</p>
-      <p style="font-size: 20px;">168168168</p>
+      <p style="font-size: 20px;"><%= @my_follower %></p>
     </div>
     <div style="width:30%;display: inline-block;">
       <p style="color:gray;font-size: 20px;">Following</p>
-      <p style="font-size: 20px;">999</p>
+      <p style="font-size: 20px;"><%= @my_following %></p>
     </div>
   </div>
 

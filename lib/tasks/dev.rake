@@ -33,4 +33,15 @@ namespace :dev do
       end
     end
   end
+  task :insert_distance => :environment do
+    @post=Post.all
+    puts "#{@post.count}"
+    @post.each_with_index do |p, i|
+      p.update(
+        :distance => Faker::Number.decimal(4.1)
+        # puts "[#{i}]: Post.#{p.id} #{:distance}!"
+      )
+      puts "[#{i}]: Post.#{p.id} done!"
+    end
+  end
 end
