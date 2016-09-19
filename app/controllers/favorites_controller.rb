@@ -10,7 +10,11 @@ class FavoritesController < ApplicationController
       @favorite = Favorite.create!( :post => @post, :user => current_user )
     end
 
-    render "reload"
+    # if request.referrer == "http://localhost:3000/posts"
+    #   render "reload_index_favorite"
+    # else
+      render "reload"
+    # end
   end
 
   def destroy
@@ -18,8 +22,11 @@ class FavoritesController < ApplicationController
     @favorite.destroy
 
     @favorite = nil
-
-    render "reload"
+    # if request.referrer == "http://localhost:3000/posts"
+    #   render "reload_index_favorite"
+    # else
+      render "reload"
+    # end
   end
 
    protected

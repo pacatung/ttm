@@ -5,7 +5,15 @@
 @import "bootstrap-social";
 @import "select2";
 @import "select2-bootstrap";
-
+/* post/index tab hover */
+.nav > li > a:hover {
+    background-color:#3a94ca;
+    color: white;
+}
+/* post/index table hover */
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #e7f4fd;
+}
 /* fix login fb button */
 .btn-facebook {
   color: white !important;
@@ -233,4 +241,42 @@ ul.nav.navbar-nav.navbar-right>li.dropdown.open>ul.dropdown-menu>li>a{
 .u_s_about{
   width: 70%;
 }
+}
+@media (min-width: 1170px){
+/* .table{
+  table-layout:fixed;
+} */
+/* .p_i_all_post_photo_th,.p_i_published_post_photo_th,.p_i_draft_post_photo_th,.p_i_locked_post_photo_th,.p_i_favorites_post_photo_th,.p_i_trashcan_post_photo_th{
+  width: 273px;
+}
+.p_i_all_post_author_th,.p_i_published_post_author_th,.p_i_draft_post_author_th,.p_i_locked_post_author_th,.p_i_favorites_post_author_th,.p_i_trashcan_post_author_th{
+  width: 92px;
+}
+.p_i_all_post_date_th,.p_i_published_post_date_th,.p_i_draft_post_date_th,.p_i_locked_post_date_th,.p_i_favorites_post_date_th,.p_i_trashcan_post_date_th{
+  width: 109px;
+}
+.p_i_all_post_country_th,.p_i_published_post_country_th,.p_i_draft_post_country_th,.p_i_locked_post_country_th,.p_i_favorites_post_country_th,.p_i_trashcan_post_country_th{
+  width: 115px;
+}
+.p_i_all_post_destination_th,.p_i_published_post_destination_th,.p_i_draft_post_destination_th,.p_i_locked_post_destination_th,.p_i_favorites_post_destination_th,.p_i_trashcan_post_destination_th{
+  width: 155px;
+}
+.p_i_all_post_origin_th,.p_i_published_post_origin_th,.p_i_draft_post_origin_th,.p_i_locked_post_origin_th,.p_i_favorites_post_origin_th,.p_i_trashcan_post_origin_th{
+  width: 85px;
+}
+.p_i_all_post_distance_th,.p_i_published_post_distance_th,.p_i_draft_post_distance_th,.p_i_locked_post_distance_th,.p_i_favorites_post_distance_th,.p_i_trashcan_post_distance_th{
+  width: 109px;
+}
+.p_i_all_post_favorite_th,.p_i_published_post_favorite_th,.p_i_draft_post_favorite_th,.p_i_locked_post_favorite_th,.p_i_favorites_post_favorite_th,.p_i_trashcan_post_favorite_th{
+  width: 70px;
+}
+.p_i_all_post_locker_th,.p_i_published_post_locker_th,.p_i_draft_post_locker_th,.p_i_locked_post_locker_th,.p_i_favorites_post_locker_th,.p_i_trashcan_post_locker_th{
+  width: 70px;
+}
+.p_i_all_post_trashcan_th,.p_i_published_post_trashcan_th,.p_i_draft_post_trashcan_th,.p_i_locked_post_trashcan_th,.p_i_favorites_post_trashcan_th,.p_i_trashcan_post_trashcan_th{
+  width: 62px;
+}
+.p_i_trashcan_photo_th{
+
+} */
 }

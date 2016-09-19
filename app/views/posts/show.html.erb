@@ -75,11 +75,9 @@
     </div>
     <hr>
     <p style="font-size: 18px;color: gray;">From &nbsp;
-      <i style="color:#3a94ca;"><%= @post.origin %></i>
-      &nbsp;&nbsp;To&nbsp;
-      <i style="color:#3a94ca;"><%= @post.destination %></i>,
-       &nbsp;Total Miles <i style="color:#3a94ca;">&nbsp;<%= @post.distance %></i>
-      <br>
+      <i style="color:#3a94ca;"><%= @post.origin %></i> <br>
+      To&nbsp;<i style="color:#3a94ca;"><%= @post.destination %></i> <br>
+      Total Miles <i style="color:#3a94ca;">&nbsp;<%= @post.distance %></i><br>
       Date<i style="color:#3a94ca;">&nbsp;<%= @post.start_date %></i>&nbsp;--<i style="color:#3a94ca;">&nbsp;<%= @post.return_date %></i>
     </p>
     <%= simple_format @post.description, class: :"p_s_description" %>

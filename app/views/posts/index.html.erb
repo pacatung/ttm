@@ -3,7 +3,6 @@
   <h1>Hi, <%= current_user.name %></h1>
   <p>Welcome to manage albums !</p>
   <p></p>
-  <%= @post_counrtys %>
   <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -40,23 +39,23 @@
           <tr>
             <td class="p_i_all_post_photo_td">
               <% if post.photos.first %>
-                  <div class="p_i_photo">
-                    <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
-                  </div>
-                <% else %>
-                  <%= link_to image_tag('default.jpg', class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
-                <% end %>
+                <div class="p_i_photo">
+                  <%= link_to image_tag(post.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+                </div>
+              <% else %>
+                <%= link_to image_tag('default.jpg', class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(post) %>
+              <% end %>
             </td>
             <td class="p_i_all_post_author_td" style="vertical-align:middle;">
               <div style="width:50px;margin:0 auto;">
                 <% if post.user.image %>
-                    <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
-                  <% else %>
-                    <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
-                  <% end %>
+                  <%= link_to image_tag(post.user.image, style: :'border-radius:25px;'), user_path(post.user) %>
+                <% else %>
+                  <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(post.user) %>
+                <% end %>
               </div>
             </td>
-            <td class="p_i_all_post_date_td" style="text-align:center; vertical-align:middle;">
+            <td class="p_i_all_post_date_td" style="text-align:center; vertical-align:middle;white-space:nowrap;">
               <%= post.start_date %><br>
               <div style="margin:0 auto; width:2px;">|</div>
               <%= post.return_date %>
@@ -153,12 +152,19 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_published_post_date_td" style="text-align:center; vertical-align:middle;">
+                <td class="p_i_published_post_date_td" style="text-align:center; vertical-align:middle;white-space:nowrap;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td class="p_i_published_post_country_td"> post.country </td>
+                <td class="p_i_published_post_country_td" style="vertical-align:middle;">
+                  <div style=" margin:0 auto;width:40px">
+                    <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                      <% country = Country.find(pc.country_id) %>
+                      <%= country_flag(country.name, "40px") %>
+                    <% end %>
+                  </div>
+                </td>
                 <td class="p_i_published_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
                 <td class="p_i_published_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
                 <td class="p_i_published_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
@@ -243,12 +249,19 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_draft_post_date_td" style="text-align:center; vertical-align:middle;">
+                <td class="p_i_draft_post_date_td" style="text-align:center; vertical-align:middle;white-space:nowrap;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td class="p_i_draft_post_country_td"> post.country </td>
+                <td class="p_i_draft_post_country_td" style="vertical-align:center;">
+                  <div style=" margin:0 auto;width:40px">
+                    <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                      <% country = Country.find(pc.country_id) %>
+                      <%= country_flag(country.name, "40px") %>
+                    <% end %>
+                  </div>
+                </td>
                 <td class="p_i_draft_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
                 <td class="p_i_draft_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
                 <td class="p_i_draft_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
@@ -331,16 +344,18 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_locked_post_date_td" style="text-align:center; vertical-align:middle;">
+                <td class="p_i_locked_post_date_td" style="text-align:center; vertical-align:middle;white-space:nowrap;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td class="p_i_locked_post_country_td">
-                  <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
-                    <% country = Country.find(pc.country_id) %>
-                    <%= country_flag(country.name, 40) %>
-                  <% end %>
+                <td class="p_i_locked_post_country_td" style="vertical-align:center;">
+                  <div style=" margin:0 auto;width:40px">
+                    <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                      <% country = Country.find(pc.country_id) %>
+                      <%= country_flag(country.name, "40px") %>
+                    <% end %>
+                  </div>
                 </td>
                 <td class="p_i_locked_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
                 <td class="p_i_locked_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
@@ -391,37 +406,37 @@
         <table class="table table-hover">
           <thead style="background-color:#3a94ca;color:white;">
             <tr>
-              <th>ID</th>
-              <th>COUNTRY</th>
-              <th>NEW POST</th>
-              <th>Total Posts</th>
-              <th>MILES</th>
-              <th></th>
+              <th style="">ID</th>
+              <th style="text-align:center;">COUNTRY</th>
+              <th style="text-align:center;">NEW POST</th>
+              <th style="text-align:center;">Total Posts</th>
+              <th style="text-align:center;">MILES</th>
+              <th style="text-align:center;"></th>
             </tr>
           </thead>
           <tbody>
             <% @my_following_users.each do |user| %>
             <tr>
-              <td style="padding:53px 0 0 15px;display:block;overflow:hidden;text-overflow:ellipsis;">
+              <td style="overflow:hidden;text-overflow:ellipsis;color:#3a94ca;vertical-align:middle;font-size:20px;">
                 <% if user.image %>
                   <%= link_to image_tag(user.image, style: :'border-radius:25px;'), user_path(user) %>
                 <% else %>
                   <%= link_to image_tag('member_head.png', style: :'width:50px;border-radius:25px;'), user_path(user) %>
-                <% end %>
+                <% end %>&nbsp;
                 <%= user.name %>
               </td>
-              <td style="vertical-align:middle;">country</td>
-              <td>
+              <td style="text-align:center;vertical-align:middle;">country</td>
+              <td style="text-align:center;vertical-align:middle;">
                 <% lastest_post = user.posts.last %>
                 <% if user.posts.last == nil %>
                   <p>~~~~~ The user haven't post yet ~~~~</p>
                 <% else %>
                   <%= link_to image_tag(user.posts.last.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(lastest_post) %>
                 <% end %>  
-               </td> 
-              <td style="vertical-align:middle;"><%= user.posts.count %></td>
-              <td style="vertical-align:middle;">< MILES ></td>
-              <td style="vertical-align:middle;">
+              </td> 
+              <td style="text-align:center;vertical-align:middle;"><%= user.posts.count %></td>
+              <td style="text-align:center;vertical-align:middle;">< MILES ></td>
+              <td style="text-align:center;vertical-align:middle;">
                 <div id="follow_block_<%= user.id %>">
                   <% follow = current_user.find_my_following(user) %>
                   <%= render :partial => "follows/index_follow", :locals => { :follow => follow, :user => user } %>
@@ -443,6 +458,7 @@
               <th style="text-align:center;">DESTINATION</th>
               <th style="text-align:center;">ORIGIN</th>
               <th style="text-align:center;">MILES</th>
+              <th></th> 
             </tr>
           </thead>
           <tbody>
@@ -466,15 +482,37 @@
                   <% end %>
                 </div>
               </td>
-              <td class="p_i_favorite_post_date_td" style="text-align:center; vertical-align:middle;">
+              <td class="p_i_favorite_post_date_td" style="text-align:center; vertical-align:middle;white-space:nowrap;">
                 <%= post.start_date %><br>
                 <div style="margin:0 auto; width:2px;">|</div>
                 <%= post.return_date %>
               </td>
-              <td class="p_i_favorite_post_country_td"> post.country </td>
+              <td class="p_i_favorite_post_country_td" style="vertical-align:middle;">
+                <div style=" margin:0 auto;width:40px">
+                  <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                    <% country = Country.find(pc.country_id) %>
+                    <%= country_flag(country.name, "40px") %>
+                  <% end %>
+                </div>
+              </td>
               <td class="p_i_favorite_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
               <td class="p_i_favorite_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
               <td class="p_i_favorite_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
+              <td class="p_i_favorite_post_favorite_td" style="text-align:center; vertical-align:middle;">
+                <% favorite = post.find_my_favorite(current_user) %>
+                  <div id="favorite_block_<%= post.id %>" style="display:inline;margin-right:10px;color:#3a94ca;">
+                    <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
+                    <% if favorite %>
+                      <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
+                    <% else %>
+                      <%= link_to image_tag('album_sub_love.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorites_path(post), :method => :post, :remote => true %>
+                    <% end %>
+                    <% if post.favorites.count > 0 %>
+                      <%= post.favorites.count %> 
+                    <% else %>
+                    <% end %>
+                  </div>
+              </td>
             </tr>
             <% end %>
           </tbody>
@@ -518,12 +556,19 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_trashcan_post_date_td" style="text-align:center; vertical-align:middle;">
+                <td class="p_i_trashcan_post_date_td" style="text-align:center; vertical-align:middle;white-space:nowrap;">
                   <%= post.start_date %><br>
                   <div style="margin:0 auto; width:2px;">|</div>
                   <%= post.return_date %>
                 </td>
-                <td class="p_i_trashcan_post_country_td"> post.country </td>
+                <td class="p_i_trashcan_post_country_td" style="vertical-align:middle;">
+                  <div style=" margin:0 auto;width:40px">
+                    <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                      <% country = Country.find(pc.country_id) %>
+                      <%= country_flag(country.name, "40px") %>
+                    <% end %>
+                  </div>
+                </td>
                 <td class="p_i_trashcan_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
                 <td class="p_i_trashcan_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
                 <td class="p_i_trashcan_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
