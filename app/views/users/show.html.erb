@@ -18,7 +18,8 @@
 
   <div style="width:40%;margin:0px auto;">
     <% @country_names.each do |name| %>
-      <%= country_flag(name, "10%") %>
+      <% n = name.downcase.tr(' ', '_') %>
+      <%= country_flag(n, "10%") %>
     <% end %>
   </div>
 

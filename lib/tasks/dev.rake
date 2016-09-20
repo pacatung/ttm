@@ -23,7 +23,8 @@ namespace :dev do
                           :origin => Faker::Address.country,
                           :destination => Faker::Address.country,
                           :description =>Faker::Lorem.paragraph(4),
-                          :trip_date => Faker::Date.backward(30),
+                          :start_date => Faker::Date.backward(30),
+                          :end_date => Faker::Date.backward(30),
                           :distance => Faker::Number.decimal(3.1))
       5.times do
         post.photos.create(
