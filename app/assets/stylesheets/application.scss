@@ -48,6 +48,19 @@ li.nav_n_p>a{
 li.nav_n_p>a>img{
   width: 80%;
 }
+.sub_menu{
+  box-shadow: 0px 5px 62px rgba(0,0,0,0.50);
+  margin-bottom: 23px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-top: -20px;
+}
+/* modify navbar */
+@media (min-width: 768px){
+.navbar {
+  border-radius: 0px;
+}
+}
 .user_bar{
   margin: auto;
   width: 320px;

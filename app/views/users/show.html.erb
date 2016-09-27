@@ -20,11 +20,13 @@
     <% @country_names.each do |name| %>
       <% n = name.downcase.tr(' ', '_') %>
       <%= country_flag(n, "10%") %>
+      <% n1 = name.tr(' ', '_') %>
+      <%= country_flag(n1, "10%") %>
     <% end %>
   </div>
 
   <div style="border-width:1px;border-style:dotted none;border-color:gray;padding:5px;width:40%;margin:10px auto;">
-    <p style="color:gray;font-size: 20px;display: inline-block;margin:10px 0 10px 10px">Cumulative Miles</p>
+    <p style="color:gray;font-size: 20px;display: inline-block;margin:10px 0 10px 10px">Cumulative Kilometers</p>
     <p class="pull-right" style="margin:10px 10px 10px 0;font-size: 20px;display: inline-block;"><%= @total_mailes %>&nbsp;<span style="color:gray;font-size: 14px;">公里</span></p>
     <br>
     <p style="color:gray;font-size: 20px;display: inline-block;margin-left: 10px;">Rank</p>
