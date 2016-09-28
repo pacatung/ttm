@@ -170,6 +170,11 @@ img.p_l_post_photo_area,img.u_s_post_photo_area{
   border-right: none;
   border-left: none;
 }
+/* rewrite line 131, /usr/local/lib/ruby/gems/2.2.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_navs.scss */
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  color: #fff;
+  background-color: #3a94ca;
+}
 .user_bar>.nav-pills > li > a{
   border-radius: 0px;
 }
@@ -177,7 +182,7 @@ img.p_l_post_photo_area,img.u_s_post_photo_area{
     margin-left: 0px;
 }
 .user_bar>ul>li>a:hover{
-  background-color: #337ab7 !important;
+  background-color: #3a94ca !important;
   color: white !important;
 }
 /* post/show */

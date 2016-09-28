@@ -1,10 +1,16 @@
 <%= render 'layouts/nav' %>
 <div class="sub_menu">
   <div class="user_bar">
-    <ul class="nav nav-pills">
-      <li class="active"><a class="recommand" data-toggle="pill" href="#home">Recommand</a></li>
-      <li class="new"><a class="new" data-toggle="pill" href="#menu1">New</a></li>
-      <li class="following"><a class="following" data-toggle="pill" href="#menu2">Following</a></li>
+    <% if current_user == nil %>
+      <ul class="nav nav-pills">
+        <li class="active"><a class="recommand" data-toggle="pill" href="#home">Recommand</a></li>
+        <li class="following"><a class="following" data-toggle="pill" href="#menu2">New</a></li>
+      <% else %>
+        <ul class="nav nav-pills">
+        <li class="active"><a class="recommand" data-toggle="pill" href="#home">Recommand</a></li>
+        <li class="new"><a class="new" data-toggle="pill" href="#menu1">New</a></li>
+        <li class="following"><a class="following" data-toggle="pill" href="#menu2">Following</a></li>
+      <% end %>
     </ul>
   </div>
 </div>
@@ -24,7 +30,7 @@
           <p class="p_l_destination text-center" style="margin:0;padding:4px 24px 0 24px;text-overflow:ellipsis;overflow:hidden;white-space: nowrap;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;" %><%= post.destination %></p>
           <p class="text-center" style="padding:3px 0;margin:0 10px;border-top:1px solid #e5e5e5;">
             <% if post.user.image %>
-              <%=link_to image_tag(post.user.image, style: :'height:40px;border-radius:20px;margin-right:10px;'), user_path(post.user) %>
+              <%=link_to image_tag(post.user.image, style: :'height:32px;border-radius:20px;margin-right:10px;'), user_path(post.user) %>
             <% else %>
               <%= image_tag "member_head.png", :style=>"height:40px;border-radius:4em;margin-right:10px" %>
             <% end %><%= post.user.name %>
@@ -36,8 +42,8 @@
 
 <br><br>
 <div class="text-center">
-  <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:60px;"%>
-  <p style="color: #3a94ca;font-size:20px;">Find Location On Map</p>
+  <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:90px;"%>
+  <p style="color: #3a94ca;font-size:30px;">Find Location On Map</p>
   <br>
 </div>
 
