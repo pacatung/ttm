@@ -3,6 +3,11 @@ class PostsController < ApplicationController
   before_action :find_post, :only => [ :show, :edit, :update, :destroy, :change_status]
   def landing
     @posts = Post.where(status: :'published').order("id DESC").limit(15)
+    # @posts_destination = []
+    @new_posts_destination = @posts.collect(&:destination)
+    # @posts.each do |post|
+    #   @posts_destination.push(post.destination)
+    # end
   end
 
   def index

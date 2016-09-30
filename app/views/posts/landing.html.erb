@@ -78,97 +78,98 @@
 <script>
 var poly;
 var map;
-function initialize() {
-  var my_best = [
-    {
-      "featureType":"all",
-      "elementType":"all",
-      "stylers":[
-        {"invert_lightness":true},
-        {"saturation":10},
-        {"lightness":30},
-        {"gamma":0.5},
-        {"hue":"#435158"}]
-      }];
   // Create an array of styles.
-  var styles = [
-    {
-      stylers: [
-        { hue: "#00ffe6" },
-        { saturation: -20 }
-      ]
-    },{
-      featureType: "road",
-      elementType: "geometry",
-      stylers: [
-        { lightness: 100 },
-        { visibility: "simplified" }
-      ]
-    },{
-      featureType: "road",
-      elementType: "labels",
-      stylers: [
-        { visibility: "off" }
-      ]
-    }
-  ];
+  <%= render 'layouts/mapStyles' %>
 
+// The following example creates complex markers to indicate beaches near
+// Sydney, NSW, Australia. Note that the anchor is set to (0,32) to correspond
+// to the base of the flagpole.
+function initialize() {
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
-  var styledMap = new google.maps.StyledMapType(styles,
-    {name: "Styled Map"});
-  var styledMap1 = new google.maps.StyledMapType(my_best,
-    {name: "My Best"});
-
-  // Create a map object, and include the MapTypeId to add
-  // to the map type control.
+  var style1type = new google.maps.StyledMapType(style1,
+      {name: "Orange"});
+  var style2type = new google.maps.StyledMapType(style2,
+      {name: "DarkBlue"});
+  var style3type = new google.maps.StyledMapType(style3,
+      {name: "Pink"});
+  var style4type = new google.maps.StyledMapType(style4,
+      {name: "LightBlue"});
+  var style5type = new google.maps.StyledMapType(style5,
+      {name: "LightGreen"});
   var mapOptions = {
-    zoom: 11,
-    center: new google.maps.LatLng(-34, 151),
-    // center: {lat: -34, lng: 151},
+    zoom: 11 ,
+    // center: new google.maps.LatLng(25.03, 121.30),
+    center: {lat: -33.9, lng: 151.2},
     scrollwheel: false,
     mapTypeControlOptions: {
-      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style','map_style1']
-    }
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP,'style1id','style2id','style3id','style4id','style5id']
+    },
   }; //mapOptions
 
-  map = new google.maps.Map(document.getElementById('map'),
-    mapOptions);
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-  poly = new google.maps.Polyline({
-    strokeColor: '#000000',
-    strokeOpacity: 1.0,
-    strokeWeight: 3
-  });
-  poly.setMap(map);
+  map.mapTypes.set('style1id', style1type);
+  map.setMapTypeId('style1id');
+  map.mapTypes.set('style4id', style4type);
+  map.setMapTypeId('style4id');
+  map.mapTypes.set('style5id', style5type);
+  map.setMapTypeId('style5id');
+  map.mapTypes.set('style3id', style3type);
+  map.setMapTypeId('style3id');
+  map.mapTypes.set('style2id', style2type);
+  map.setMapTypeId('style2id');
 
-  // Add a listener for the click event
-  map.addListener('click', addLatLng);
-
-  // Associate the styled map with the MapTypeId and set it to display.
-  map.mapTypes.set('map_style', styledMap);
-  map.setMapTypeId('map_style');
-  map.mapTypes.set('map_style1', styledMap1);
-  map.setMapTypeId('map_style1');
-
-  // google.maps.event.addDomListener(
-  //         window, 'load', initialize);
+  setMarkers(map);
 }
 
-// Handles click events on a map, and adds a new point to the Polyline.
-function addLatLng(event) {
-  var path = poly.getPath();
+// Data for the markers consisting of a name, a LatLng and a zIndex for the
+// order in which these markers should display on top of each other.
+var new_posts_destination=[]
 
-  // Because path is an MVCArray, we can simply append a new coordinate
-  // and it will automatically appear.
-  path.push(event.latLng);
+var beaches = [
+  ['Bondi Beach', -33.890542, 151.274856, 4],
+  ['Coogee Beach', -33.923036, 151.259052, 5],
+  ['Cronulla Beach', -34.028249, 151.157507, 3],
+  ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+  ['Maroubra Beach', -33.950198, 151.259302, 1]
+];
 
-  // Add a new marker at the new plotted point on the polyline.
-  var marker = new google.maps.Marker({
-    position: event.latLng,
-    title: '#' + path.getLength(),
-    map: map
-  });
+function setMarkers(map) {
+  // Adds markers to the map.
+
+  // Marker sizes are expressed as a Size of X,Y where the origin of the image
+  // (0,0) is located in the top left of the image.
+
+  // Origins, anchor positions and coordinates of the marker increase in the X
+  // direction to the right and in the Y direction down.
+  var image = {
+    url:'http://s3-us-west-1.amazonaws.com/northcali1/imageables/images/000/000/030/medium/icon1-shadow.png?1474910681',
+    // This marker is 20 pixels wide by 32 pixels high.
+    // size: new google.maps.Size(20, 32),
+    // The origin for this image is (0, 0).
+    // origin: new google.maps.Point(0, 0),
+    // The anchor for this image is the base of the flagpole at (0, 32).
+    anchor: new google.maps.Point(20, 54)
+  }
+  // Shapes define the clickable region of the icon. The type defines an HTML
+  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+  // The final coordinate closes the poly by connecting to the first coordinate.
+  // var shape = {
+  //   coords: [1, 1, 1, 20, 18, 20, 18, 1],
+  //   type: 'poly'
+  // };
+  for (var i = 0; i < beaches.length; i++) {
+    var beach = beaches[i];
+    var marker = new google.maps.Marker({
+      position: {lat: beach[1], lng: beach[2]},
+      map: map,
+      icon: image,
+      // shape: shape,
+      title: beach[0],
+      zIndex: beach[3]
+    });
+  }
 }
 </script>
 
