@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @posts = @user.posts.order('id desc')
-    @post_countrys = PostCountryship.joins(:post)
+    @post_countrys = PostCountryship.where(:post_id=>@posts)
     @country_ids = @post_countrys.collect(&:country_id)
     @countrys = []
     @country_ids.each do |ci|

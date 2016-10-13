@@ -41,8 +41,6 @@ class User < ActiveRecord::Base
    has_many :followed_users, :through => :reverse_follows, :source => "user"
 
    has_many :countries, :through => :post_countryships
-
-
   def find_my_following(user)
     user && self.follows.find_by_following_user_id( user.id )
   end
