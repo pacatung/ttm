@@ -2,7 +2,7 @@
 <div class="container">
 <div class="col-md-6">
   <h1>新增行程</h1>
-  <%= form_for @post, url: posts_path,:html => {:multipart => true}  do |f| %>
+  <%= form_for setup_post(@post), url: posts_path,:html => {:multipart => true}  do |f| %>
     <div class="field">
       <%= f.label :title, '相簿名稱' %><br/>
       <%= f.text_field :title, autofocus: true, :class =>"form-control" %>
@@ -17,31 +17,12 @@
     <p></p>
     <div class="form-group">
       <%= f.label :status %>
-      <%= f.select :status, post_status_options[0..1], :class => "form-control",:default=>"Published" %>
-    </div>
-    <p></p>
-    <!--  -->
-    <div class="form-group">
-      <%= f.label :countries, "國家", :class => "" %> <br>
-      <!-- <div class="col-sm-9"> -->
-        <%= f.nested_fields_for :countries do |ff| %>
-        <div class="col-sm-10 col-xs-10">
-          <%= ff.text_field :name, :class => "form-control", :placeholder=>"旅行國家", :id=>"country" %>
-        </div>
-        <div class="col-sm-1 col-xs-2">
-          <%= ff.remove_nested_fields_link 'x', :class => 'btn btn-danger', role: 'button' %>
-        </div>
-        <div class="clearfix"></div>
-        <p></p>
-        <% end %>
-        <div class="col-sm-12">
-          <%= f.add_nested_fields_link :countries, '＋ 新增旅行國家', :class => "btn btn-primary" %>
-        </div>
-      <!-- </div> -->
+      <div class="clearfix"></div>
+      <div class="col-md-4 col-xs-8">
+        <%= f.select :status, post_status_options[0..1],{:default=>"Published"}, {:class => "form-control"} %>
+      </div>
     </div>
     <div class="clearfix"></div>
-
-<!--  -->
     <p></p>
     <div class="field">
       <%= f.label :origin, '旅行出發地' %><br/>
@@ -53,7 +34,7 @@
 <% if false %>
     <div class="form-group">
       <div class="col-sm-12 col-md-6">
-        <%= f.add_nested_fields_link :locations, '＋ 新增旅遊地點', :class => "btn btn-primary" %>
+        <%= f.add_nested_fields_link :locations, '＋ 新增旅遊地點', :class => "btn btn-primary",:style =>"display:none;" %>
       </div>
       <div class="clearfix"></div>
       <p></p>
@@ -75,14 +56,31 @@
 
     <div class="clearfix"></div>
     <p> </p>
-    <div class="field col-md-12">
+    <div class="field">
       <%= f.label :destination, '目的地' %><br/>
-      <%= f.text_field :destination, autocomplete: "off", :class =>"form-control", :id=>"destination-input", :placeholder=>"旅行目的地" %>
-      <p></p>      
+      <div class="col-md-12">
+        <%= f.text_field :destination, autocomplete: "off", :class =>"form-control", :id=>"destination-input", :placeholder=>"旅行目的地" %>
+      </div>
     </div>
-
+    <p></p>      
     <div class="clearfix"></div>
-
+    <div class="form-group">
+      <%= f.label :countries, "國家", :class => "" %> <br>
+      <!-- <div class="col-sm-9"> -->
+        <%= f.nested_fields_for :countries do |ff| %>
+        <div class="col-sm-10 col-xs-10 col-md-10">
+          <%= ff.text_field :name, :class => "form-control", :placeholder=>"旅行國家", :id=>"country" %>
+        </div>
+        <div class="col-sm-1 col-xs-2">
+          <%= ff.remove_nested_fields_link 'x', :class => 'btn btn-danger', role: 'button', style: :"display:none" %>
+        </div>
+        <div class="clearfix"></div>
+        <% end %>
+        <div class="col-sm-12">
+          <%= f.add_nested_fields_link :countries, '＋ 新增旅行國家', :class => "btn btn-primary", style: :"display:none" %>
+        </div>
+      <!-- </div> -->
+    </div>
     <div class="field">
       <%= f.label :distance, 'Distance  (Km)' %><br >
       <div class="col-xs-12 col-sm-4 col-md-6">
@@ -91,7 +89,7 @@
     </div>
     <!-- distance:<span id="google_compute_distance1"></span> <br> -->
     <div class="clearfix"></div>
-
+    <p></p>
     <div class="field">
       <%= f.label :description, '' %><br >
       <%= f.text_area :description, :class =>"form-control", :rows =>"8" %>

@@ -41,6 +41,7 @@
 </div>
 
 <br><br>
+<%= @new_posts_destination.inspect %>
 <div class="text-center">
   <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:90px;"%>
   <p style="color: #3a94ca;font-size:30px;">Find Location On Map</p>
@@ -163,11 +164,12 @@ function setMarkers(map) {
     var beach = beaches[i];
     var marker = new google.maps.Marker({
       position: {lat: beach[1], lng: beach[2]},
+      // position: beach[0],
       map: map,
       icon: image,
       // shape: shape,
       title: beach[0],
-      zIndex: beach[3]
+      // zIndex: beach[3]
     });
   }
 }

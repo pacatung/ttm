@@ -5,6 +5,11 @@ class PostsController < ApplicationController
     @posts = Post.where(status: :'published').order("id DESC").limit(15)
     # @posts_destination = []
     @new_posts_destination = @posts.collect(&:destination)
+    
+    # for (i=0;i <= @new_posts_destination.length;i++;)    
+    # hash = Hash[ @new_posts_destination.map {|d| [d.destination]} ]
+    # puts "===="
+    # end
     # @posts.each do |post|
     #   @posts_destination.push(post.destination)
     # end
@@ -16,19 +21,19 @@ class PostsController < ApplicationController
     @published_posts = current_user.posts.where(status: :'published').limit(15).order('id desc')
     @draft_posts = current_user.posts.where(status: :'draft').limit(15).order('id desc')
     @trashcan_posts = current_user.posts.where(status: :'trashcan').limit(15).order('id desc')
-    @my_following = current_user.follows(params[:id])
-    @my_following_users_ids = []
-    @my_following.each do |my_following|
-      @my_following_users_ids.push(my_following.following_user_id)
-    end
-    @following_users_last_posts=[]
-    @my_following_users_ids.each do |user|
-      @following_users_last_posts.push(User.find(user).posts.last)
-    end
-    @my_following_users = []
-    @my_following_users_ids.each do |user_id|
-      @my_following_users.push(User.find(user_id))
-    end
+    # @my_following = current_user.follows
+    # @my_following_users_ids = []
+    # @my_following.each do |my_following|
+    #   @my_following_users_ids.push(my_following.following_user_id)
+    # end
+    # @following_users_last_posts=[]
+    # @my_following_users_ids.each do |user|
+    #   @following_users_last_posts.push(User.find(user).posts.last)
+    # end
+    # @my_following_users = []
+    # @my_following_users_ids.each do |user_id|
+    #   @my_following_users.push(User.find(user_id))
+    # end
     @favorite_posts = current_user.favorited_posts.order("id DESC").limit(15)
   end
 
