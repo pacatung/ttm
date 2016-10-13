@@ -1,1 +1,1 @@
-$("#favorite_block_<%= @post.id %>").html("<%=j render :partial => "favorites/favorite", :locals => { :favorite => @favorite } %>");
+$(".favorite_block_<%= @post.id %>").html("<%=j render :partial => "favorites/favorite", :locals => { :favorite => @favorite } %>");

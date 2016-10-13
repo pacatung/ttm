@@ -26,7 +26,7 @@ class PostsController < ApplicationController
     # @my_following.each do |my_following|
     #   @my_following_users_ids.push(my_following.following_user_id)
     # end
-    # @following_users_last_posts=[]
+    #  @following_users_last_posts=[]
     # @my_following_users_ids.each do |user|
     #   @following_users_last_posts.push(User.find(user).posts.last)
     # end

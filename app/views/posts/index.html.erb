@@ -73,7 +73,7 @@
             <td class="p_i_all_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
             <td class="p_i_all_post_favorite_td" style="text-align:center; vertical-align:middle;">
               <% favorite = post.find_my_favorite(current_user) %>
-                <div id="favorite_block_<%= post.id %>" style="display:inline;">
+                <div class="favorite_block_<%= post.id %>" style="display:inline;">
                   <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                   <% if favorite %>
                     <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
@@ -170,7 +170,7 @@
                 <td class="p_i_published_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_published_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
+                    <div class="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
                         <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
@@ -267,7 +267,7 @@
                 <td class="p_i_draft_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_draft_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
+                    <div class="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
                         <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
@@ -362,7 +362,7 @@
                 <td class="p_i_locked_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_locked_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
+                    <div class="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
                         <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
@@ -428,16 +428,20 @@
               <td style="text-align:center;vertical-align:middle;">country</td>
               <td style="text-align:center;vertical-align:middle;">
                 <% lastest_post = user.posts.last %>
-                <% if user.posts.last == nil %>
-                  <p>~~~~~ The user haven't post yet ~~~~</p>
+                <% if user.posts.last.present? %>
+                  <% if user.posts.last.photos.first.present? %>
+                    <%= link_to image_tag(user.posts.last.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(lastest_post) %>
+                  <% else %>
+                  No Photo
+                  <% end %>
                 <% else %>
-                  <%= link_to image_tag(user.posts.last.photos.first.pic.url(:medium), class: :"p_i_post_photo_area",style: :"width:210px;"), post_path(lastest_post) %>
-                <% end %>  
+                  <p>~~~~~ The user haven't post yet ~~~~</p>
+                <% end %>
               </td> 
               <td style="text-align:center;vertical-align:middle;"><%= user.posts.count %></td>
               <td style="text-align:center;vertical-align:middle;">< MILES ></td>
               <td style="text-align:center;vertical-align:middle;">
-                <div id="follow_block_<%= user.id %>">
+                <div class="follow_block_<%= user.id %>">
                   <% follow = current_user.find_my_following(user) %>
                   <%= render :partial => "follows/index_follow", :locals => { :follow => follow, :user => user } %>
                 </div>
@@ -500,7 +504,7 @@
               <td class="p_i_favorite_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
               <td class="p_i_favorite_post_favorite_td" style="text-align:center; vertical-align:middle;">
                 <% favorite = post.find_my_favorite(current_user) %>
-                  <div id="favorite_block_<%= post.id %>" style="display:inline;margin-right:10px;color:#3a94ca;">
+                  <div class="favorite_block_<%= post.id %>" style="display:inline;margin-right:10px;color:#3a94ca;">
                     <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                     <% if favorite %>
                       <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
@@ -574,7 +578,7 @@
                 <td class="p_i_trashcan_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_trashcan_post_favorite_td" style="text-align:center; vertical-align:middle;">
                   <% favorite = post.find_my_favorite(current_user) %>
-                    <div id="favorite_block_<%= post.id %>" style="display:inline;">
+                    <div class="favorite_block_<%= post.id %>" style="display:inline;">
                       <%#= render :partial => "favorites/favorite", :locals => { :favorite => favorite, :post => @post } %>
                       <% if favorite %>
                         <%= link_to image_tag('album_sub_love_hover.png', :'data-toggle'=>'tooltip', :'data-placement'=>'auto bottom', :title=>'將此相簿加入我的最愛', style: :'margin-top:5px;'), post_favorite_path(post, favorite), :method => :delete, :locals => { :favorite => favorite }, :remote => true %>
