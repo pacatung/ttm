@@ -73,6 +73,13 @@ li.nav_n_p>a>img{
   background:url("signin background_map2-01.jpg") no-repeat;
   background-size: cover;
 }
+.signup_error_message{
+  background-color: #f2dede;
+  border:2px solid #f06354;
+  color: #f06354;
+  padding: 10px 150px;
+  border-radius: 8px;
+}
 .login_block{
   /* border: 1px solid #3a94ca; */
   /* margin: 0 auto; */
