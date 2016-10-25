@@ -42,6 +42,8 @@
 
 <br><br>
 <%= @new_posts_destination.inspect %>
+<%= @new_posts_destination.count %>
+
 <div class="text-center">
   <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:90px;"%>
   <p style="color: #3a94ca;font-size:30px;">Find Location On Map</p>
@@ -122,13 +124,19 @@ function initialize() {
   map.setMapTypeId('style2id');
 
   setMarkers(map);
+  
+  var geocoder = new google.maps.Geocoder();
+  geocodeAddress(geocoder, map);
 }
 
 // Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-var new_posts_destination=[]
+var new_posts_destination=[
+  
+]
 
 var beaches = [
+  ['<%=  %>', -33.890542, 151.274856, 4],
   ['Bondi Beach', -33.890542, 151.274856, 4],
   ['Coogee Beach', -33.923036, 151.259052, 5],
   ['Cronulla Beach', -34.028249, 151.157507, 3],
@@ -137,12 +145,17 @@ var beaches = [
 ];
 
 // get geocode
-var geocoder = new google.maps.Geocoder();
-
 function geocodeAddress(geocoder, resultsMap) {
-  var address = document.getElementById('address').value;
+  // for (var i = 0; i < <%= @new_posts_destination.count %>; i++) {
+  //   var new_posts_destination = new_posts_destination[i];
+
+  // }
+  // var address = document.getElementById('address').value;
+  // geocoder.geocode({'address': "bondi beach"}, function(results, status) {
   geocoder.geocode({'address': address}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
+      console.log(results[0].geometry.location.lat());
+      console.log(results[0].geometry.location.lng());
       resultsMap.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
         map: resultsMap,
@@ -152,6 +165,7 @@ function geocodeAddress(geocoder, resultsMap) {
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
+
 }
 
 function setMarkers(map) {

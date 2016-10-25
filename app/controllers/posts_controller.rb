@@ -104,7 +104,7 @@ private
   end
   def post_params
     params.require(:post).permit( :title, :start_date,:return_date, :origin, :destination, :distance, :description,:user_id,
-     :status, :publish_on, :countries, photos_attributes: [:post_id, :photo_location, :pic],countries_attributes:[:name,:_destroy,:id,:priority],
-      locations_attributes:[:location,:_destroy,:id,:priority])
+     :status, :publish_on, :countries,:locations, photos_attributes: [:post_id, :photo_location, :pic],countries_attributes:[:name,:_destroy,:id,:priority],
+      locations_attributes:[:name,:lat,:lng,:_destroy,:id,:priority])
   end
 end

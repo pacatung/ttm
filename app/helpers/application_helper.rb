@@ -4,6 +4,7 @@ module ApplicationHelper
 	end
 	def setup_post(post)
 		post.countries.build if post.countries.blank?
+		post.locations.build if post.locations.blank?
 		post
 	end
 end
