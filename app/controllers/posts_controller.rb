@@ -4,15 +4,15 @@ class PostsController < ApplicationController
   def landing
     @posts = Post.where(status: :'published').order("id DESC").limit(15)
     # @posts_destination = []
-    @new_posts_destination = @posts.collect(&:destination)
-    
-    # for (i=0;i <= @new_posts_destination.length;i++;)    
-    # hash = Hash[ @new_posts_destination.map {|d| [d.destination]} ]
-    # puts "===="
-    # end
-    # @posts.each do |post|
-    #   @posts_destination.push(post.destination)
-    # end
+    # @new_posts_destination = @posts.collect(&:destination)
+
+    @post_locations = PostLocationship.where(:post_id=>@posts)
+    @locations_ids = @post_locations.collect(&:location_id)
+    @locations = []
+    @locations_ids.each do |location_id|
+      @locations.push(Location.find(location_id))
+    end
+    @locations_for_javascript = @locations.map{|l| [l.name.to_s,l.lat.to_s.to_i,l.lng.to_s.to_i] }
   end
 
   def index
