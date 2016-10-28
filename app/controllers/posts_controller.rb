@@ -12,7 +12,7 @@ class PostsController < ApplicationController
     @locations_ids.each do |location_id|
       @locations.push(Location.find(location_id))
     end
-    @locations_for_javascript = @locations.map{|l| [l.name.to_s,l.lat.to_s.to_i,l.lng.to_s.to_i] }
+    @locations_for_javascript = @locations.map{|l| [l.name.to_s,l.lat.to_i,l.lng.to_i] }
   end
 
   def index

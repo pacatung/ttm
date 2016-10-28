@@ -27,7 +27,13 @@
             <%= link_to image_tag("default.jpg", class: :"p_l_post_photo_area",style: :"border-top-right-radius:10px;border-top-left-radius:10px;"), post_path(post) %>
           </div>
         <% end %>
-          <p class="p_l_destination text-center" style="margin:0;padding:4px 24px 0 24px;text-overflow:ellipsis;overflow:hidden;white-space: nowrap;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;" %><%= post.destination %></p>
+          <p class="p_l_destination text-center" style="margin:0;padding:4px 24px 0 24px;text-overflow:ellipsis;overflow:hidden;white-space: nowrap;"><%= image_tag ("main_map.png"), alt: :"icon", style: :"height:30px;" %>
+            <%#= post.locations.map(&:name) %>
+            <% post.locations.map do |location| %>
+              <%= location.name %>
+            <% end %>
+          </p>
+          <%#= post.locations.collect(&:name).to_s %>
           <p class="text-center" style="padding:3px 0;margin:0 10px;border-top:1px solid #e5e5e5;">
             <% if post.user.image %>
               <%=link_to image_tag(post.user.image, style: :'height:32px;border-radius:20px;margin-right:10px;'), user_path(post.user) %>
@@ -41,8 +47,6 @@
 </div>
 
 <br><br>
-<%= @post_locations.inspect %>
-<hr><%= @aaa.inspect %>
 <div class="text-center">
   <%= image_tag ("main_map.png"), alt: :"icon", style: :"height:90px;"%>
   <p style="color: #3a94ca;font-size:30px;">Find Location On Map</p>
@@ -130,16 +134,7 @@ function initialize() {
 
 // Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-var new_posts_location=
-    <%= raw @locations_for_javascript %>
-
-var beaches = [
-  ['Bondi Beach', -33.890542, 151.274856, 4],
-  ['Coogee Beach', -33.923036, 151.259052, 5],
-  ['Cronulla Beach', -34.028249, 151.157507, 3],
-  ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-  ['Maroubra Beach', -33.950198, 151.259302, 1]
-];
+var new_posts_location=  <%= raw @locations_for_javascript %>
 
 // get geocode
 // function geocodeAddress(geocoder, resultsMap) {

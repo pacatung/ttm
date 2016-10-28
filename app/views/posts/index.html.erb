@@ -62,13 +62,17 @@
             </td>
             <td class="p_i_all_post_country_td" style="vertical-align:middle;">
              <div style=" margin:0 auto;width:40px">
-              <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
-                <% country = Country.find(pc.country_id) %>
-                <%= country_flag(country.name, "40px") %>
-              <% end %>
+                <% @post_countrys = post.post_countryships.uniq.each do |pc| %>
+                  <% country = Country.find(pc.country_id) %>
+                  <%= country_flag(country.name, "40px") %>
+                <% end %>
               </div>
             </td>
-            <td class="p_i_all_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+            <td class="p_i_all_post_destination_td" style="text-align:center; vertical-align:middle;">
+              <% post.locations.map do |post_location| %>
+                <%= post_location.name %>
+              <% end %>
+            </td>
             <td class="p_i_all_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
             <td class="p_i_all_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
             <td class="p_i_all_post_favorite_td" style="text-align:center; vertical-align:middle;">
@@ -165,7 +169,11 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_published_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_published_post_destination_td" style="text-align:center; vertical-align:middle;">
+                  <% post.locations.map do |post_location| %>
+                    <%= post_location.name %>
+                  <% end %>
+                </td>
                 <td class="p_i_published_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
                 <td class="p_i_published_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_published_post_favorite_td" style="text-align:center; vertical-align:middle;">
@@ -262,7 +270,11 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_draft_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_draft_post_destination_td" style="text-align:center; vertical-align:middle;">
+                  <% post.locations.map do |post_location| %>
+                    <%= post_location.name %>
+                  <% end %>
+                </td>
                 <td class="p_i_draft_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
                 <td class="p_i_draft_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_draft_post_favorite_td" style="text-align:center; vertical-align:middle;">
@@ -357,7 +369,11 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_locked_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_locked_post_destination_td" style="text-align:center; vertical-align:middle;">
+                  <% post.locations.map do |post_location| %>
+                    <%= post_location.name %>
+                  <% end %>
+                </td>
                 <td class="p_i_locked_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
                 <td class="p_i_locked_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_locked_post_favorite_td" style="text-align:center; vertical-align:middle;">
@@ -499,7 +515,11 @@
                   <% end %>
                 </div>
               </td>
-              <td class="p_i_favorite_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+              <td class="p_i_favorite_post_destination_td" style="text-align:center; vertical-align:middle;">
+                <% post.locations.map do |post_location| %>
+                  <%= post_location.name %>
+                <% end %>
+              </td>
               <td class="p_i_favorite_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
               <td class="p_i_favorite_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
               <td class="p_i_favorite_post_favorite_td" style="text-align:center; vertical-align:middle;">
@@ -573,7 +593,11 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="p_i_trashcan_post_destination_td" style="text-align:center; vertical-align:middle;"><%= post.destination %></td>
+                <td class="p_i_trashcan_post_destination_td" style="text-align:center; vertical-align:middle;">
+                  <% post.locations.map do |post_location| %>
+                    <%= post_location.name %>
+                  <% end %>
+                </td>
                 <td class="p_i_trashcan_post_origin_td" style="text-align:center; vertical-align:middle;"><%= post.origin %></td>
                 <td class="p_i_trashcan_post_distance_td" style="text-align:center; vertical-align:middle;"><%= post.distance %></td>
                 <td class="p_i_trashcan_post_favorite_td" style="text-align:center; vertical-align:middle;">
