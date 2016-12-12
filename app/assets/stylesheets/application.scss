@@ -80,6 +80,103 @@ li.nav_n_p>a>img{
   padding: 10px 150px;
   border-radius: 8px;
 }
+.userlogin .col-centered {
+    float: none;
+    margin: 0 auto;
+}
+.userlogin {
+    min-height: 600px;
+}
+.userlogin .login-wrapper {
+    max-width: 730px;
+    background-color: rgba(255, 255, 255, 0.57);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+}
+
+.userlogin .login-wrapper .login-tab-item {
+    border-top: 3px solid #333333;
+    padding: 0;
+}
+.userlogin .login-wrapper .unactive {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 2px solid #ddd;
+}
+.userlogin .login-wrapper .login-info {
+    width: 100%;
+    padding: 20px 30px 0px 30px;
+}
+.userlogin .login-wrapper .login-form {
+    padding-bottom: 20px;
+    min-height: 320px;
+}
+.userlogin .announcement {
+    margin-bottom: 15px;
+    padding: 15px 30px 15px;
+    font-weight: bold;
+}
+.login-username, .login-password {
+  background: transparent;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(140, 136, 136, 0.7);
+  color: black;
+  display: block;
+  margin: 1rem;
+  padding: .5rem;
+  transition: 250ms background ease-in;
+  width: calc(100% - 3rem);
+  box-shadow: none;
+  border-radius: 0px; 
+  &:focus {
+    background: rgba(255, 255, 255, 0.5);
+    color: black;
+    transition: 250ms background ease-in;
+    border-radius: 0px; 
+  }
+
+}
+.btn-lg, .btn-group-lg > .btn {
+    border-radius: 43px;
+}
+.submitbtn{
+  -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    background: #3498db;
+    padding: 10px 47px 10px 46px;
+    text-decoration: none;
+    border: 1px;
+    font-size: 15px;
+  
+}
+input {
+  ::-webkit-input-placeholder {
+     color: rgba(255,255,255,0.7);
+  }
+  ::-moz-placeholder {
+     color: rgba(255,255,255,0.7);  
+  }
+  :-ms-input-placeholder {  
+     color: rgba(255,255,255,0.7);  
+  }
+  &:focus {
+    outline: 0 transparent solid;
+    ::-webkit-input-placeholder {
+     color: rgba(0,0,0,0.7);
+    }
+    ::-moz-placeholder {
+       color: rgba(0,0,0,0.7);  
+    }
+    :-ms-input-placeholder {  
+       color: rgba(0,0,0,0.7);  
+    }
+  }
+}
 .login_block{
   /* border: 1px solid #3a94ca; */
   /* margin: 0 auto; */
