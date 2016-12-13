@@ -30,23 +30,10 @@
             </div>
           <div class="clearfix"></div>
         </div>
-        <div class="login-info">
-          <p>您可以透過以下帳號或Email認證完成註冊。</p>
-        </div>
         <div class="col-md-12 login-form">
-          <div class="col-sm-6">
-            <p>可以透過這些帳號登入:</p>
-            <div class="auth">          
-              <%- resource_class.omniauth_providers.each do |provider| %>
-                <a class="btn btn-block btn-lg btn-social btn-facebook" href="<%= omniauth_authorize_path(resource_name, provider) %>">
-                  <i class="fa fa-facebook"></i> 使用 Facebook 帳號登入
-                </a>
-                <%#= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
-              <% end -%>         
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <p>或使用Email註冊:</p>
+          <div class="col-md-12">
+            <br> 
+            <p>您可以使用Email註冊:</p>
             <div class="email">
               <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
                 
@@ -64,12 +51,22 @@
                 </div>
               <% end %>          
             </div>
+            <br>
+            <p>或直接透過FB帳號登入:</p>
+            <div class="auth">          
+              <%- resource_class.omniauth_providers.each do |provider| %>
+                <a class="btn btn-block btn-lg btn-social btn-facebook" href="<%= omniauth_authorize_path(resource_name, provider) %>">
+                  <i class="fa fa-facebook"></i> 使用 Facebook 帳號登入
+                </a>
+                <%#= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
+              <% end -%>         
+            </div>
           </div>
           <div class="clearfix"></div>
         </div>
         <div class="announcement">
           <span class="glyphicon glyphicon-info-sign"></span>
-          按下註冊/登入即代表您同意 用戶協議 和 隱私權政策
+          按下註冊/登入即代表您同意用戶條款和隱私權政策
         </div>
         <div class="clearfix"></div>
 

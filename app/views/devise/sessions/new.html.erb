@@ -8,35 +8,81 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-    <div class="container">
-  <!--     <div class="signup_error_message">
-        <%#= devise_error_messages! %>
-      </div> -->
-      <div class="login_block col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-        <h2>Log in</h2>
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, class: :'form-control' %>
+
+<!-- -->
+<div class="userlogin">
+<div class="container">
+<div class="row">
+    <!-- <div class="signup_error_message">
+      <%#= devise_error_messages! %>
+    </div>-->
+      <div class="col-centered login-wrapper">
+        <div class="login-tab">
+          <div class="col-xs-6 text-center login-tab-item unactive">
+            <a href="/users/sign_up">
+              <h4>註冊</h4>
+            </a>
+          </div>
+          <div class="col-xs-6 text-center login-tab-item ">
+            <a href="/users/sign_in">
+              <h4>登入</h4>
+            </a>          
+            </div>
+          <div class="clearfix"></div>
         </div>
-        <p></p>
-        <div class="field">
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "off", class: :'form-control' %>
+        <div class="col-md-12 login-form">
+          <div class="col-md-12">
+            <br> 
+            <p>請輸入Email登入:</p>
+            <div class="email">
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                
+                <div class="form-group">
+                  <%= f.email_field :email, autofocus: true, class: :'form-control login-username' ,placeholder: "輸入Email" %>          
+                </div>
+                <div class="form-group">
+                  <%= f.password_field :password, autocomplete: "off", class: :'form-control login-password ',placeholder: "輸入密碼(最少八個字)"%>
+                </div>
+                <% if devise_mapping.rememberable? -%>
+                  <div class="form-group">
+                    <%= f.check_box :remember_me %> 記住我
+                    
+                  </div>
+                <% end -%>
+                <div class=""> 
+                  <%= f.submit "登入", class: :'submitbtn', style: :'color:white;background-color:#3a94ca;' %>
+                  <%= link_to "忘記密碼?", new_password_path(resource_name) %><br />
+
+                </div>
+              <% end %>          
+            </div>
+            <br>
+            <p>或直接FB帳號登入:</p>
+            <div class="auth">          
+              <%- resource_class.omniauth_providers.each do |provider| %>
+                <a class="btn btn-block btn-lg btn-social btn-facebook" href="<%= omniauth_authorize_path(resource_name, provider) %>">
+                  <i class="fa fa-facebook"></i> 使用 Facebook 帳號登入
+                </a>
+                <%#= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
+              <% end -%>         
+            </div>
+          </div>
+          <div class="clearfix"></div>
         </div>
-        <% if devise_mapping.rememberable? -%>
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
+        <div class="announcement">
+          <span class="glyphicon glyphicon-info-sign"></span>
+          按下註冊/登入即代表您同意用戶條款和隱私權政策
         </div>
-        <% end -%>
-        <div class="actions">
-          <%= f.submit "Log in", class: :'form-control', style: :'color:white;background-color:#3a94ca;' %>
-        </div>
-        <% end %>
-        <%= render "devise/shared/links" %>
-        <%#= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+        <div class="clearfix"></div>
+
+
       </div>
-    </div>
-  <br><br><br>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+
 </div>

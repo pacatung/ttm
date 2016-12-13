@@ -66,7 +66,7 @@ li.nav_n_p>a>img{
   width: 320px;
 }
 .signin{
-  background:url("signin_background_map-01.jpg") no-repeat;
+  background:url("signin background_map2-01.jpg") no-repeat;
   background-size: cover;
 }
 .signup{
@@ -88,7 +88,7 @@ li.nav_n_p>a>img{
     min-height: 600px;
 }
 .userlogin .login-wrapper {
-    max-width: 730px;
+    max-width: 350px;
     background-color: rgba(255, 255, 255, 0.57);
     margin-top: 30px;
     margin-bottom: 30px;
@@ -96,7 +96,7 @@ li.nav_n_p>a>img{
 }
 
 .userlogin .login-wrapper .login-tab-item {
-    border-top: 3px solid #333333;
+    border-top: 3px solid #3a94ca;
     padding: 0;
 }
 .userlogin .login-wrapper .unactive {
@@ -117,8 +117,10 @@ li.nav_n_p>a>img{
     padding: 15px 30px 15px;
     font-weight: bold;
 }
+
 .login-username, .login-password {
-  background: transparent;
+  background:url("login-sprite.png") no-repeat;
+
   border: 0 solid;
   border-bottom: 1px solid rgba(140, 136, 136, 0.7);
   color: black;
@@ -129,12 +131,22 @@ li.nav_n_p>a>img{
   width: calc(100% - 3rem);
   box-shadow: none;
   border-radius: 0px; 
+  padding-left: 29px;
+
   &:focus {
-    background: rgba(255, 255, 255, 0.5);
     color: black;
     transition: 250ms background ease-in;
     border-radius: 0px; 
   }
+
+}
+.login-username{
+  
+  background-position: 4px -9px !important;
+
+}
+.login-password{
+  background-position: 4px -59px !important;
 
 }
 .btn-lg, .btn-group-lg > .btn {
@@ -147,12 +159,15 @@ li.nav_n_p>a>img{
     font-family: Arial;
     color: #ffffff;
     font-size: 20px;
-    background: #3498db;
+    background: #5d3aca;
     padding: 10px 47px 10px 46px;
     text-decoration: none;
     border: 1px;
     font-size: 15px;
-  
+  &:hover {
+      background: #23709e;
+    }
+
 }
 input {
   ::-webkit-input-placeholder {
